@@ -1,0 +1,112 @@
+{
+  "derived": {
+    "efficiency_per_exec": null,
+    "record_count": 2
+  },
+  "exec_count": 4200,
+  "records": [
+    {
+      "core": {
+        "coverage_delta": {
+          "exec_n": 4200,
+          "new_bb": 0
+        },
+        "helper_arg_violations": [],
+        "jit_interp_diff": {
+          "data_out_equal": true,
+          "retval_interp": 0,
+          "retval_jit": 0
+        },
+        "processed": {
+          "insn_processed": 12,
+          "states_processed": 3
+        },
+        "register_evolution": [
+          {
+            "insn_idx": 0,
+            "regs": [
+              {
+                "reg": 0,
+                "reg_type": "scalar",
+                "smax": 255,
+                "smin": 0,
+                "tnum": {
+                  "mask": 255,
+                  "value": 0
+                },
+                "umax": 255,
+                "umin": 0
+              }
+            ]
+          }
+        ],
+        "verifier_decision": {
+          "decision": "accept"
+        }
+      },
+      "counterfactual": {
+        "alternatives": [],
+        "enabled": false
+      },
+      "expectation": {
+        "expected": "no_prediction",
+        "predicted": null
+      }
+    },
+    {
+      "core": {
+        "coverage_delta": {
+          "exec_n": 4200,
+          "new_bb": 0
+        },
+        "helper_arg_violations": [
+          {
+            "arg_index": 1,
+            "expected": "PTR_TO_MAP_KEY",
+            "helper": "bpf_map_lookup_elem",
+            "observed": "SCALAR_VALUE"
+          }
+        ],
+        "jit_interp_diff": {
+          "data_out_equal": true,
+          "retval_interp": 0,
+          "retval_jit": 1
+        },
+        "processed": {
+          "insn_processed": 12,
+          "states_processed": 3
+        },
+        "register_evolution": [
+          {
+            "insn_idx": 0,
+            "regs": [
+              {
+                "reg": 0,
+                "reg_type": "scalar",
+                "smax": 255,
+                "smin": 0,
+                "tnum": {
+                  "mask": 255,
+                  "value": 1
+                },
+                "umax": 255,
+                "umin": 0
+              }
+            ]
+          }
+        ],
+        "verifier_decision": {
+          "decision": "accept"
+        }
+      },
+      "counterfactual": {
+        "alternatives": [],
+        "enabled": false
+      },
+      "expectation": {
+        "expected": "no_prediction",
+        "predicted": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+=== DERLEME ===
+H21B rc=0
+H21F rc=0
+35269248 .lab/build/bzImage-h21b
+35272160 .lab/build/bzImage-h21f
+config byte-identical (should be 1): 1
+=== h21b ===
+===P3PROG name=H21_scalar_ids flags=0 verdict=reject errno=22
+===P3PROG name=H21_scalar_ids_freq flags=freq verdict=accept errno=0
+  PRUNEPAIR satiri: 22
+  SUBSUME pairs=3 modelled=3 agree=3 disagree=0 unmodelled=0
+  SUBSUME nontrivial_pairs=1 scalar_comparisons=2 shortcircuited_regs=0 other_type_regs=1 ptr_cmps=0 id_checks=0
+=== h21f ===
+===P3PROG name=H21_scalar_ids flags=0 verdict=reject errno=22
+===P3PROG name=H21_scalar_ids_freq flags=freq verdict=reject errno=22
+  PRUNEPAIR satiri: 8
+  SUBSUME pairs=1 modelled=1 agree=1 disagree=0 unmodelled=0
+  SUBSUME nontrivial_pairs=0 scalar_comparisons=0 shortcircuited_regs=0 other_type_regs=0 ptr_cmps=0 id_checks=0
+=== BITTI ===

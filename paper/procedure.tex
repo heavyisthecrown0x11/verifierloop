@@ -1,0 +1,109 @@
+The axis of Section~2 is only useful if it can be applied before the work it is
+meant to inform. This section gives the procedure that does so, and its defining
+property is cost: it reads source and nothing else. No system is built, nothing is
+executed, and no test campaign is run. The output is an upper bound on an oracle's
+reach, obtained while the oracle is still a design.
+
+\subsection{Inputs}
+
+The procedure takes two inputs.
+
+The first is the oracle \emph{design} $O$, characterized not by its implementation
+but by its \textbf{consumption set}: the artifacts $O$ will read in order to form
+its judgement. Naming this set requires no code, which is what makes the procedure
+a pre-build one. The set must be named at the granularity of individual artifacts
+or fields---``the profile of executed basic blocks'', ``the range fields of the
+tracked abstract state''---and not as ``the system's output'', because the answer
+differs per artifact. It must also be named relative to the \emph{component} under
+test rather than the whole system, for the reason given in Section~2: an oracle may
+share most of a system with the code it judges and still be evidentially
+independent of the part that matters.
+
+The second is a defect population $P$ drawn from the system under test, and it
+carries a precondition.
+
+\subsection{Precondition on the population}
+
+\textbf{$P$ must be drawn independently of any oracle's findings.} A population
+assembled from what some tool reported measures the sighted side of that tool and
+cannot bound the blind side of any tool, including itself. The natural constructions
+that satisfy the precondition are exhaustive over some independently chosen frame:
+every fixed defect in a release window, or every fix touching a named component in
+the project's history. The natural construction that violates it is the appealing
+one---the bug list a technique published---because it is already assembled,
+already curated, and already classified.
+
+This is a precondition and not a caution: if $P$ is drawn from a tool's findings,
+the procedure does not yield a weaker bound, it yields no bound at all. We state it
+formally because it does not transfer on its own. Having applied it correctly to the
+system in Section~5---partitioning the historical population by what an oracle
+\emph{could} observe, not by what it had found---we nonetheless proposed, when
+moving to a second system, to classify the defect list that a published technique
+had itself reported. The asymmetry had been learned in one context and did not
+survive the move to another, which is the argument for writing the procedure down
+rather than treating it as judgement.
+
+A second requirement on $P$ is weaker but must be reported: the criterion selecting
+$P$ should not correlate with visibility. A frame such as ``defects whose fix
+message quotes internal state'' is convenient and biased, because the property that
+makes a defect easy to read may also be the property that made it findable.
+
+\subsection{The step}
+
+For each defect $d \in P$, ask one question:
+
+\begin{quote}
+Does $d$ corrupt an artifact in $O$'s consumption set?
+\end{quote}
+
+\noindent Three answers are permitted.
+
+\begin{itemize}
+\item \textbf{Yes} --- $O$ consumes the corruption and reproduces it. $d$ is in
+      $O$'s blind class, structurally and regardless of $O$'s predicate.
+\item \textbf{No} --- $d$ corrupts nothing $O$ consumes. This answer covers two
+      situations that must be kept apart. If $d$ lies in an artifact $O$ never reads
+      at all, $O$ is blind to it as surely as in the first case, for a different
+      reason. If $d$ lies in something $O$ does examine, $O$ \emph{may} observe it,
+      subject to its predicate covering the class---a necessary condition, not a
+      sufficient one. The reproducibility measurement of Section~4.5 found that
+      independent readers split exactly on this seam, which is why it is named here.
+\item \textbf{Undecided} --- the fix does not settle the question from source.
+\end{itemize}
+
+Two disciplines make the step reliable, and both were earned rather than assumed.
+First, \emph{decide from the source of the fix, never from its title or summary}.
+In an earlier partition of forty fixes, four carried titles that named a
+component the diff did not touch; a classification taken from titles would have been
+wrong in one case in ten. Second, \emph{Undecided is a bucket, not a default}. A
+procedure that silently resolves ambiguity produces a bound it cannot support, and
+a count of undecided cases is part of the result rather than an embarrassment in it.
+
+\subsection{Output, and what it is not}
+
+The partition yields $\mathrm{reach}(O) \le |\{d : \text{No}\}| / |P|$, an
+\emph{upper} bound, and the slack in it has a name: predicate coverage. A defect the
+oracle does not consume may still lie in an arm the oracle never implemented, and
+$|\{\text{No}\}|$ counts it anyway. In Section~5 the bound is $1/57$ and the
+realized reach is $0/57$; the difference is one such arm. This slack is not
+irreducible before a build, because which arms an oracle implements is a property
+of the oracle's source, readable the same way the partition is. Being outside the
+blind class is necessary for observation and
+not sufficient: the oracle's predicate must also cover the class. In Section~5 the
+bound is one defect in fifty-seven, and the realized reach is zero, because that one
+lies in a part of the predicate the oracle did not implement. A procedure that
+promised reach rather than bounding it would have promised one defect and delivered
+none on its first application.
+
+\subsection{Why the cost matters}
+
+The procedure's value is not that it is rigorous but that it is cheap enough to run
+before committing. Calibrating a single oracle against a single real defect, in the
+manner of Section~4, costs a build of the system at the defect and another at its
+fix; in our case study that is tens of minutes of machine time per pair and a
+configuration that must be held byte-identical across the two. The procedure costs
+opening one commit per defect and reading the function it changes.
+
+The asymmetry is the point: run the procedure over the whole population first, then
+spend calibration only where it says the oracle should be able to see. The procedure
+does not replace calibration---it aims it.

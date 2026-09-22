@@ -1,0 +1,54 @@
+===PROG maygotolive#871ef8d50e7c#mov type=socket_filter ===
+RESULT decision=accept fd=1 errno=0 load_ns=0
+LIVENESS status=ok n=6 mask=000000002000002001
+---LOG---
+func#0 @0
+Live regs before insn:
+  0: .......... (b7) r0 = 0
+  1: .......... (b7) r1 = 1
+  2: .1........ (e5) may_goto pc+1
+  3: .......... (05) goto pc-3
+  4: .1........ (bf) r0 = r1
+  5: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (b7) r0 = 0                        ; R0_w=0
+1: (b7) r1 = 1                        ; R1=1
+2: (e5) may_goto pc+1
+4: (bf) r0 = r1                       ; R0_w=1 R1=1
+5: (95) exit
+
+from 2 to 3: R0=0 R1=1 R10=fp0
+3: R0=0 R1=1 R10=fp0
+3: (05) goto pc-3
+1: (b7) r1 = 1
+2: safe
+processed 8 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 1
+
+---END---
+===PROG maygotolive#871ef8d50e7c#add type=socket_filter ===
+RESULT decision=accept fd=1 errno=0 load_ns=0
+LIVENESS status=ok n=6 mask=000001003001003001
+---LOG---
+func#0 @0
+Live regs before insn:
+  0: .......... (b7) r0 = 0
+  1: 0......... (b7) r1 = 1
+  2: 01........ (e5) may_goto pc+1
+  3: 0......... (05) goto pc-3
+  4: 01........ (0f) r0 += r1
+  5: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (b7) r0 = 0                        ; R0_w=0
+1: (b7) r1 = 1                        ; R1=1
+2: (e5) may_goto pc+1
+4: (0f) r0 += r1                      ; R0_w=1 R1=1
+5: (95) exit
+
+from 2 to 3: R0=0 R1=1 R10=fp0
+3: R0=0 R1=1 R10=fp0
+3: (05) goto pc-3
+1: (b7) r1 = 1
+2: safe
+processed 8 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 1
+
+---END---

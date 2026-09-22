@@ -1,0 +1,203 @@
+%% Where a Test Oracle Reads From
+%% Evidential independence as a design criterion for differential testing
+%%
+%% TARGET: ISSTA (acmart/sigconf). The class is deliberate: ICSE uses the same
+%% class, and the ISSTA-collocated workshops use it in a shorter format, so
+%% moving DOWN (workshop) or SIDEWAYS (ICSE) is a format switch, not a rewrite.
+%% Written to the full-paper shape on purpose — lowering is cheap, raising is not.
+%%
+%% BUILD: needs acmart.cls (texlive-publishers, or Overleaf). Not installed in
+%% the development container; compile on Overleaf or a TeX Live host.
+
+%% ---------------------------------------------------------------------------
+%% SUBMISSION SWITCHES — the numbers in the margin are NOT A WORD COUNT, they are line numbers.
+%% Source: acmart.cls:2516, `\if@ACM@review` -> `\ACM@mk@linecount`. I.e. what ACM's
+%% own class DELIBERATELY prints in review mode, so that a reviewer can cite a line.
+%% Measured: review on 9 pages, off 9 pages -- it does not change the pagination.
+%%
+%%   review     -> line numbers + folio. Wanted in a double-blind submission; check the CFP.
+%%   anonymous  -> makes the authors "Anonymous Author(s)". Required for double-blind.
+%%
+%% In CAMERA-READY both are REMOVED and these are added:
+%%   \acmConference[ACRONYM '27]{...}{date}{venue}
+%%   \acmBooktitle{...}  \acmDOI{...}  \acmISBN{...}  \copyrightyear{...}
+%% The "Conference'17, July 2017, Washington, DC, USA" at the bottom of the page is the
+%% PLACEHOLDER acmart prints in the absence of \acmConference; it must also be filled at submission.
+%%
+%% Measured structure: body pp.1-7, Appendix A starts on p.8, REFERENCES on p.9.
+%% ---------------------------------------------------------------------------
+\documentclass[sigconf,review,anonymous]{acmart}
+
+%% Fig.1 (the 2x2) is TikZ; acmart does not load it.
+\usepackage{tikz}
+%% Float fractions loosened so a top float is not stranded alone on a final page.
+%% (Appendix B's table was also made single-column for the same reason: a table*
+%% met mid-page can only go to the NEXT page top.)
+\renewcommand{\dbltopfraction}{0.92}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+
+%% PAGE BUDGET — deliberately left as a parameter rather than a number.
+%% ACM/ISSTA limits change per edition; fill from the current CFP, do not
+%% guess. The decision that matters is not the limit but the CAP below.
+%%
+%% THE CAP, and it is the point of this file:
+%%   Sec.5 (case study) MUST NOT EXCEED 2.5 pages.
+%% The material behind it is a 112-entry engineering log, and its weight will
+%% pull the section toward chronology. Chronology is the failure mode: it turns
+%% the case study into the log wearing a paper's clothes. Every paragraph in
+%% Sec.5 must answer "which claim does this carry?" — and the claim is always
+%% the one in the last sentence of Sec.1.
+
+\begin{document}
+
+\title{Where a Test Oracle Reads From}
+\subtitle{Evidential independence as a design criterion for differential testing}
+
+%% Filled at submission; the class is set `anonymous', so acmart replaces these
+%% with "Anonymous Author(s)" for review. They exist so the title block has an
+%% author to typeset at all.
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \country{}}
+
+%% CCS: required by ACM at submission. ONE concept, deliberately: two \ccsdesc
+%% lines were tried and acmart printed both, doubling the text
+%% ("...verification.Software testing and debug-ging...").
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10011007.10011074.10011099.10011102.10011103</concept_id>
+       <concept_desc>Software and its engineering~Software testing and debugging</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Software and its engineering~Software testing and debugging}
+
+\keywords{differential testing, test oracles, oracle independence, blind spots,
+  program analysis, eBPF verifier}
+
+\begin{abstract}
+%% Written LAST, from Sec.1's final sentence outward. Four contributions in the
+%% order the paper delivers them. No chronology, no "we built a tool".
+A differential oracle is trusted in proportion to the independence of its reference,
+and independence is graded by how the reference was written: an independently
+developed implementation ranks above a comparison among implementations sharing an
+origin. A second property is orthogonal to that grade and unnamed---what the
+reference \emph{reads}. An oracle whose input is an artifact the component under test
+produced inherits that component's defects on exactly the inputs where they matter,
+however independently its logic was implemented.
+
+We name this property evidential independence and show that it is
+component-relative: the same oracle is entangled with one component and independent
+of the next, so a single grade for a whole system is the wrong unit. We then give a
+procedure that converts the property into a number before the oracle is built.
+Partition the component's historical defect population---drawn independently of any
+oracle's findings---by whether each defect corrupts an artifact the oracle consumes;
+the blind partition bounds the oracle's reach. The cost is source reading: no builds,
+no execution, no test campaign.
+
+We apply the procedure once and deeply, to two oracles for the Linux eBPF verifier
+built under identical discipline and differing in one respect visible in their type
+signatures, each side anchored by calibration against real defects. Their blind-spot
+classes separate as the axis predicts. Ahead of construction, the procedure showed
+that, of fifty-seven documented fixes whose messages quote the verifier's internal
+state, the more sophisticated oracle is structurally blind to 42\% and can target
+2\%. That frame is enriched for the oracle's own operating region---we measure the
+enrichment at roughly threefold---so on an unfiltered frame both shares fall; what
+does not change is that the partition was available before the oracle was written,
+and that an independent blind rater reproduces it ($\kappa = 0.86$). At volume, the
+region where that oracle agreed with the kernel most completely proved to be a region
+where it agreed for the wrong reason.
+
+Finally, we report that the procedure cannot today be applied to a second system from
+the published record. Defect taxonomies are organized by symptom and by
+configuration, never by whether an oracle could have observed the defect. Where
+techniques do state what they cannot see, they state it by component---which part of
+the system was analysed---and two oracles covering one component can differ entirely
+in what they consume. A prediction we pre-registered, that a widely cited technique
+would state the limitation its input provenance implies, was falsified. That failure
+is the measurement, and the argument for collecting defect data on this axis.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+%% DRAFTED — see paper/intro.tex. Ends on the sentence that filters Sec.5.
+\input{intro}
+
+\section{Two Axes of Oracle Independence}
+%% DRAFTED — see paper/axes.tex.
+%% 2.2 carries the NoREC refinement (component-relative), 2.3 states the limit of
+%% the axis HERE rather than in threats (it explains two of six mechanisms), and
+%% 2.4 is the bridge: the failure is silent by construction, so it needs a
+%% procedure and not a caution.
+\input{axes}
+
+\section{The Procedure}
+%% DRAFTED — see paper/procedure.tex.
+%% Population independence is a PRECONDITION (3.2), not a caution: violating it
+%% yields no bound at all. Cost is foregrounded (3.5): the procedure aims
+%% calibration rather than replacing it.
+\input{procedure}
+
+\section{Evaluating a Procedure}
+%% DRAFTED — see paper/evaluation.tex.
+%% NOT "we ran our tool on a benchmark": there is no tool to score. Four
+%% answerable questions of unequal strength (bound held / auditable / changed a
+%% decision / generalizes), and a fifth named as unmeasured (reproducibility).
+%% 4.1 splits confirmatory from held-out and reports n=1 as n=1.
+%% 4.4 reports the absence of external validation as a RESULT, per the fourth
+%% contribution — not as an apology.
+\input{evaluation}
+
+\section{Case Study}
+%% *** HARD CAP: 2.5 PAGES — see the note at the top of this file. ***
+%% DRAFTED — see paper/casestudy.tex. Contract honoured:
+%%   5.1 the two oracles contrasted at their INPUT (signatures carry it)
+%%   5.2 calibration, two anchors per oracle, one of them a required SILENCE
+%%   5.3 the procedure applied ahead of the oracle; bound 1/57, realized 0/57 (rebuilt partition; the original 40 was unrecoverable)
+%%   5.4 the verification of 2.4 — agreement at volume, for the wrong reason
+%% No chronology: nothing here is justified by the order in which it happened.
+\input{casestudy}
+
+\section{Threats to Validity}
+%% DRAFTED — see paper/threats.tex. Each threat names the claim it endangers and
+%% what would settle it. The frame-bias one is first because §5.3 already admits
+%% it: the population satisfies §3.2's precondition and violates its second,
+%% weaker requirement.
+\input{threats}
+
+\section{Related Work}
+%% DRAFTED — see paper/related.tex. Contains the pre-registered prediction about
+%% EMI that was FALSIFIED, reported as such, plus the confirmed-but-weakly-
+%% diagnostic second prediction that is explicitly not counted. Unusual for a
+%% related-work section; it is the evidence for the fourth contribution.
+\input{related}
+
+\section{Conclusion}
+%% DRAFTED — see paper/conclusion.tex. Ends on the follow-up STUDY DESIGN, not a
+%% gesture: a population drawn independently of any tool, partitioned by oracle
+%% visibility. That tests the blind side.
+\input{conclusion}
+
+\appendix
+\section{The Full Blind-Spot Map}
+%% DRAFTED — see paper/appendixA.tex. 56 cells, 34 of them empty, and the empty
+%% cells are labelled UNTESTED where the reader sees them.
+\input{appendixA}
+
+\section{Calibration Pairs}
+%% DRAFTED — see paper/appendixB.tex. The `evidence' column is the honest part:
+%% nine built, five message-quoted, one source-only. It contradicts the loose
+%% wording in Sec.1/5.2, which was corrected rather than defended.
+\input{appendixB}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

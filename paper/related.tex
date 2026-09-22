@@ -1,0 +1,106 @@
+\paragraph{The canonical formalism, and where the axis is missing from it.}
+The standard survey of test oracles defines a pseudo-oracle as ``an alternative
+version of the program produced independently, e.g. by a different programming team
+or written in an entirely different programming language''~\cite{barr2015oracle}, and
+formalizes it as a pair of executions $f_1(x)\,o_1\;f_2(x)\,o_2$ accepted when
+$f_1 \neq f_2 \wedge o_1 = o_2$. The independence condition quantifies over the
+implementations $f$; the input $x$ is shared and goes unexamined, as it does in the
+survey's own prose---``the output of independently implemented components of the SUT
+on the same input value.'' That is the axis's absence stated in one line, in the
+definition rather than in an omission: independence is a predicate on the programs,
+never on what they read.
+
+\paragraph{Oracle-source taxonomies.}
+More recent surveys grade independence, and grade it along the same axis: an
+independently developed reference ranks above a comparison among existing
+implementations, which ranks above consensus among implementations drawn from a
+common origin~\cite{oraclesurvey2026}. Input provenance is not among the axes. The
+closest such work comes is a remark on oracles derived from the code itself---that
+they accept what the code currently does---which is the coarsest case of the
+phenomenon and is not developed into a dimension.
+
+\paragraph{Csmith, and an independence it does not name.}
+Csmith generates C programs and compares the outputs of several
+compilers~\cite{yang2011csmith}. It states the shared-defect limitation plainly---%
+``if that did happen we would not detect that problem; this is an inherent limitation
+of differential testing without an oracle''---and then argues that it does not happen,
+empirically and over implementations: ``despite the fact that Knight and Leveson found
+a substantial number of correlated errors in an experiment on N-version programming,
+Csmith has yielded no evidence of correlated failures among unrelated C compilers.''
+The argument is about how independently the compilers were built, and it is a good
+argument. Read through Section~2, a second reason is available and the paper does not
+give it: the program under test is produced by Csmith, that is, by \emph{neither}
+compiler, so the evidence never passes through a system under test. The technique sits
+on the favourable side of the input axis by construction. This is not a confusion on
+its authors' part---the axis had no name to reach for---but it is the sharpest
+available demonstration that the property is real and load-bearing before it is
+articulated.
+
+\paragraph{NoREC.}
+NoREC constructs its reference by rewriting a query into a form the optimizer cannot
+apply to, and evaluating it on the same engine~\cite{rigger2020norec}. Read through
+Section~2.2, it is the axis realized: evidential independence from the component under
+test, purchased by construction, while sharing everything else. Its authors state the
+corresponding limitation---``both the unoptimized and optimized query can yield an
+incorrect result''---and attribute it to metamorphic testing's inability to establish
+ground truth. That attribution is correct and coarser than the component-relative
+reading, which says not merely that ground truth is absent but which defects escape
+and which do not.
+
+\paragraph{The same subject, a different reference.}
+Our case study's component has been verified before. Agni checks the soundness of the
+verifier's range analysis by generating verification conditions ``directly from the
+Linux kernel's C source code'' and discharging them against an independent soundness
+specification~\cite{vishwanathan2023agni}. Placed on the axis, it is the opposite
+corner from oracle $B$ of Section~5: its input is the component's source text, which
+is upstream of every value the component computes, so no defect in the analysis can
+reach it as evidence. What it inherits instead is the faithfulness of the extraction,
+which its authors name as a trusted computing base. Two oracles for one component,
+sharing a subject and almost nothing else, is what the axis is for; they are the
+opposing corners of Figure~\ref{fig:axes}.
+
+\paragraph{EMI, and a prediction we registered and lost.}
+EMI derives variants by profiling a program and pruning code the profile marks
+unexecuted~\cite{le2014emi}, so its evidence passes through the system under test for
+everything except the presence of that code. Before reading the paper we recorded a
+falsifiable prediction: that its stated limitations would include the class the axis
+implies---defects affecting a program and its variant identically. They do not. The
+paper's stated limitations concern extension to other languages, floating-point
+equivalence, and undefined behaviour. By the criterion we fixed in advance, the
+prediction failed.
+
+A second prediction, that the reported defects would concentrate in components
+sensitive to surrounding code, holds---``most of the bugs that Orion found in GCC are
+optimizer bugs''---but we do not count it. EMI targets optimizations by construction,
+so the observation does not separate our axis from the technique's own stated aim, and
+a weakly diagnostic confirmation does not offset a falsified prediction.
+
+\paragraph{What the record does and does not supply.}
+Authors do sometimes state what their oracle cannot see: Csmith names the shared-defect
+case, and Agni's caveats name the unseen class outright---``Only Range Analysis is
+Considered\ldots\ There are other static analyses in the kernel verifier beyond range
+analysis.'' The claim that survives contact with these papers is narrower and, for our
+purposes, sharper. Where a scope is stated it is stated \emph{by component}: which part
+of the system was analysed. It is not stated by what the oracle reads, and the reported
+defect taxonomies are organized by symptom---wrong code, crash, performance---and by
+configuration, never by whether an oracle could have observed the defect. A
+component-scoped caveat cannot be turned into the partition of Section~3, because two
+oracles covering the same component can differ entirely in what they consume. That is
+why the published record cannot validate this axis, and it is the observation
+Section~3 turns into a call---reached by trying and failing rather than by assuming.
+We are explicit about what the failed prediction does and does not establish. It
+measures the record: what a technique's authors chose to state. It does not measure
+the axis, and a reader who took it as validation would be right to object; the
+axis's tests are the held-out predictions of Section~4.1, and the failed prediction
+is evidence only for the fourth contribution, that the data the procedure needs is
+not being collected.
+
+\paragraph{Metamorphic testing and differential testing generally.}
+The axis is orthogonal to the choice between a metamorphic relation and a reference
+implementation. The survey places metamorphic relations among derived oracles because
+``in practice, metamorphic relations are usually manually inferred from a white-box
+inspection of a SUT''~\cite{barr2015oracle}---a statement about where the relation
+comes from, not about what the check consumes when it runs. Both kinds can be
+evidentially entangled, and both can be constructed not to be. What the axis adds is
+that the entanglement determines a class rather than a degree, and that the class is
+computable in advance.

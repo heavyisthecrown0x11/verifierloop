@@ -1,0 +1,7 @@
+RESULT decision=accept fd=1 errno=0 load_ns=0
+STORE in[s n = 2 21. 998r3e9g6] BUG: unable to handle page fault for address: ffff888105d1c528
+[    2.000559] Oops: Oops: 0002 [#1] SMP KASAN NOPTI
+[    2.002667] RIP: 0010:bpf_prog_08e3cb6c8754a5c4+0xaf/0xca
+[    2.012079]  bpf_test_run+0x468/0xa00
+[    2.012475]  ? __pfx_bpf_test_run+0x10/0x10
+[    2.017506]  bpf_prog_test_run_skb+0xf97/0x2ef0

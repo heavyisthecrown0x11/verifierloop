@@ -1,0 +1,4 @@
+CHANNEL btf=ok new=83158 next=83159 destroy=83156 btf_bytes=6841577
+CHANNEL arm=0 insns=17 verdict=accept errno=0 reason=""
+CHANNEL arm=1 insns=30 verdict=accept errno=0 reason=""
+CHANNEL arm=2 insns=29 verdict=reject errno=13 reason="processed 190 insns (limit 1000000) max_states_per_insn 8 total_states 19 peak_states 14 mark_read 0"

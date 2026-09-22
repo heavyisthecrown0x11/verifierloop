@@ -1,0 +1,21 @@
+{
+  "__scaffolding__": "syzkaller manager config PLACEHOLDER. NOT valid until every TODO path is filled. Building syzkaller requires a Go toolchain. Copy to syzkaller.cfg and edit.",
+  "target": "linux/amd64",
+  "http": "127.0.0.1:56741",
+  "workdir": "TODO/abs/path/to/workdir",
+  "kernel_obj": "TODO/abs/path/to/bpf-next/build",
+  "image": "TODO/abs/path/to/disposable/rootfs.img",
+  "sshkey": "TODO/abs/path/to/ssh/key",
+  "syzkaller": "TODO/abs/path/to/syzkaller/checkout",
+  "procs": 4,
+  "type": "qemu",
+  "vm": {
+    "count": 4,
+    "kernel": "TODO/abs/path/to/self-built/bzImage",
+    "cpu": 2,
+    "mem": 2048,
+    "qemu_args": "-enable-kvm -cpu host"
+  },
+  "__todo_focus__": "restrict enable_syscalls to bpf() + related; collect DEFAULT-mode native output UNCHANGED (normalize later, never at source).",
+  "__todo_tcg__": "KVM-less hosts: set vm.qemu_args to '-accel tcg -cpu qemu64' (slower; manual PoC/differential only)."
+}

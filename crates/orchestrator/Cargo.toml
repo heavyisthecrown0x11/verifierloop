@@ -1,0 +1,15 @@
+[package]
+name = "orchestrator"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "verifierloop"
+path = "src/main.rs"
+
+# Declares the full intended wiring even though the scaffold only stubs it.
+[dependencies]
+metrics = { path = "../metrics" }
+contract = { path = "../contract" }
+pipeline = { path = "../pipeline" }
+vmctl = { path = "../vmctl" }

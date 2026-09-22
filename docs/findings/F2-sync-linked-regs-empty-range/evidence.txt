@@ -1,0 +1,111 @@
+F2 — raw evidence. Every line in this file was copied from a run; none was written by hand.
+Runs: 2026-09-10, review leg (SSHPORT=10122; a concurrent hunt VM was holding the default 10022).
+
+== 1. Four kernels, SAME genome, one variable ==========================================
+genome: genes=4 hi=0:15.2.0.8.41,3.1.1.1.31,15.0.2.2.32,10.0.1.7.39
+config: bzImage-{precnum,cn-a,cn-b}.config md5 f5a6ed6d3ebfb1517c35f07397a70ebf (all three BYTE-IDENTICAL)
+
+stock   dffc1150e2cc
+  base_verdict=accept base_errno=0 base_states=4 base_reason=none freq_verdict=accept freq_errno=0 freq_states=12 freq_reason=none inv_verdict=reject inv_errno=14 inv_reason=efault
+precnum 789b7c1c64b9
+  base_verdict=accept base_errno=0 base_states=4 base_reason=none freq_verdict=accept freq_errno=0 freq_states=12 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+cn-a    b93f7180f0bc
+  base_verdict=accept base_errno=0 base_states=4 base_reason=none freq_verdict=accept freq_errno=0 freq_states=12 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+cn-b    bbc631085503
+  base_verdict=accept base_errno=0 base_states=4 base_reason=none freq_verdict=accept freq_errno=0 freq_states=12 freq_reason=none inv_verdict=reject inv_errno=14 inv_reason=efault
+
+== 2. Kernel identities (from the WARNING dump in violation-producing runs) ===================
+  stock: 7.2.0-gdffc1150e2cc
+  cn-b:  7.0.0-gbbc631085503
+  precnum/cn-a: NO violation -> no WARNING -> no version stamp in the log either.
+                This is an evidence gap: see OPEN-ITEMS OI-18.
+
+== 3. The kernel's own assertion (stock, Not tainted) ================================
+[    1.948620] verifier bug: REG INVARIANTS VIOLATION (alu): range bounds violation r64={.base=0xffffffffffffffff, .size=0xffffffffffffffff} r32={.base=0xffffffff, .size=0xffffffff} var_off=(0x0, 0x6)
+[    1.950126] WARNING: kernel/bpf/verifier.c:2211 at reg_bounds_sanity_check+0x178/0xa10, CPU#0: diffharness/71
+[    1.951325] CPU: 0 UID: 0 PID: 71 Comm: diffharness Not tainted 7.2.0-gdffc1150e2cc #4 PREEMPT(lazy)
+
+== 4. Minimized program, from the kernel's own disassembly ========================
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888001cda800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+22
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (61) r7 = *(u32 *)(r0 +4)
+  9: (61) r9 = *(u32 *)(r0 +8)
+ 10: (bf) r2 = r10
+ 11: (07) r2 += -4
+ 12: (18) r1 = 0xffff888001cda400
+ 14: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 15: (15) if r0 == 0x0 goto pc+13
+ 16: (bf) r8 = r0
+ 17: (25) if r9 > 0x9 goto pc+1
+ 18: (57) r6 &= 9
+ 19: (27) r6 *= 2
+ 20: (26) if w6 > 0x3 goto pc+1
+ 21: (57) r9 &= 3
+ 22: (bf) r7 = r6
+ 23: (07) r7 += 8
+ 24: (bf) r9 = r6
+ 25: (25) if r7 > 0x10 goto pc+1
+ 26: (0f) r6 += r6
+ 27: (bf) r0 = r6
+ 28: (95) exit
+ 29: (b7) r0 = 57005
+ 30: (95) exit
+stack use/def subprog#0 (d0,cs0):
+
+== 5. The moment of emptying: R7 refined by the comparison is SOUND, R6 written after is EMPTY ====
+ 25: (25) if r7 > 0x10 goto pc+1
+
+== 6. THREE GATES: f2probe, hand-written program + control arms ======================
+   (harness/f2probe.c — a separate binary that does not touch diffharness; scripts/run-f2probe-vm.sh)
+
+-- STOCK dffc1150e2cc (upstream 5e289c5a4a52 + F1 guard) --
+F2 name=P0_alu                 insns=19 flags=0   verdict=accept errno=0   viol=1 ctx=alu
+F2 name=P0_alu                 insns=19 flags=inv verdict=reject errno=14  viol=1 ctx=alu
+F2 name=C1_no_addconst         insns=18 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C1_no_addconst         insns=18 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=C2_no_link             insns=21 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C2_no_link             insns=21 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=C3_no_umin             insns=17 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C3_no_umin             insns=17 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=M1_store_via_ptr       insns=21 flags=0   verdict=reject errno=13  viol=0 ctx=-
+F2 name=M1_store_via_ptr       insns=21 flags=inv verdict=reject errno=13  viol=0 ctx=-
+F2 name=M2_load_via_ptr        insns=21 flags=0   verdict=reject errno=13  viol=0 ctx=-
+F2 name=M2_load_via_ptr        insns=21 flags=inv verdict=reject errno=13  viol=0 ctx=-
+F2 name=M3_store_no_link       insns=23 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=M3_store_no_link       insns=23 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=M4_load_no_link        insns=23 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=M4_load_no_link        insns=23 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=N0_no_payload          insns=18 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=N0_no_payload          insns=18 flags=inv verdict=accept errno=0   viol=0 ctx=-
+
+-- TODAY'S TIP: 7.3.0-rc2-gaf0b84a9215d (bpf-next, 2026-09-08) --
+F2 name=P0_alu                 insns=19 flags=0   verdict=accept errno=0   viol=1 ctx=alu
+F2 name=P0_alu                 insns=19 flags=inv verdict=reject errno=14  viol=1 ctx=alu
+F2 name=C1_no_addconst         insns=18 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C1_no_addconst         insns=18 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=C2_no_link             insns=21 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C2_no_link             insns=21 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=C3_no_umin             insns=17 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=C3_no_umin             insns=17 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=M1_store_via_ptr       insns=21 flags=0   verdict=reject errno=13  viol=0 ctx=-
+F2 name=M1_store_via_ptr       insns=21 flags=inv verdict=reject errno=13  viol=0 ctx=-
+F2 name=M2_load_via_ptr        insns=21 flags=0   verdict=reject errno=13  viol=0 ctx=-
+F2 name=M2_load_via_ptr        insns=21 flags=inv verdict=reject errno=13  viol=0 ctx=-
+F2 name=M3_store_no_link       insns=23 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=M3_store_no_link       insns=23 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=M4_load_no_link        insns=23 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=M4_load_no_link        insns=23 flags=inv verdict=accept errno=0   viol=0 ctx=-
+F2 name=N0_no_payload          insns=18 flags=0   verdict=accept errno=0   viol=0 ctx=-
+F2 name=N0_no_payload          insns=18 flags=inv verdict=accept errno=0   viol=0 ctx=-
+
+-- M1's reason for rejection (GATE 2: the direction is CONSERVATIVE) --
+     tail=Suggestion: |   Preserve a pointer-valued register where needed, or reload and revalidate the pointer after scalar |   arithmetic, helper calls, or other operations that can invalidate it. |
+
+-- P0's moment of emptying (GATE 3: the same in the hand-written program too) --
+     tail=15: (25) if r7 > 0x10 goto pc+1       ; R6=scalar(id=2,smin=smin32=-1,smax=smax32=-2,var_off=(0x0; 0x2)) R7=scalar(id=2+8,smin=umin=smin32=umin32=12,smax=umax=smax32=umax32=16,var_off=(0x8; 0x12)) | 16: (0f) r6 += r6 | verifier bug: REG INVARIANTS VI

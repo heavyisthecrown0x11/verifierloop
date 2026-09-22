@@ -1,0 +1,48 @@
+One row per pair. \emph{Kind} is what the pair established about the oracle, which is
+the reason each was built: a pair that only confirms what was already believed buys
+nothing. \emph{Evidence} distinguishes what was measured from what was derived:
+\textsc{built}---two kernels compiled from one configuration, differing in the fix
+alone, and the oracle run on both; \textsc{quoted}---the defective state read from the
+commit message's own printed state, no build; \textsc{source}---a determination made
+by aligning source lines, no build and no run.
+
+\begin{table}[h]
+\caption{Calibration pairs. P~=~positive (the oracle fired on the defect and was
+silent on the fix); B~=~boundary (the oracle was \emph{required} to stay silent, and
+did).}
+\label{tab:pairs}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}l@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}l@{\hspace{4pt}}p{0.46\columnwidth}@{}}
+\toprule
+fix & oracle & & evidence & what the pair established \\
+\midrule
+\texttt{3844d153a41a} & $\Omega$ & P & \textsc{quoted} & the oracle was missing the property \\
+\texttt{92424801261d} & V & P & \textsc{built} & the state is never printed; another channel was needed \\
+\texttt{049c4e13714e} & $\Omega$ & P & \textsc{quoted} & property correct, the log could not be read \\
+\texttt{ae67b9fb8c4e} & $\Omega$ & P & \textsc{quoted} & no blind spot; a clean confirmation \\
+\texttt{af9e89d8dd39} & $\Omega$,V & B & \textsc{quoted} & the class lies outside this instrument \\
+\texttt{811c363645b3} & R & B & \textsc{built} & the oracle's ground truth was rewritten to agree \\
+\texttt{3cf2b61eb067} & $\Omega$ & P & \textsc{quoted} & the missing half of an earlier pair's property \\
+\texttt{3878ae04e9fc} & S & P & \textsc{built} & the store-location channel, never calibrated before \\
+\texttt{3157f7e29996} & L & P & \textsc{built} & the liveness gate's own pair \\
+\texttt{871ef8d50e7c} & L & B & \textsc{built} & silence required when the kernel over-approximates \\
+\texttt{2f2ec8e7730e} & B & P & \textsc{built} & identity matching; the model's first positive \\
+\texttt{bc308be380c1} & S & B & \textsc{built} & verifier accepts, kernel faults; observation is fatal \\
+\texttt{fd675184fc7a} & B & P & \textsc{built} & min/max containment---a second, older arm \\
+\texttt{cd5b460ed1ec} & B & P & \textsc{built} & arc containment; the input, not the oracle, was the blocker \\
+\texttt{f54c7898ed1c} & B & B & \textsc{source} & the precision short-circuit (Section~5.4) \\
+\texttt{1ffc85d9298e} & B & P & \textsc{built} & the visible held-out case. Silent on the first run: the oracle selects its era-specific comparison by print format, the 2023 format is shared with a 2021 era whose comparison legitimately had no identity check, and no arm existed for the year between---a routing gap, not a predicate one. Fires with the predicted arm once the era is stated (\S4.1) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Sixteen pairs are listed. Ten were built; five were established from the
+state the commit message itself prints; one from source alone. Section~5.2's summary
+should be read against Table~\ref{tab:pairs}'s evidence column: the design calls for
+two builds per pair, and six of the sixteen did not need them because the defective
+state was already on the
+record or the alignment was decidable without running anything. Reporting that is
+cheaper than pretending otherwise, and it is also the point of Section~3.5---the
+procedure aims calibration rather than replacing it, and the cheapest calibration is
+the one a commit message has already done.

@@ -1,0 +1,102 @@
+===PROG spill#811c363645b3#neg type=socket_filter ===
+RESULT decision=accept fd=1 errno=0 load_ns=0
+EXPECT intended_retval=0
+RUNTIME input=0x00000000 retval=0x00000000
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  0: (bf) r2 = r10	r2: _ -> fp0+0
+  0: (bf) r2 = r10	r2: _ -> fp0+0
+subprog#0:
+  0: (bf) r2 = r10
+  1: (7a) *(u64 *)(r2 -40) = -44
+  2: (79) r0 = *(u64 *)(r2 -40) // r2=fp0+0
+  3: (c5) if r0 s< 0xa goto pc+2
+  4: (b7) r0 = 1
+  5: (95) exit
+  6: (b7) r0 = 0
+  7: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (bf) r2 = r10
+  1: (7a) *(u64 *)(r2 -40) = -44       ; def: fp0-40
+  2: (79) r0 = *(u64 *)(r2 -40)        ; use: fp0-40
+  3: (c5) if r0 s< 0xa goto pc+2
+  4: (b7) r0 = 1
+  5: (95) exit
+  6: (b7) r0 = 0
+  7: (95) exit
+Live regs before insn:
+      0: .......... (bf) r2 = r10
+      1: ..2....... (7a) *(u64 *)(r2 -40) = -44
+      2: ..2....... (79) r0 = *(u64 *)(r2 -40)
+      3: 0......... (c5) if r0 s< 0xa goto pc+2
+      4: .......... (b7) r0 = 1
+      5: 0......... (95) exit
+      6: .......... (b7) r0 = 0
+      7: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+1: (7a) *(u64 *)(r2 -40) = -44        ; R2=fp0 fp-40=-44
+2: (79) r0 = *(u64 *)(r2 -40)         ; R0=-44
+3: (c5) if r0 s< 0xa goto pc+2
+mark_precise: frame0: last_idx 3 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r0 stack= before 2: (79) r0 = *(u64 *)(r2 -40)
+mark_precise: frame0: regs= stack=-40 before 1: (7a) *(u64 *)(r2 -40) = -44
+3: R0=-44
+6: (b7) r0 = 0                        ; R0=0
+7: (95) exit
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG spill#811c363645b3#pos type=socket_filter ===
+RESULT decision=accept fd=1 errno=0 load_ns=0
+EXPECT intended_retval=1
+RUNTIME input=0x00000000 retval=0x00000001
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  0: (bf) r2 = r10	r2: _ -> fp0+0
+  0: (bf) r2 = r10	r2: _ -> fp0+0
+subprog#0:
+  0: (bf) r2 = r10
+  1: (7a) *(u64 *)(r2 -40) = 44
+  2: (79) r0 = *(u64 *)(r2 -40) // r2=fp0+0
+  3: (c5) if r0 s< 0xa goto pc+2
+  4: (b7) r0 = 1
+  5: (95) exit
+  6: (b7) r0 = 0
+  7: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (bf) r2 = r10
+  1: (7a) *(u64 *)(r2 -40) = 44        ; def: fp0-40
+  2: (79) r0 = *(u64 *)(r2 -40)        ; use: fp0-40
+  3: (c5) if r0 s< 0xa goto pc+2
+  4: (b7) r0 = 1
+  5: (95) exit
+  6: (b7) r0 = 0
+  7: (95) exit
+Live regs before insn:
+      0: .......... (bf) r2 = r10
+      1: ..2....... (7a) *(u64 *)(r2 -40) = 44
+      2: ..2....... (79) r0 = *(u64 *)(r2 -40)
+      3: 0......... (c5) if r0 s< 0xa goto pc+2
+      4: .......... (b7) r0 = 1
+      5: 0......... (95) exit
+      6: .......... (b7) r0 = 0
+      7: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+1: (7a) *(u64 *)(r2 -40) = 44         ; R2=fp0 fp-40=44
+2: (79) r0 = *(u64 *)(r2 -40)         ; R0=44
+3: (c5) if r0 s< 0xa goto pc+2
+mark_precise: frame0: last_idx 3 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r0 stack= before 2: (79) r0 = *(u64 *)(r2 -40)
+mark_precise: frame0: regs= stack=-40 before 1: (7a) *(u64 *)(r2 -40) = 44
+3: R0=44
+4: (b7) r0 = 1                        ; R0=1
+5: (95) exit
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---

@@ -1,0 +1,4 @@
+SUBSUME pairs=1 modelled=1 agree=1 disagree=0 unmodelled=0
+SUBSUME nontrivial_pairs=0 scalar_comparisons=0 shortcircuited_regs=0 other_type_regs=0 ptr_cmps=0 id_checks=0
+SUBSUME denominator pairs=1 trivial=1 nontrivial=0 breaks=0 unmodelled=0 sums=ok
+SUBSUME unimplemented_arms ptr_id_pairs=0 dead_reg_cmps=0 live_reg_cmps=0 pairs_without_liveness_claim=1 pairs_without_tracked_reg=0 live_gated_regs=1 refsafe_idmap_seed=not-observable-from-capture

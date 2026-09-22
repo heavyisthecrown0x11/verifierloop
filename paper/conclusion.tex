@@ -1,0 +1,23 @@
+Independence is what makes a differential oracle worth believing, and it is graded
+along the wrong axis. Whether the reference was written independently bounds how
+much logic it can inherit; what the reference reads bounds which defects it can
+inherit, and that is the bound that decides what the oracle will never see. The two
+are orthogonal, and only the first has a name.
+
+We named the second, gave a procedure that turns it into a number before the oracle
+is built, and applied it once: an oracle built with every care available was
+measured, from source alone, to be structurally blind to 42\% of a documented defect
+population and able to target 2\% of it---figures conditional on a frame we then
+measured to be enriched for the oracle's own path, reproduced by a blind second rater,
+and obtainable at the cost of opening fifty-seven commits. Reading gave the bound; explaining why one of its boundaries holds took a
+build, and the paper does not claim the first act does the second's work.
+
+The procedure's limit is also its finding. It cannot be validated beyond one system
+today, because no defect population anywhere is organized by whether an oracle could
+have observed each defect. Taxonomies record what a defect did, not what could have
+caught it. The study that would close this is specific rather than gestural: take a
+defect population drawn independently of any tool---one release window's
+wrong-code defects in a compiler, say---and partition it by whether an oracle of a
+given input provenance could have observed each. That measures the blind side, which
+a tool's own findings can never do, and it is the first application of the same
+procedure to a system its authors did not build.

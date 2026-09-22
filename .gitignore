@@ -1,0 +1,38 @@
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Per-period harvest artifacts (runtime output; keep the dir, ignore contents)
+/data/periods/
+!/data/.gitkeep
+
+# Kernel / VM build artifacts (large; never commit)
+*.img
+*.qcow2
+bzImage
+vmlinux
+/bpf-next/
+
+# Local secrets / ssh keys used by the fuzzing VMs
+*.pem
+id_rsa*
+
+# real kernel/VM lab artifacts (heavy)
+.lab/
+
+# Compiled guest-side harness (build artifact; reproducible from source)
+/harness/diffharness
+/harness/f2probe
+harness/*.o
+
+# LaTeX build output (regenerated from paper/ source)
+/paper/build/

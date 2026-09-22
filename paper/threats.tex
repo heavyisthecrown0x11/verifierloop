@@ -1,0 +1,63 @@
+Section~4 asked how a procedure can be evaluated at all. This section asks what
+could make the specific claims of Section~5 wrong, and what would settle each.
+
+\paragraph{The population's frame is biased, and the direction is now measured.}
+Section~3.2 states two requirements on the population. The first---independence from
+any oracle's findings---is satisfied. The second is not: the fifty-seven fixes were
+selected because their messages quote internal state, which is what makes them
+readable. That property may correlate with how a defect was found and reported, so
+the frame is not a random sample of the component's defect history.
+
+The held-out work of Section~4.1 measures the bias, because its frame was drawn from
+the complement of that filter---fixes in the same component and window whose messages
+do \emph{not} quote internal state. In the filtered frame, 25 of 57 defects lie on
+the state-equivalence path; in the unfiltered complement, 3 of 20
+($p = 0.030$, Fisher's exact, two-sided). Selecting on messages that quote verifier
+state over-represents state-equivalence-path defects roughly threefold.
+
+This does not overturn the figures in Section~5.3; it corrects what they are
+fractions of. It also exposes an asymmetry between the two requirements of
+Section~3.2 that the text there does not anticipate. The first---independence from
+findings---was kept, and it protects the bound's logic. The second---a frame not
+correlated with visibility---was broken, and it was broken in the direction that
+inflates exactly the quantity reported: a frame selected on printed verifier state is
+a frame selected on the oracle's own inputs. The two requirements are separable in
+principle; in this application the one that failed was the one whose failure flatters
+the number. The 42\% blind and 2\% targeted are conditional on a frame enriched
+for the very path the oracle operates on, and on an unfiltered frame both shares
+fall. What the procedure delivers unconditionally is the classification of a given
+population, not a population-independent constant---which is Section~3.4's point,
+arriving here as a measurement rather than a caution.
+
+\paragraph{The partition was produced with assistance, and its reproducibility is
+measured on the held-out cases only.}
+Classification was carried out with automated help, and only the decision-changing
+case of the flagship partition was re-derived by hand. Section~4.5 now supplies
+inter-rater measurements on both the held-out cases and the rebuilt flagship
+partition; the original forty could not be re-rated because its list was not
+retained (Section~4.2). Its result cuts both
+ways for this threat. Agreement was substantial ($\kappa = 0.71$), so the partition is
+not an idiosyncrasy of one reader; but the second rater used \emph{Undecided} where the
+first never did, and the disagreements clustered on a seam in the step's own wording.
+A human inter-rater study over the full population remains the experiment that would
+settle it.
+
+\paragraph{The contrast is two oracles in one system.}
+Confounds are held constant rather than randomized: same corpus, same discipline,
+same protocol, same author. That is the strength of the design and also its limit.
+Two oracles differing in one respect show that the respect matters here; they do not
+establish an effect size, and no claim of one is made.
+
+\paragraph{Calibration establishes a channel, not a class.}
+Each pair certifies that a specific oracle either fires or cannot fire on one
+specific defect. Generalizing from a pair to a class is an inference the pair does
+not license on its own, and in this work the generalization is carried by the
+partition rather than by the pairs. Where a pair and the partition disagree the pair
+wins, since it is the direct measurement.
+
+\paragraph{The subject is one analysis in one system.}
+The eBPF verifier is an abstract interpreter whose defects are unusually well
+documented, which is why it can serve as a case study at all. That same property
+makes it unrepresentative: most systems do not publish the internal state their
+defects corrupt, and applying the procedure elsewhere may be harder for reasons this
+case study cannot expose.

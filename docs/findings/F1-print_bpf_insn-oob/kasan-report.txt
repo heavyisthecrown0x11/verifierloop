@@ -1,0 +1,162 @@
+syz.0.5226 (15003) used greatest stack depth: 23544 bytes left
+syz.5.5238 (15020) used greatest stack depth: 22816 bytes left
+syz.5.5238 (15019) used greatest stack depth: 22488 bytes left
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in kernel/bpf/disasm.c:306:21
+index 3 is out of range for type 'char *[3]'
+CPU: 1 UID: 0 PID: 17148 Comm: syz.3.6211 Not tainted 7.2.0-g5e289c5a4a52 #1 PREEMPT(lazy) 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack home/tylersec/verifierloop/.lab/bpf-next/lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xab/0xe0 home/tylersec/verifierloop/.lab/bpf-next/lib/dump_stack.c:120
+ ubsan_epilogue home/tylersec/verifierloop/.lab/bpf-next/lib/ubsan.c:233 [inline]
+ __ubsan_handle_out_of_bounds home/tylersec/verifierloop/.lab/bpf-next/lib/ubsan.c:455 [inline]
+ __ubsan_handle_out_of_bounds+0xd4/0x130 home/tylersec/verifierloop/.lab/bpf-next/lib/ubsan.c:442
+ print_bpf_insn+0x240e/0x2970 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/disasm.c:306
+ format_disasm_line home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:633 [inline]
+ diag_print_insn_context+0x3c2/0x950 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:783
+ bpf_diag_source+0x610/0x14a0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:896
+ bpf_diag_program_structure+0x1f8/0x280 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:1215
+ check_subprogs home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/verifier.c:3093 [inline]
+ bpf_check+0x556a/0xb8b0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/verifier.c:21236
+ bpf_prog_load+0x1383/0x28b0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:3133
+ __sys_bpf+0x24f6/0x6360 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6367
+ __do_sys_bpf home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6486 [inline]
+ __se_sys_bpf home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6483 [inline]
+ __x64_sys_bpf+0xcb/0x140 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6483
+ do_syscall_x64 home/tylersec/verifierloop/.lab/bpf-next/arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0xec/0x4e0 home/tylersec/verifierloop/.lab/bpf-next/arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0427b92afd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f04265d6f98 EFLAGS: 00000246 ORIG_RAX: 0000000000000141
+RAX: ffffffffffffffda RBX: 00007f0427e25fa0 RCX: 00007f0427b92afd
+RDX: 0000000000000094 RSI: 0000200000002300 RDI: 0000000000000005
+RBP: 00007f0427c3022c R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f0427e26038 R14: 00007f0427e25fa0 R15: 00007f04265b7000
+ </TASK>
+---[ end trace ]---
+==================================================================
+BUG: KASAN: global-out-of-bounds in print_bpf_insn+0x23f0/0x2970 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/disasm.c:302
+Read of size 8 at addr ffffffffa3d12598 by task syz.3.6211/17148
+
+CPU: 1 UID: 0 PID: 17148 Comm: syz.3.6211 Not tainted 7.2.0-g5e289c5a4a52 #1 PREEMPT(lazy) 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack home/tylersec/verifierloop/.lab/bpf-next/lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xab/0xe0 home/tylersec/verifierloop/.lab/bpf-next/lib/dump_stack.c:120
+ print_address_description home/tylersec/verifierloop/.lab/bpf-next/mm/kasan/report.c:378 [inline]
+ print_report+0xcb/0x5e0 home/tylersec/verifierloop/.lab/bpf-next/mm/kasan/report.c:482
+ kasan_report+0xb8/0xf0 home/tylersec/verifierloop/.lab/bpf-next/mm/kasan/report.c:595
+ print_bpf_insn+0x23f0/0x2970 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/disasm.c:302
+ format_disasm_line home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:633 [inline]
+ diag_print_insn_context+0x3c2/0x950 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:783
+ bpf_diag_source+0x610/0x14a0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:896
+ bpf_diag_program_structure+0x1f8/0x280 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/diagnostics.c:1215
+ check_subprogs home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/verifier.c:3093 [inline]
+ bpf_check+0x556a/0xb8b0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/verifier.c:21236
+ bpf_prog_load+0x1383/0x28b0 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:3133
+ __sys_bpf+0x24f6/0x6360 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6367
+ __do_sys_bpf home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6486 [inline]
+ __se_sys_bpf home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6483 [inline]
+ __x64_sys_bpf+0xcb/0x140 home/tylersec/verifierloop/.lab/bpf-next/kernel/bpf/syscall.c:6483
+ do_syscall_x64 home/tylersec/verifierloop/.lab/bpf-next/arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0xec/0x4e0 home/tylersec/verifierloop/.lab/bpf-next/arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0427b92afd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f04265d6f98 EFLAGS: 00000246 ORIG_RAX: 0000000000000141
+RAX: ffffffffffffffda RBX: 00007f0427e25fa0 RCX: 00007f0427b92afd
+RDX: 0000000000000094 RSI: 0000200000002300 RDI: 0000000000000005
+RBP: 00007f0427c3022c R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f0427e26038 R14: 00007f0427e25fa0 R15: 00007f04265b7000
+ </TASK>
+
+The buggy address belongs to the variable:
+ bpf_ldsx_string+0x18/0x140
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x58b12
+flags: 0x100000000002000(reserved|node=0|zone=1)
+raw: 0100000000002000 ffffea000162c488 ffffea000162c488 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffffffffa3d12480: 00 00 00 00 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+ ffffffffa3d12500: 04 f9 f9 f9 f9 f9 f9 f9 03 f9 f9 f9 f9 f9 f9 f9
+>ffffffffa3d12580: 00 00 00 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+                            ^
+ ffffffffa3d12600: 04 f9 f9 f9 f9 f9 f9 f9 03 f9 f9 f9 f9 f9 f9 f9
+ ffffffffa3d12680: 04 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 f9 f9 f9 f9
+==================================================================
+syz-executor (254) used greatest stack depth: 22320 bytes left
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f0427e26038 R14: 00007f0427e25fa0 R15: 00007f04265b7000
+ </TASK>
+---[ end trace ]---
+==================================================================
+BUG: KASAN: global-out-of-bounds in print_bpf_insn+0x23f0/0x2970
+Read of size 8 at addr ffffffffa3d12598 by task syz.3.6211/17148
+
+CPU: 1 UID: 0 PID: 17148 Comm: syz.3.6211 Not tainted 7.2.0-g5e289c5a4a52 #1 PREEMPT(lazy) 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xab/0xe0
+ print_report+0xcb/0x5e0
+ kasan_report+0xb8/0xf0
+ print_bpf_insn+0x23f0/0x2970
+ diag_print_insn_context+0x3c2/0x950
+ bpf_diag_source+0x610/0x14a0
+ bpf_diag_program_structure+0x1f8/0x280
+ bpf_check+0x556a/0xb8b0
+ bpf_prog_load+0x1383/0x28b0
+ __sys_bpf+0x24f6/0x6360
+ __x64_sys_bpf+0xcb/0x140
+ do_syscall_64+0xec/0x4e0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f0427b92afd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f04265d6f98 EFLAGS: 00000246 ORIG_RAX: 0000000000000141
+RAX: ffffffffffffffda RBX: 00007f0427e25fa0 RCX: 00007f0427b92afd
+RDX: 0000000000000094 RSI: 0000200000002300 RDI: 0000000000000005
+RBP: 00007f0427c3022c R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f0427e26038 R14: 00007f0427e25fa0 R15: 00007f04265b7000
+ </TASK>
+
+The buggy address belongs to the variable:
+ bpf_ldsx_string+0x18/0x140
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x58b12
+flags: 0x100000000002000(reserved|node=0|zone=1)
+raw: 0100000000002000 ffffea000162c488 ffffea000162c488 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffffffffa3d12480: 00 00 00 00 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+ ffffffffa3d12500: 04 f9 f9 f9 f9 f9 f9 f9 03 f9 f9 f9 f9 f9 f9 f9
+>ffffffffa3d12580: 00 00 00 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+                            ^
+ ffffffffa3d12600: 04 f9 f9 f9 f9 f9 f9 f9 03 f9 f9 f9 f9 f9 f9 f9
+ ffffffffa3d12680: 04 f9 f9 f9 f9 f9 f9 f9 00 00 00 00 f9 f9 f9 f9
+==================================================================
+syz-executor (254) used greatest stack depth: 22320 bytes left
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+SYZFAIL: failed to recv rpc
+fd=3 want=4 recv=0 n=0 (errno 9: Bad file descriptor)
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+

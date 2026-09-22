@@ -1,0 +1,5 @@
+# Toolchain for the ORCHESTRATION crates only. The self-built bpf-next kernel
+# uses its own build toolchain (see justfile build-kernel), not this one.
+[toolchain]
+channel = "stable"
+# TODO(toolchain): pin an exact version if reproducibility becomes necessary.

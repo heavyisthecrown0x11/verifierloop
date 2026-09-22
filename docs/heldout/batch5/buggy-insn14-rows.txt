@@ -1,0 +1,11 @@
+PRUNEPAIR insn=14 exact=0 side=old fr=0 r6 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=3 fno=0 prec=1 live=1
+PRUNEPAIR insn=14 exact=0 side=old fr=0 r7 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=3 fno=0 prec=1 live=1
+PRUNEPAIR insn=14 exact=0 side=old fr=0 r9 type=4 delta=0 var=0/0 u64=0..0 s64=0..0 u32=0..0 s32=0..0 id=0 fno=0 prec=0 live=1
+PRUNEPAIR insn=14 exact=0 side=old fr=0 r10 type=6 delta=0 var=0/0 u64=0..0 s64=0..0 u32=0..0 s32=0..0 id=0 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r0 type=4 delta=0 var=0/0 u64=0..0 s64=0..0 u32=0..0 s32=0..0 id=0 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r1 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=2 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r2 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=3 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r6 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=2 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r7 type=1 delta=0 var=0/ffffffffffffffff u64=0..ffffffffffffffff s64=8000000000000000..7fffffffffffffff u32=0..ffffffff s32=80000000..7fffffff id=3 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r9 type=4 delta=0 var=0/0 u64=0..0 s64=0..0 u32=0..0 s32=0..0 id=0 fno=0 prec=0 live=0
+PRUNEPAIR insn=14 exact=0 side=cur fr=0 r10 type=6 delta=0 var=0/0 u64=0..0 s64=0..0 u32=0..0 s32=0..0 id=0 fno=0 prec=0 live=0

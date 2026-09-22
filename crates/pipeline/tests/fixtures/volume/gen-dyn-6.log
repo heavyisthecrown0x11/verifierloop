@@ -1,0 +1,1013 @@
+CHANNEL btf=ok slice_rdwr=82837
+===PROG gendyn#o0.z8.k0#000 type=sched_cls ===
+RESULT decision=accept fd=4 errno=0 load_ns=0
+STORE insn=22 reg=0 off=0 size=1
+DYN dynptr_size=32 slice_off=0 slice_szk=8 store_k=0 runtime_slice_ok=1
+PRUNE fall=o0 taken=z8 fall_safe=1 taken_safe=1 stack=0 base_verdict=accept base_errno=0 base_states=2 base_reason=none freq_verdict=accept freq_errno=0 freq_states=4 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+RUNTIME input=0x00000000 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=0 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=0 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 0
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 8
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +0) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 0                       ; R2=0
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 8                       ; R4=8
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+21: R0=mem_or_null(id=2,parent_id=1,sz=8) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=8)
+22: (72) *(u8 *)(r0 +0) = -1          ; R0=mem(id=2,parent_id=1,sz=8)
+23: (b7) r0 = 1                       ; R0=1
+24: (95) exit
+
+from 21 to 25: R10=fp0 fp-32=dynptr_local(id=1)
+25: R10=fp0 fp-32=dynptr_local(id=1)
+25: (b7) r0 = 0                       ; R0=0
+26: (95) exit
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gendyn#o0.z8.k7#001 type=sched_cls ===
+RESULT decision=accept fd=4 errno=0 load_ns=0
+STORE insn=22 reg=0 off=7 size=1
+DYN dynptr_size=32 slice_off=0 slice_szk=8 store_k=7 runtime_slice_ok=1
+PRUNE fall=o0 taken=z8 fall_safe=1 taken_safe=1 stack=0 base_verdict=accept base_errno=0 base_states=2 base_reason=none freq_verdict=accept freq_errno=0 freq_states=4 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+RUNTIME input=0x00000000 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=7 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=7 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +7) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +7) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 0
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 8
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +7) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 0                       ; R2=0
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 8                       ; R4=8
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+21: R0=mem_or_null(id=2,parent_id=1,sz=8) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=8)
+22: (72) *(u8 *)(r0 +7) = -1          ; R0=mem(id=2,parent_id=1,sz=8)
+23: (b7) r0 = 1                       ; R0=1
+24: (95) exit
+
+from 21 to 25: R10=fp0 fp-32=dynptr_local(id=1)
+25: R10=fp0 fp-32=dynptr_local(id=1)
+25: (b7) r0 = 0                       ; R0=0
+26: (95) exit
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gendyn#o0.z8.k8#002 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=22 reg=0 off=8 size=1
+DYN dynptr_size=32 slice_off=0 slice_szk=8 store_k=8 runtime_slice_ok=1
+PRUNE fall=o0 taken=z8 fall_safe=0 taken_safe=1 stack=0 base_verdict=reject base_errno=13 base_states=1 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=3 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +8) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +8) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 0
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 8
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +8) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 0                       ; R2=0
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 8                       ; R4=8
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+21: R0=mem_or_null(id=2,parent_id=1,sz=8) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=8)
+22: (72) *(u8 *)(r0 +8) = -1
+invalid access to memory, mem_size=8 off=8 size=1
+R0 min value is outside of the allowed memory range
+
+Verification failed: Memory Safety: Access outside bounds
+
+Reason:
+  The verifier cannot prove offset + access_size <= object_size. Here, the minimal bound for a
+  memory access is 8 and is outside of the object of size 8. R0 is mem; offset is constant 8;
+  access_size is 1; object_size is 8.
+
+At:
+  insn 22
+       | ^-- error: access may be outside object bounds
+  Instruction context:
+      20 | (85) call bpf_dynptr_slice_rdwr#82837
+      21 | (15) if r0 == 0x0 goto pc+3
+  >>> 22 | (72) *(u8 *)(r0 +8) = -1
+      23 | (b7) r0 = 1
+      24 | (95) exit
+
+Causal path:
+  insn 20
+       | ^-- update: R0 changed from uninitialized value to mem_or_null at offset 0
+  Instruction context:
+      18 | (07) r3 += -128
+      19 | (b7) r4 = 8
+  >>> 20 | (85) call bpf_dynptr_slice_rdwr#82837
+      21 | (15) if r0 == 0x0 goto pc+3
+      22 | (72) *(u8 *)(r0 +8) = -1
+
+  insn 21
+       | ^-- branch: took the false branch of this conditional, goto not followed
+  Instruction context:
+      19 | (b7) r4 = 8
+      20 | (85) call bpf_dynptr_slice_rdwr#82837
+  >>> 21 | (15) if r0 == 0x0 goto pc+3
+      22 | (72) *(u8 *)(r0 +8) = -1
+      23 | (b7) r0 = 1
+
+Suggestion:
+  Add or adjust a bounds check that proves offset + access_size stays within the object.
+
+processed 22 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+===PROG gendyn#o24.z8.k7#003 type=sched_cls ===
+RESULT decision=accept fd=4 errno=0 load_ns=0
+STORE insn=22 reg=0 off=31 size=1
+DYN dynptr_size=32 slice_off=24 slice_szk=8 store_k=7 runtime_slice_ok=1
+PRUNE fall=o24 taken=z8 fall_safe=1 taken_safe=1 stack=0 base_verdict=accept base_errno=0 base_states=2 base_reason=none freq_verdict=accept freq_errno=0 freq_states=4 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+RUNTIME input=0x00000000 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=31 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=31 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 24
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +7) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 24
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +7) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 24
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 8
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +7) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 24                      ; R2=24
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 8                       ; R4=8
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+21: R0=mem_or_null(id=2,parent_id=1,sz=8) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=8)
+22: (72) *(u8 *)(r0 +7) = -1          ; R0=mem(id=2,parent_id=1,sz=8)
+23: (b7) r0 = 1                       ; R0=1
+24: (95) exit
+
+from 21 to 25: R10=fp0 fp-32=dynptr_local(id=1)
+25: R10=fp0 fp-32=dynptr_local(id=1)
+25: (b7) r0 = 0                       ; R0=0
+26: (95) exit
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gendyn#o28.z8.k0#004 type=sched_cls ===
+RESULT decision=accept fd=4 errno=0 load_ns=0
+STORE insn=22 reg=0 off=28 size=1
+DYN dynptr_size=32 slice_off=28 slice_szk=8 store_k=0 runtime_slice_ok=0
+PRUNE fall=o28 taken=z8 fall_safe=1 taken_safe=0 stack=0 base_verdict=accept base_errno=0 base_states=2 base_reason=none freq_verdict=accept freq_errno=0 freq_states=4 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+RUNTIME input=0x00000000 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000001 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000002 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000003 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000004 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000005 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000006 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000007 store_off=none store_len=0 store_size=1 executed=0
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 28
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 28
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 8
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 28
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 8
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +0) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 28                      ; R2=28
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 8                       ; R4=8
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 8
+21: R0=mem_or_null(id=2,parent_id=1,sz=8) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=8)
+22: (72) *(u8 *)(r0 +0) = -1          ; R0=mem(id=2,parent_id=1,sz=8)
+23: (b7) r0 = 1                       ; R0=1
+24: (95) exit
+
+from 21 to 25: R10=fp0 fp-32=dynptr_local(id=1)
+25: R10=fp0 fp-32=dynptr_local(id=1)
+25: (b7) r0 = 0                       ; R0=0
+26: (95) exit
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gendyn#o0.z64.k0#005 type=sched_cls ===
+RESULT decision=accept fd=4 errno=0 load_ns=0
+STORE insn=22 reg=0 off=0 size=1
+DYN dynptr_size=32 slice_off=0 slice_szk=64 store_k=0 runtime_slice_ok=0
+PRUNE fall=o0 taken=z64 fall_safe=1 taken_safe=0 stack=0 base_verdict=accept base_errno=0 base_states=2 base_reason=none freq_verdict=accept freq_errno=0 freq_states=4 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+RUNTIME input=0x00000000 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000001 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000002 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000003 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000004 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000005 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000006 store_off=none store_len=0 store_size=1 executed=0
+RUNTIME input=0x00000007 store_off=none store_len=0 store_size=1 executed=0
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r4 = r10	r4: _ -> fp0+0
+ 12: (07) r4 += -32	r4: fp0+0 -> fp0-32
+ 13: (85) call bpf_dynptr_from_mem#197	r4: fp0-32 -> _
+ 14: (bf) r1 = r10	r1: _ -> fp0+0
+ 15: (07) r1 += -32	r1: fp0+0 -> fp0-32
+ 17: (bf) r3 = r10	r3: _ -> fp0+0
+ 18: (07) r3 += -128	r3: fp0+0 -> fp0-128
+ 20: (85) call bpf_dynptr_slice_rdwr#82837	r1: fp0-32 -> _	r3: fp0-128 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197 // r4=fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 64
+ 20: (85) call bpf_dynptr_slice_rdwr#82837 // r1=fp0-32 r3=fp0-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff8880059bdc00
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+18
+  7: (bf) r6 = r0
+  8: (bf) r1 = r6
+  9: (b7) r2 = 32
+ 10: (b7) r3 = 0
+ 11: (bf) r4 = r10
+ 12: (07) r4 += -32
+ 13: (85) call bpf_dynptr_from_mem#197         ; def: fp0-24 fp0-32
+ 14: (bf) r1 = r10
+ 15: (07) r1 += -32
+ 16: (b7) r2 = 0
+ 17: (bf) r3 = r10
+ 18: (07) r3 += -128
+ 19: (b7) r4 = 64
+ 20: (85) call bpf_dynptr_slice_rdwr#82837     ; use: fp0-24 fp0-32 fp0-72..-128
+ 21: (15) if r0 == 0x0 goto pc+3
+ 22: (72) *(u8 *)(r0 +0) = -1
+ 23: (b7) r0 = 1
+ 24: (95) exit
+ 25: (b7) r0 = 0
+ 26: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff8880059bdc00
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+18
+      7: 0......... (bf) r6 = r0
+      8: ......6... (bf) r1 = r6
+      9: .1........ (b7) r2 = 32
+     10: .12....... (b7) r3 = 0
+     11: .123...... (bf) r4 = r10
+     12: .1234..... (07) r4 += -32
+     13: .1234..... (85) call bpf_dynptr_from_mem#197
+     14: .......... (bf) r1 = r10
+     15: .1........ (07) r1 += -32
+     16: .1........ (b7) r2 = 0
+     17: .12....... (bf) r3 = r10
+     18: .123...... (07) r3 += -128
+     19: .123...... (b7) r4 = 64
+     20: .1234..... (85) call bpf_dynptr_slice_rdwr#82837
+     21: 0......... (15) if r0 == 0x0 goto pc+3
+     22: 0......... (72) *(u8 *)(r0 +0) = -1
+     23: .......... (b7) r0 = 1
+     24: 0......... (95) exit
+     25: .......... (b7) r0 = 0
+     26: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff8880059bdc00       ; R1=map_ptr(ks=4,vs=64)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=64)
+6: (15) if r0 == 0x0 goto pc+18       ; R0=map_value(ks=4,vs=64)
+7: (bf) r6 = r0                       ; R0=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+8: (bf) r1 = r6                       ; R1=map_value(ks=4,vs=64) R6=map_value(ks=4,vs=64)
+9: (b7) r2 = 32                       ; R2=32
+10: (b7) r3 = 0                       ; R3=0
+11: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+12: (07) r4 += -32                    ; R4=[    2.303639] diffharness (71) used greatest stack depth: 25712 bytes left
+fp-32
+13: (85) call bpf_dynptr_from_mem#197
+mark_precise: frame0: last_idx 13 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 12: (07) r4 += -32
+mark_precise: frame0: regs=r2 stack= before 11: (bf) r4 = r10
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 9: (b7) r2 = 32
+14: fp-32=dynptr_local(id=1)
+14: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+15: (07) r1 += -32                    ; R1=fp-32
+16: (b7) r2 = 0                       ; R2=0
+17: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+18: (07) r3 += -128                   ; R3=fp-128
+19: (b7) r4 = 64                      ; R4=64
+20: (85) call bpf_dynptr_slice_rdwr#82837
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 64
+mark_precise: frame0: last_idx 20 first_idx 14 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 19: (b7) r4 = 64
+21: R0=mem_or_null(id=2,parent_id=1,sz=64) fp-32=dynptr_local(id=1)
+21: (15) if r0 == 0x0 goto pc+3       ; R0=mem(id=2,parent_id=1,sz=64)
+22: (72) *(u8 *)(r0 +0) = -1          ; R0=mem(id=2,parent_id=1,sz=64)
+23: (b7) r0 = 1                       ; R0=1
+24: (95) exit
+
+from 21 to 25: R10=fp0 fp-32=dynptr_local(id=1)
+25: R10=fp0 fp-32=dynptr_local(id=1)
+25: (b7) r0 = 0                       ; R0=0
+26: (95) exit
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---

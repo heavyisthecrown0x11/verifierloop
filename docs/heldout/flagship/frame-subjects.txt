@@ -1,0 +1,57 @@
+fd4cfa8c8f9a  2026-07-14 bpf: Reject negative const offsets for buffer pointers
+2aaf67f0516f  2026-07-09 bpf: Reject rdonly/rdwr_buf_size kfunc arguments that exceed u32 max
+37363191cbe8  2026-06-06 bpf: Fold reg->var_off into PTR_TO_FLOW_KEYS bounds check
+179ee84a8911  2026-04-01 bpf: Fix incorrect pruning due to atomic fetch precision tracking
+efc11a667878  2026-02-27 bpf: Improve bounds when tnum has a single possible value
+e2d2115e56c4  2025-05-23 bpf: Do not include stack ptr register in precision backtracking book
+c03bb2fa327e  2025-03-22 bpf: Fix out-of-bounds read in check_atomic_load/store()
+b0e66977dc07  2024-12-03 bpf: Fix narrow scalar spill onto 64-bit spilled scalar slots
+d0b98f6a17a5  2024-10-29 bpf: disallow 40-bytes extra stack for bpf_fastcall patterns
+aa30eb3260b2  2024-10-29 bpf: Force checkpoint when jmp history is too long
+8ea607330a39  2024-10-21 bpf: Fix overloading of MEM_UNINIT's meaning
+763aa759d3b2  2024-07-19 bpf: Fix compare error in function retval_range_within
+4bf79f9be434  2024-07-18 bpf: Track equal scalars history on per-instruction level
+44b7f7151dfc  2024-06-15 bpf: Add missed var_off setting in coerce_subreg_to_size_sx()
+380d5f89a481  2024-06-15 bpf: Add missed var_off setting in set_sext32_default_val()
+22c7fa171a02  2024-01-15 bpf: Reject variable offset alu on PTR_TO_FLOW_KEYS
+6b4a64bafd10  2023-12-07 bpf: Fix accesses to uninit stack slots
+829955981c55  2023-10-09 bpf: Fix verifier log for async callback return values
+d84b1a6708ee  2023-05-15 bpf: fix calculation of subseq_idx during precision backtracking
+71b547f56124  2023-04-11 bpf: Fix incorrect verifier pruning due to missing register precision
+7be14c1c9030  2023-03-22 bpf: Fix __reg_bound_offset 64->32 var_off subreg propagation
+79168a669d81  2023-01-21 bpf: Fix missing var_off check for ARG_PTR_TO_DYNPTR
+8374bfd5a3c9  2022-12-22 bpf: fix nullness propagation for reg to reg comparisons
+f5e477a861e4  2022-11-04 bpf: Fix slot type check in check_stack_write_var_off
+a657182a5c51  2022-08-25 bpf: Don't use tnum_range on array range checking for poke descriptor
+a12ca6277eca  2022-07-01 bpf: Fix incorrect verifier simulation around jmp32's jeq/jne
+bff61f6faedb  2022-03-04 bpf: Fix checking PTR_TO_BTF_ID in check_mem_access
+345e004d0233  2021-12-10 bpf: Fix incorrect state pruning for <8B spill/fill
+b9979db83401  2021-11-01 bpf: Fix propagation of bounds from 64-bit min/max into 32-bit and va
+10bf4e83167c  2021-04-23 bpf: Fix propagation of 32 bit unsigned bounds from 64 bit bounds
+9b00f1b78809  2021-02-10 bpf: Fix truncation handling for mod32 dst reg wrt zero
+e88b2c6e5a4d  2021-02-09 bpf: Fix 32 bit src register truncation on div/mod
+b02709587ea3  2020-12-08 bpf: Fix propagation of 32-bit signed bounds from 64-bit bounds.
+5b9fbeb75b6a  2020-10-07 bpf: Fix scalar32_min_max_or bounds tracking
+3a71dc366d4a  2020-05-29 bpf: Fix a verifier issue when assigning 32bit reg states to 64bit on
+100605035e15  2020-03-30 bpf: Verifier, do_refine_retval_range may clamp umin to 0 incorrectly
+f2d67fec0b43  2020-03-30 bpf: Undo incorrect __reg_bound_offset32 handling
+0af2ffc93a4b  2020-01-15 bpf: Fix incorrect verifier simulation of ARSH under ALU32
+cc52d9140aa9  2019-12-19 bpf: Fix record_func_key to perform backtracking on r3
+1fbd20f8b77b  2019-04-03 bpf: Add missed newline in verifier verbose log
+107c26a70ca8  2019-04-03 bpf: Sanity check max value for var_off stack access
+088ec26d9c2d  2019-04-03 bpf: Reject indirect var_off stack access in unpriv mode
+f2bcd05ec7b8  2019-04-03 bpf: Reject indirect var_off stack access in raw mode
+5f4566498dee  2019-02-08 bpf: Fix narrow load on a bpf_sock returned from sk_lookup()
+d623876646be  2019-02-08 bpf: Fix narrow load on a bpf_sock returned from sk_lookup()
+979d63d50c0c  2019-01-03 bpf: prevent out of bounds speculation on pointer arithmetic
+f6b1b3bf0d5f  2018-01-26 bpf: fix subprog verifier bypass by div/mod by 0 exception
+bb7f0f989ca7  2017-12-18 bpf: fix integer overflows
+4cabc5b186b5  2017-07-21 bpf: fix mixed signed/unsigned derived min/max value bounds
+6bdf6abc56b5  2017-06-29 bpf: prevent leaking pointer via xadd on unpriviledged
+1ad2f5838d34  2017-05-25 bpf: fix incorrect pruning decision when alignment must be tracked
+79adffcd6489  2017-03-31 bpf, verifier: fix rejection of unaligned access checks for map_value
+fce366a9dd0d  2017-03-31 bpf, verifier: fix alu ops against map_value{, _adj} register types
+2d2be8cab26e  2016-09-08 bpf: fix range propagation on direct packet access
+1f415a74b0ca  2016-08-02 bpf: fix method of PTR_TO_PACKET reg id generation
+1b9b69ecb3a5  2016-05-19 bpf: teach verifier to recognize imm += ptr pattern
+d91b28ed42de  2016-05-19 bpf: support decreasing order in direct packet access

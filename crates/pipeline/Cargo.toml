@@ -1,0 +1,17 @@
+[package]
+name = "pipeline"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+metrics = { path = "../metrics" }
+contract = { path = "../contract" }
+# `ingest` serializes its raw-output index as a contract payload.
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+# golden-fixture regression test deserializes the committed expected payload.
+serde_json = "1"
+
+[[example]]
+name = "ingest_demo"

@@ -1,0 +1,5 @@
+SUBSUME candidate insn=14 exact=0 arm=check_scalar_ids
+SUBSUME pairs=3 modelled=3 agree=2 disagree=1 unmodelled=0
+SUBSUME nontrivial_pairs=1 scalar_comparisons=1 shortcircuited_regs=0 other_type_regs=0 ptr_cmps=0 id_checks=2
+SUBSUME denominator pairs=3 trivial=2 nontrivial=0 breaks=1 unmodelled=0 sums=ok
+SUBSUME unimplemented_arms ptr_id_pairs=0 dead_reg_cmps=0 live_reg_cmps=0 pairs_without_liveness_claim=3 pairs_without_tracked_reg=0 live_gated_regs=2 refsafe_idmap_seed=not-observable-from-capture

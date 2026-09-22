@@ -1,0 +1,85 @@
+Independence is what gives a differential oracle its authority. If the reference is
+independent of the system under test, agreement is evidence and disagreement is a
+defect. The word, however, is doing two jobs at once.
+
+\subsection{Two questions, not one}
+
+\emph{Implementation independence} answers: could the reference have inherited a
+defect through shared \textbf{logic}? Shared code, a shared reading of the
+specification, a shared author. This is the sense the literature grades. A recent
+review of oracle sources orders exactly this axis, placing an independently
+developed reference above a comparison among existing implementations, and that
+above consensus among implementations drawn from one origin~\cite{oraclesurvey2026}.
+
+\emph{Evidential independence} answers a different question: could the reference
+inherit a defect through shared \textbf{evidence}? If the reference's inputs are
+artifacts produced by the system under test, a defect in the producer propagates
+into the reference's premises. The reference then computes correctly from corrupted
+inputs and agrees with the system---for the same wrong reason.
+
+The two are orthogonal, and this is what makes the second worth naming. An oracle
+can hold maximal implementation independence and none of the evidential kind: a
+reference written by different people, in a different language, from the
+specification rather than from the code, which nonetheless takes the system's own
+internal state as its input. Its logic shares nothing. Its premises share
+everything. Figure~\ref{fig:axes} places both axes, and the techniques discussed in
+Section~7 on them; the two corners that matter most are occupied by two oracles for
+the same component.
+
+\input{fig-axes}
+
+\subsection{The axis is component-relative}
+
+Evidential independence is not a relation between an oracle and a system. It is a
+relation between an oracle and the \textbf{component under test}, and an oracle may
+share almost all of a system with the code it judges while remaining evidentially
+independent of the part it is judging.
+
+NoREC is the clean illustration~\cite{rigger2020norec}. Its reference is the same
+database engine: same parser, same storage, same execution. What it changes is that
+the query is rewritten into a form the optimizer cannot apply to. Relative to the
+optimizer---the component under test---the reference's evidence does not pass
+through the code being judged. Relative to the execution engine, it plainly does.
+
+Read component-relatively, the axis predicts the shape of the limitation NoREC's
+authors report, and they report it: ``both the unoptimized and optimized query can
+yield an incorrect result''. Their framing is that metamorphic testing cannot
+establish a ground truth, which is true and coarser. The component-relative reading
+says something sharper than ``no ground truth''---it says \emph{which} defects
+escape and which do not, and it says so from the construction rather than from
+experience.
+
+The same reading places Equivalence Modulo Inputs~\cite{le2014emi}: its variants are
+derived from a profile of the program under test, so its evidence passes through the
+system for everything except the presence of code that the profile marked
+unexecuted. Both techniques are effective. Both are evidentially entangled with some
+component of the system they judge. Neither entanglement is an error; what is
+missing is a name for it, and therefore a way to say in advance what it costs.
+
+\subsection{What the axis does not explain}
+
+An axis that explained every failure would be a slogan. The case study of Section~5
+catalogues six mechanisms by which an oracle can fail to fire on a real defect, each
+anchored to a specific fix. Input provenance accounts for two of them: the reference's
+ground truth is itself produced by the defective component, and the oracle reads a
+field the defect corrupts.
+
+The remaining four are distinct, and none follows from provenance. The deviation may
+be conservative---wider than the truth rather than wrong---so it is not a violation
+of the property being tested at all. The oracle's predicate may be asymmetric, so
+that one direction of disagreement is required to stay silent. The mechanism the
+detector uses to create the condition it observes may be unable to create it. Or the
+observation may require surviving an event that is fatal by construction.
+
+\subsection{Why practice does not notice}
+
+The failure this axis describes is silent by construction. Evidentially entangled
+agreement is indistinguishable, from inside a testing campaign, from genuine
+agreement: both look like a clean run. A team learns that its oracle was blind to a
+class only when someone else finds a defect of that class by other means, which may
+be years later or never.
+
+This is the reason the axis needs a procedure rather than a warning. It cannot be
+discovered from one's own results, because the results of an entangled oracle look
+exactly like success. It has to be computed---before the oracle is built, from
+material the project already has. That procedure is the subject of the next section.

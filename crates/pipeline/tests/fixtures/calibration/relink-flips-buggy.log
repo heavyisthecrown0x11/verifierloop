@@ -1,0 +1,1133 @@
+===PROG gencomp#s78dde6e4#003 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=48 reg=8 off=57 size=1
+COMP seed=0x78dde6e4 insns=53 recipe=loop,loop,loop,dynskb,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s3 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=5 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=10 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+43
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....6... (79) r9 = *(u64 *)(r0 +8)
+     11: ......6..9 (62) *(u32 *)(r10 -4) = 0
+     12: ......6..9 (bf) r2 = r10
+     13: ..2...6..9 (07) r2 += -4
+     14: ..2...6..9 (18) r1 = 0xffff888005106c00
+     16: .12...6..9 (85) call bpf_map_lookup_elem#1
+     17: 0.....6..9 (15) if r0 == 0x0 goto pc+33
+     18: 0.....6..9 (bf) r8 = r0
+  3  19: ......6.89 (e5) may_goto pc+2
+  3  20: ......6.89 (57) r9 &= 7
+  3  21: ......6.89 (05) goto pc-3
+  2  22: ......6.8. (e5) may_goto pc+2
+  2  23: ......6.8. (57) r6 &= 7
+  2  24: ......6.8. (05) goto pc-3
+  1  25: ......6.8. (e5) may_goto pc+2
+  1  26: ......6.8. (57) r6 &= 7
+  1  27: ......6.8. (05) goto pc-3
+     28: ........8. (79) r1 = *(u64 *)(r10 -16)
+     29: .1......8. (b7) r2 = 0
+     30: .12.....8. (bf) r3 = r10
+     31: .123....8. (07) r3 += -48
+     32: .123....8. (85) call bpf_dynptr_from_skb#79853
+     33: ........8. (bf) r1 = r10
+     34: .1......8. (07) r1 += -48
+     35: .1......8. (b7) r2 = 0
+     36: .12.....8. (bf) r3 = r10
+     37: .123....8. (07) r3 += -80
+     38: .123....8. (b7) r4 = 8
+     39: .1234...8. (85) call bpf_dynptr_slice#79866
+     40: 0.......8. (15) if r0 == 0x0 goto pc+10
+     41: 0.......8. (71) r6 = *(u8 *)(r0 +3)
+     42: ......6.8. (bf) r9 = r6
+     43: ......6.89 (07) r9 += 4
+     44: ......6.89 (25) if r9 > 0xf goto pc+6
+     45: ......6.89 (bf) r7 = r6
+     46: ......6.89 (25) if r9 > 0xa goto pc+4
+     47: ......6.8. (0f) r8 += r6
+     48: ........8. (72) *(u8 *)(r8 +57) = -1
+     49: .......... (b7) r0 = 1
+     50: 0......... (95) exit
+     51: .......... (b7) r0 = 0
+     52: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+43       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+33      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0
+SCC enter (3)
+19: R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (e5) may_goto pc+2
+SCC enter (2)
+22: (e5) may_goto pc+2
+SCC enter (1)
+25: (e5) may_goto pc+2
+28: (79) r1 = *(u64 *)(r10 -16)       ; R1=ctx() R10=fp0 fp-16=ctx()
+29: (b7) r2 = 0                       ; R2=0
+30: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+31: (07) r3 += -48                    ; R3=fp-48
+32: (85) call bpf_dynptr_from_skb#79853       ; R0=scalar() fp-48=dynptr_skb(id=1,dynptr_id=1)
+33: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+34: (07) r1 += -48                    ; R1=fp-48
+35: (b7) r2 = 0                       ; R2=0
+36: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+37: (07) r3 += -80                    ; R3=fp-80
+38: (b7) r4 = 8                       ; R4=8
+39: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 39 first_idx 25 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 38: (b7) r4 = 8
+mark_precise: frame0: last_idx 39 first_idx 25 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 38: (b7) r4 = 8
+40: R0=rdonly_mem_or_null(id=2,sz=8) fp-48=dynptr_skb(id=1,dynptr_id=1)
+40: (15) if r0 == 0x0 goto pc+10      ; R0=rdonly_mem(sz=8)
+41: (71) r6 = *(u8 *)(r0 +3)          ; R0=rdonly_mem(sz=8) R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+42: (bf) r9 = r6                      ; R6=scalar(id=3,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R9=scalar(id=3,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+43: (07) r9 += 4                      ; R9=scalar(id=3+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
+44: (25) if r9 > 0xf goto pc+6        ; R9=scalar(id=3+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+45: (bf) r7 = r6                      ; R6=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=11) R7=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=11)
+46: (25) if r9 > 0xa goto pc+4        ; R9=scalar(id=3+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=10,var_off=(0x0; 0xf))
+47: (0f) r8 += r6
+mark_precise: frame0: last_idx 47 first_idx 40 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 46: (25) if r9 > 0xa goto pc+4
+mark_precise: frame0: regs=r6 stack= before 45: (bf) r7 = r6
+mark_precise: frame0: regs=r6 stack= before 44: (25) if r9 > 0xf goto pc+6
+mark_precise: frame0: regs=r6,r9 stack= before 43: (07) r9 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 42: (bf) r9 = r6
+mark_precise: frame0: regs=r6 stack= before 41: (71) r6 = *(u8 *)(r0 +3)
+48: R6=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=11) R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=11,var_off=(0x0; 0xf))
+48: (72) *(u8 *)(r8 +57) = -1
+invalid access to map value, value_size=64 off=68 size=1
+R8 max value is outside of the allowed memory range
+processed 41 insns (limit 1000000) max_states_per_insn 0 total_states 5 peak_states 5 mark_read 0
+
+---END---
+===PROG gencomp#s913c98d2#097 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=68 reg=8 off=57 size=1
+COMP seed=0x913c98d2 insns=73 recipe=ringbuf,narrow,iter,loop,loop,link,alu32,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s97 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=7 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=15 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+63
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....67.. (79) r9 = *(u64 *)(r0 +8)
+     11: ......67.9 (62) *(u32 *)(r10 -4) = 0
+     12: ......67.9 (bf) r2 = r10
+     13: ..2...67.9 (07) r2 += -4
+     14: ..2...67.9 (18) r1 = 0xffff888005106c00
+     16: .12...67.9 (85) call bpf_map_lookup_elem#1
+     17: 0.....67.9 (15) if r0 == 0x0 goto pc+53
+     18: 0.....67.9 (bf) r8 = r0
+     19: ......6789 (18) r1 = 0xffff888005107000
+     21: .1....6789 (b7) r2 = 16
+     22: .12...6789 (b7) r3 = 0
+     23: .123..6789 (bf) r4 = r10
+     24: .1234.6789 (07) r4 += -48
+     25: .1234.6789 (85) call bpf_ringbuf_reserve_dynptr#198
+     26: ......6789 (bf) r1 = r10
+     27: .1....6789 (07) r1 += -48
+     28: .1....6789 (b7) r2 = 0
+     29: .12...6789 (bf) r3 = r10
+     30: .123..6789 (07) r3 += -80
+     31: .123..6789 (b7) r4 = 8
+     32: .1234.6789 (85) call bpf_dynptr_slice#79866
+     33: 0.....6789 (15) if r0 == 0x0 goto pc+1
+     34: 0.....678. (71) r9 = *(u8 *)(r0 +3)
+     35: ......6789 (bf) r1 = r10
+     36: .1....6789 (07) r1 += -48
+     37: .1....6789 (b7) r2 = 0
+     38: .12...6789 (85) call bpf_ringbuf_submit_dynptr#199
+     39: ......6789 (25) if r9 > 0x9 goto pc+31
+     40: ......6789 (bf) r1 = r10
+     41: .1....6789 (07) r1 += -8
+     42: .1....6789 (b7) r2 = 0
+     43: .12...6789 (b7) r3 = 4
+     44: .123..6789 (85) call bpf_iter_num_new#80135
+  3  45: ......6789 (bf) r1 = r10
+  3  46: .1....6789 (07) r1 += -8
+  3  47: .1....6789 (85) call bpf_iter_num_next#80136
+  3  48: 0.....6789 (15) if r0 == 0x0 goto pc+2
+  3  49: ......6789 (57) r6 &= 7
+  3  50: ......6789 (05) goto pc-6
+     51: ......6789 (bf) r1 = r10
+     52: .1....6789 (07) r1 += -8
+     53: .1....6789 (85) call bpf_iter_num_destroy#80133
+  2  54: ......6789 (e5) may_goto pc+2
+  2  55: ......6789 (57) r6 &= 7
+  2  56: ......6789 (05) goto pc-3
+  1  57: .......789 (e5) may_goto pc+2
+  1  58: .......789 (57) r7 &= 7
+  1  59: .......789 (05) goto pc-3
+     60: ........89 (bf) r7 = r9
+     61: ........89 (44) w9 |= 1
+     62: ........89 (bf) r6 = r9
+     63: ......6.89 (07) r6 += 4
+     64: ......6.89 (25) if r6 > 0x10 goto pc+6
+     65: ......6.89 (bf) r7 = r9
+     66: ......6.89 (25) if r6 > 0xa goto pc+4
+     67: ........89 (0f) r8 += r9
+     68: ........8. (72) *(u8 *)(r8 +57) = -1
+     69: .......... (b7) r0 = 1
+     70: 0......... (95) exit
+     71: .......... (b7) r0 = 0
+     72: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+63       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+53      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0                      ; R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (18) r1 = 0xffff888005107000      ; R1=map_ptr(ks=0,vs=0)
+21: (b7) r2 = 16                      ; R2=16
+22: (b7) r3 = 0                       ; R3=0
+23: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+24: (07) r4 += -48                    ; R4=fp-48
+25: (85) call bpf_ringbuf_reserve_dynptr#198          ; R0=scalar() fp-48=dynptr_ringbuf(id=1,ref_id=2,dynptr_id=1) refs=2
+26: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=2
+27: (07) r1 += -48                    ; R1=fp-48 refs=2
+28: (b7) r2 = 0                       ; R2=0 refs=2
+29: (bf) r3 = r10                     ; R3=fp0 R10=fp0 refs=2
+30: (07) r3 += -80                    ; R3=fp-80 refs=2
+31: (b7) r4 = 8                       ; R4=8 refs=2
+32: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 32 first_idx 26 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 31: (b7) r4 = 8
+mark_precise: frame0: last_idx 32 first_idx 26 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 31: (b7) r4 = 8
+33: R0=rdonly_mem_or_null(id=3,sz=8) fp-48=dynptr_ringbuf(id=1,ref_id=2,dynptr_id=1) refs=2
+33: (15) if r0 == 0x0 goto pc+1       ; R0=rdonly_mem(sz=8) refs=2
+34: (71) r9 = *(u8 *)(r0 +3)          ; R0=rdonly_mem(sz=8) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) refs=2
+35: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=2
+36: (07) r1 += -48                    ; R1=fp-48 refs=2
+37: (b7) r2 = 0                       ; R2=0 refs=2
+38: (85) call bpf_ringbuf_submit_dynptr#199   ;
+39: (25) if r9 > 0x9 goto pc+31       ; R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf))
+40: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+41: (07) r1 += -8                     ; R1=fp-8
+42: (b7) r2 = 0                       ; R2=0
+43: (b7) r3 = 4                       ; R3=4
+44: (85) call bpf_iter_num_new#80135
+SCC enter (3)
+45: R0=scalar() fp-8=iter_num(ref_id=4,state=active,depth=0) refs=4
+45: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=4
+46: (07) r1 += -8                     ; R1=fp-8 refs=4
+47: (85) call bpf_iter_num_next#80136         ; R0=0 fp-8=iter_num(ref_id=4,state=drained,depth=0) refs=4
+48: (15) if r0 == 0x0 goto pc+2
+mark_precise: frame0: last_idx 48 first_idx 47 subseq_idx -1 
+mark_precise: frame0: regs=r0 stack= before 47: (85) call bpf_iter_num_next#80136
+48: R0=0 refs=4
+51: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=4
+52: (07) r1 += -8                     ; R1=fp-8 refs=4
+53: (85) call bpf_iter_num_destroy#80133
+SCC enter (2)
+54:
+54: (e5) may_goto pc+2
+SCC enter (1)
+57: (e5) may_goto pc+2
+60: (bf) r7 = r9                      ; R7=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf)) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf))
+61: (44) w9 |= 1                      ; R9=scalar(smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=15,var_off=(0x1; 0xe))
+62: (bf) r6 = r9                      ; R6=scalar(id=7,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=15,var_off=(0x1; 0xe)) R9=scalar(id=7,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=15,var_off=(0x1; 0xe))
+63: (07) r6 += 4                      ; R6=scalar(id=7+4,smin=umin=smin32=umin32=5,smax=umax=smax32=umax32=19,var_off=(0x1; 0x1e))
+64: (25) if r6 > 0x10 goto pc+6       ; R6=scalar(id=7+4,smin=umin=smin32=umin32=5,smax=umax=smax32=umax32=16,var_off=(0x1; 0x1e))
+65: (bf) r7 = r9                      ; R7=scalar(id=8,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=12,var_off=(0x1; 0xfffffffffffffffe)) R9=scalar(id=8,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=12,var_off=(0x1; 0xfffffffffffffffe))
+66: (25) if r6 > 0xa goto pc+4        ; R6=scalar(id=7+4,smin=umin=smin32=umin32=5,smax=umax=smax32=umax32=10,var_off=(0x1; 0xe))
+67: (0f) r8 += r9
+mark_precise: frame0: last_idx 67 first_idx 57 subseq_idx -1 
+mark_precise: frame0: regs=r9 stack= before 66: (25) if r6 > 0xa goto pc+4
+mark_precise: frame0: regs=r9 stack= before 65: (bf) r7 = r9
+mark_precise: frame0: regs=r9 stack= before 64: (25) if r6 > 0x10 goto pc+6
+mark_precise: frame0: regs=r6,r9 stack= before 63: (07) r6 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 62: (bf) r6 = r9
+mark_precise: frame0: regs=r9 stack= before 61: (44) w9 |= 1
+mark_precise: frame0: regs=r9 stack= before 60: (bf) r7 = r9
+mark_precise: frame0: regs=r9 stack= before 57: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r9 stack=:  R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf)) R10=fp0 fp-16=ctx() fp-80=mmmmmmmm
+mark_precise: frame0: last_idx 54 first_idx 54 subseq_idx 57 
+mark_precise: frame0: regs=r9 stack= before 54: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r9 stack=:  R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf)) R10=fp0 fp-16=ctx() fp-80=mmmmmmmm
+mark_precise: frame0: last_idx 53 first_idx 47 subseq_idx 54 
+mark_precise: frame0: regs=r9 stack= before 53: (85) call bpf_iter_num_destroy#80133
+mark_precise: frame0: regs=r9 stack= before 52: (07) r1 += -8
+mark_precise: frame0: regs=r9 stack= before 51: (bf) r1 = r10
+mark_precise: frame0: regs=r9 stack= before 48: (15) if r0 == 0x0 goto pc+2
+mark_precise: frame0: regs=r9 stack= before 47: (85) call bpf_iter_num_next#80136
+mark_precise: frame0: parent state regs=r9 stack=:  R0=scalar() R1=fp-8 R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf)) R10=fp0 fp-8=iter_num(ref_id=4,state=active,depth=0) fp-16=ctx() fp-80=mmmmmmmm refs=4
+mark_precise: frame0: last_idx 46 first_idx 45 subseq_idx 47 
+mark_precise: frame0: regs=r9 stack= before 46: (07) r1 += -8
+mark_precise: frame0: regs=r9 stack= before 45: (bf) r1 = r10
+mark_precise: frame0: parent state regs=r9 stack=:  R0=scalar() R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf)) R10=fp0 fp-8=iter_num(ref_id=4,state=active,depth=0) fp-16=ctx() fp-80=mmmmmmmm refs=4
+mark_precise: frame0: last_idx 44 first_idx 35 subseq_idx 45 
+mark_precise: frame0: regs=r9 stack= before 44: (85) call bpf_iter_num_new#80135
+mark_precise: frame0: regs=r9 stack= before 43: (b7) r3 = 4
+mark_precise: frame0: regs=r9 stack= before 42: (b7) r2 = 0
+mark_precise: frame0: regs=r9 stack= before 41: (07) r1 += -8
+mark_precise: frame0: regs=r9 stack= before 40: (bf) r1 = r10
+mark_precise: frame0: regs=r9 stack= before 39: (25) if r9 > 0x9 goto pc+31
+mark_precise: frame0: regs=r9 stack= before 38: (85) call bpf_ringbuf_submit_dynptr#199
+mark_precise: frame0: regs=r9 stack= before 37: (b7) r2 = 0
+mark_precise: frame0: regs=r9 stack= before 36: (07) r1 += -48
+mark_precise: frame0: regs=r9 stack= before 35: (bf) r1 = r10
+mark_precise: frame0: parent state regs=r9 stack=:  R0=rdonly_mem(sz=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_ringbuf(id=1,ref_id=2,dynptr_id=1) fp-80=mmmmmmmm refs=2
+mark_precise: frame0: last_idx 34 first_idx 26 subseq_idx 35 
+mark_precise: frame0: regs=r9 stack= before 34: (71) r9 = *(u8 *)(r0 +3)
+68: R8=map_value(ks=4,vs=64,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=12,var_off=(0x1; 0xe)) R9=scalar(id=8,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=12,var_off=(0x1; 0xfffffffffffffffe))
+68: (72) *(u8 *)(r8 +57) = -1
+invalid access to map value, value_size=64 off=69 size=1
+R8 max value is outside of the allowed memory range
+processed 60 insns (limit 1000000) max_states_per_insn 0 total_states 7 peak_states 7 mark_read 0
+
+---END---
+===PROG gencomp#sbd5280cb#162 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=27 reg=8 off=61 size=1
+COMP seed=0xbd5280cb insns=32 recipe=shape,narrow,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s162 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=2 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=5 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+22
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....67.. (79) r9 = *(u64 *)(r0 +8)
+     11: ......67.. (62) *(u32 *)(r10 -4) = 0
+     12: ......67.. (bf) r2 = r10
+     13: ..2...67.. (07) r2 += -4
+     14: ..2...67.. (18) r1 = 0xffff888005106c00
+     16: .12...67.. (85) call bpf_map_lookup_elem#1
+     17: 0.....67.. (15) if r0 == 0x0 goto pc+12
+     18: 0.....67.. (bf) r8 = r0
+     19: ......678. (a7) r6 ^= 7
+     20: ......678. (25) if r7 > 0x9 goto pc+9
+     21: ......6.8. (bf) r9 = r6
+     22: ......6.89 (07) r9 += 4
+     23: ......6.89 (25) if r9 > 0x11 goto pc+6
+     24: ......6.89 (bf) r7 = r6
+     25: ......6.89 (25) if r9 > 0x6 goto pc+4
+     26: ......6.8. (0f) r8 += r6
+     27: ........8. (72) *(u8 *)(r8 +61) = -1
+     28: .......... (b7) r0 = 1
+     29: 0......... (95) exit
+     30: .......... (b7) r0 = 0
+     31: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+22       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+12      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0                      ; R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (a7) r6 ^= 7                      ; R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+20: (25) if r7 > 0x9 goto pc+9        ; R7=scalar(smin=smin32=0,smax=umax=smax32=umax32=9,var_off=(0x0; 0xf))
+21: (bf) r9 = r6                      ; R6=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+22: (07) r9 += 4                      ; R9=scalar(id=1+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff))
+23: (25) if r9 > 0x11 goto pc+6       ; R9=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=17,var_off=(0x0; 0x1f))
+24: (bf) r7 = r6                      ; R6=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=13) R7=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=13)
+25: (25) if r9 > 0x6 goto pc+4        ; R9=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=6,var_off=(0x4; 0x3))
+26: (0f) r8 += r6
+mark_precise: frame0: last_idx 26 first_idx 25 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 25: (25) if r9 > 0x6 goto pc+4
+mark_precise: frame0: parent state regs=r6 stack=:  R0=map_value(ks=4,vs=64) R6=Pscalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=13) R7=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=13) R8=map_value(ks=4,vs=64) R9=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=17,var_off=(0x0; 0x1f)) R10=fp0 fp-8=0000???? fp-16=ctx()
+mark_precise: frame0: last_idx 24 first_idx 17 subseq_idx 25 
+mark_precise: frame0: regs=r6 stack= before 24: (bf) r7 = r6
+mark_precise: frame0: regs=r6 stack= before 23: (25) if r9 > 0x11 goto pc+6
+mark_precise: frame0: regs=r6,r9 stack= before 22: (07) r9 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 21: (bf) r9 = r6
+mark_precise: frame0: regs=r6 stack= before 20: (25) if r7 > 0x9 goto pc+9
+mark_precise: frame0: regs=r6 stack= before 19: (a7) r6 ^= 7
+mark_precise: frame0: regs=r6 stack= before 18: (bf) r8 = r0
+mark_precise: frame0: regs=r6 stack= before 17: (15) if r0 == 0x0 goto pc+12
+mark_precise: frame0: parent state regs=r6 stack=:  R0=map_value(ks=4,vs=64) R6=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar() R10=fp0 fp-8=0000???? fp-16=ctx()
+mark_precise: frame0: last_idx 16 first_idx 0 subseq_idx 17 
+mark_precise: frame0: regs=r6 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 14: (18) r1 = 0xffff888005106c00
+mark_precise: frame0: regs=r6 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 11: (62) *(u32 *)(r10 -4) = 0
+mark_precise: frame0: regs=r6 stack= before 10: (79) r9 = *(u64 *)(r0 +8)
+mark_precise: frame0: regs=r6 stack= before 9: (61) r7 = *(u32 *)(r0 +4)
+mark_precise: frame0: regs=r6 stack= before 8: (61) r6 = *(u32 *)(r0 +0)
+27: R6=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=13) R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=13,var_off=(0x0; 0xf))
+27: (72) *(u8 *)(r8 +61) = -1
+invalid access to map value, value_size=64 off=74 size=1
+R8 max value is outside of the allowed memory range
+processed 26 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gencomp#sfd1f9ecf#198 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=67 reg=8 off=61 size=1
+COMP seed=0xfd1f9ecf insns=77 recipe=dynskb,ringbuf,shape,loop,shape,call,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s198 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=6 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=15 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+func#1 @72
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+62
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....67.. (79) r9 = *(u64 *)(r0 +8)
+     11: ......67.. (62) *(u32 *)(r10 -4) = 0
+     12: ......67.. (bf) r2 = r10
+     13: ..2...67.. (07) r2 += -4
+     14: ..2...67.. (18) r1 = 0xffff888005106c00
+     16: .12...67.. (85) call bpf_map_lookup_elem#1
+     17: 0.....67.. (15) if r0 == 0x0 goto pc+52
+     18: 0.....67.. (bf) r8 = r0
+     19: ......678. (79) r1 = *(u64 *)(r10 -16)
+     20: .1....678. (b7) r2 = 0
+     21: .12...678. (bf) r3 = r10
+     22: .123..678. (07) r3 += -48
+     23: .123..678. (85) call bpf_dynptr_from_skb#79853
+     24: ......678. (bf) r1 = r10
+     25: .1....678. (07) r1 += -48
+     26: .1....678. (b7) r2 = 0
+     27: .12...678. (bf) r3 = r10
+     28: .123..678. (07) r3 += -80
+     29: .123..678. (b7) r4 = 8
+     30: .1234.678. (85) call bpf_dynptr_slice#79866
+     31: 0.....678. (15) if r0 == 0x0 goto pc+38
+     32: 0.....678. (71) r9 = *(u8 *)(r0 +6)
+     33: ......6789 (18) r1 = 0xffff888005107000
+     35: .1....6789 (b7) r2 = 16
+     36: .12...6789 (b7) r3 = 0
+     37: .123..6789 (bf) r4 = r10
+     38: .1234.6789 (07) r4 += -96
+     39: .1234.6789 (85) call bpf_ringbuf_reserve_dynptr#198
+     40: ......6789 (bf) r1 = r10
+     41: .1....6789 (07) r1 += -96
+     42: .1....6789 (b7) r2 = 0
+     43: .12...6789 (bf) r3 = r10
+     44: .123..6789 (07) r3 += -128
+     45: .123..6789 (b7) r4 = 8
+     46: .1234.6789 (85) call bpf_dynptr_slice#79866
+     47: 0.....6789 (15) if r0 == 0x0 goto pc+1
+     48: 0......789 (71) r6 = *(u8 *)(r0 +1)
+     49: ......6789 (bf) r1 = r10
+     50: .1....6789 (07) r1 += -96
+     51: .1....6789 (b7) r2 = 0
+     52: .12...6789 (85) call bpf_ringbuf_submit_dynptr#199
+     53: ..23456789 (47) r6 |= 15
+  1  54: ..2345.789 (e5) may_goto pc+2
+  1  55: ..2345.789 (57) r9 &= 7
+  1  56: ..2345.789 (05) goto pc-3
+     57: ..2345.789 (a7) r9 ^= 12
+     58: ..2345.789 (bf) r1 = r9
+     59: .12345.78. (85) call pc+12
+     60: 0......78. (bf) r9 = r0
+     61: .......78. (bf) r9 = r7
+     62: .......789 (07) r9 += 4
+     63: .......789 (25) if r9 > 0x10 goto pc+6
+     64: .......789 (bf) r6 = r7
+     65: .......789 (25) if r9 > 0x6 goto pc+4
+     66: .......78. (0f) r8 += r7
+     67: ........8. (72) *(u8 *)(r8 +61) = -1
+     68: .......... (b7) r0 = 1
+     69: 0......... (95) exit
+     70: .......... (b7) r0 = 0
+     71: 0......... (95) exit
+     72: .1........ (25) if r1 > 0xf goto pc+2
+     73: .1........ (bf) r0 = r1
+     74: 0......... (95) exit
+     75: .......... (b7) r0 = 0
+     76: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+62       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+52      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0                      ; R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (79) r1 = *(u64 *)(r10 -16)       ; R1=ctx() R10=fp0 fp-16=ctx()
+20: (b7) r2 = 0                       ; R2=0
+21: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+22: (07) r3 += -48                    ; R3=fp-48
+23: (85) call bpf_dynptr_from_skb#79853       ; R0=scalar() fp-48=dynptr_skb(id=1,dynptr_id=1)
+24: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+25: (07) r1 += -48                    ; R1=fp-48
+26: (b7) r2 = 0                       ; R2=0
+27: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+28: (07) r3 += -80                    ; R3=fp-80
+29: (b7) r4 = 8                       ; R4=8
+30: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 30 first_idx 17 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 29: (b7) r4 = 8
+mark_precise: frame0: last_idx 30 first_idx 17 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 29: (b7) r4 = 8
+31: R0=rdonly_mem_or_null(id=2,sz=8) fp-48=dynptr_skb(id=1,dynptr_id=1)
+31: (15) if r0 == 0x0 goto pc+38      ; R0=rdonly_mem(sz=8)
+32: (71) r9 = *(u8 *)(r0 +6)          ; R0=rdonly_mem(sz=8) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+33: (18) r1 = 0xffff888005107000      ; R1=map_ptr(ks=0,vs=0)
+35: (b7) r2 = 16                      ; R2=16
+36: (b7) r3 = 0                       ; R3=0
+37: (bf) r4 = r10                     ; R4=fp0 R10=fp0
+38: (07) r4 += -96                    ; R4=fp-96
+39: (85) call bpf_ringbuf_reserve_dynptr#198          ; R0=scalar() fp-96=dynptr_ringbuf(id=3,ref_id=4,dynptr_id=1) refs=4
+40: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=4
+41: (07) r1 += -96                    ; R1=fp-96 refs=4
+42: (b7) r2 = 0                       ; R2=0 refs=4
+43: (bf) r3 = r10                     ; R3=fp0 R10=fp0 refs=4
+44: (07) r3 += -128                   ; R3=fp-128 refs=4
+45: (b7) r4 = 8                       ; R4=8 refs=4
+46: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 46 first_idx 40 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 45: (b7) r4 = 8
+mark_precise: frame0: last_idx 46 first_idx 40 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 45: (b7) r4 = 8
+47: R0=rdonly_mem_or_null(id=5,sz=8) fp-96=dynptr_ringbuf(id=3,ref_id=4,dynptr_id=1) refs=4
+47: (15) if r0 == 0x0 goto pc+1       ; R0=rdonly_mem(sz=8) refs=4
+48: (71) r6 = *(u8 *)(r0 +1)          ; R0=rdonly_mem(sz=8) R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) refs=4
+49: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=4
+50: (07) r1 += -96                    ; R1=fp-96 refs=4
+51: (b7) r2 = 0                       ; R2=0 refs=4
+52: (85) call bpf_ringbuf_submit_dynptr#199   ;
+53: (47) r6 |= 15
+SCC enter (1)
+54: R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0))
+54: (e5) may_goto pc+2
+57: (a7) r9 ^= 12                     ; R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+58: (bf) r1 = r9                      ; R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+59: (85) call pc+12
+caller:
+ R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-128=mmmmmmmm
+callee:
+ frame1: R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0
+72: frame1: R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0
+72: (25) if r1 > 0xf goto pc+2        ; frame1: R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+73: (bf) r0 = r1                      ; frame1: R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+74: (95) exit
+(0) frame 0 insn 52 +live -88,-96 
+(0) frame 0 insn 52 +written -88,-96 
+(0) frame 0 insn 49 +live -88,-96 
+(0) frame 0 insn 49 +written -88,-96 
+(0) frame 0 insn 47 +live -88,-96 
+(0) frame 0 insn 47 +written -88,-96 
+(0) frame 0 insn 46 +live -88,-96,-128 
+(0) frame 0 insn 46 +written -88,-96 
+(0) frame 0 insn 40 +live -88,-96,-128 
+(0) frame 0 insn 40 +written -88,-96 
+(0) frame 0 insn 39 +live -128 
+(0) frame 0 insn 39 +written -88,-96 
+(0) frame 0 insn 31 +live -128 
+(0) frame 0 insn 30 +live -40,-48,-80,-128 
+(0) frame 0 insn 24 +live -40,-48,-80,-128 
+(0) frame 0 insn 23 +live -80,-128 
+(0) frame 0 insn 23 +written -40,-48 
+(0) frame 0 insn 19 +live -16,-80,-128 
+(0) frame 0 insn 19 +written -40,-48 
+(0) frame 0 insn 17 +live -16,-80,-128 
+(0) frame 0 insn 16 +live -8,-16,-80,-128 
+(0) frame 0 insn 7 +live -8,-16,-80,-128 
+(0) frame 0 insn 6 +live -8,-16,-80,-128 
+(0) frame 0 insn 0 +live -8,-80,-128 
+(0) frame 0 insn 0 +written -16 
+(0) live stack update done in 2 iterations
+returning from callee:
+ frame1: R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R1=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R10=fp0
+to caller at 60:
+ R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-128=mmmmmmmm
+
+from 74 to 60: R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-128=mmmmmmmm
+60: (bf) r9 = r0                      ; R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+61: (bf) r9 = r7                      ; R7=scalar(id=7,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar(id=7,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+62: (07) r9 += 4                      ; R9=scalar(id=7+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff))
+63: (25) if r9 > 0x10 goto pc+6       ; R9=scalar(id=7+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=16,var_off=(0x0; 0x1f))
+64: (bf) r6 = r7                      ; R6=scalar(id=8,smin=smin32=0,smax=umax=smax32=umax32=12) R7=scalar(id=8,smin=smin32=0,smax=umax=smax32=umax32=12)
+65: (25) if r9 > 0x6 goto pc+4        ; R9=scalar(id=7+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=6,var_off=(0x4; 0x3))
+66: (0f) r8 += r7
+mark_precise: frame0: last_idx 66 first_idx 63 subseq_idx -1 
+mark_precise: frame0: regs=r7 stack= before 65: (25) if r9 > 0x6 goto pc+4
+mark_precise: frame0: regs=r7 stack= before 64: (bf) r6 = r7
+mark_precise: frame0: regs=r7 stack= before 63: (25) if r9 > 0x10 goto pc+6
+mark_precise: frame0: parent state regs=r7,r9 stack=:  R0=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0)) R7=Pscalar(id=7,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(id=7+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-128=mmmmmmmm
+mark_precise: frame0: last_idx 62 first_idx 54 subseq_idx 63 
+mark_precise: frame0: regs=r7,r9 stack= before 62: (07) r9 += 4
+mark_precise: frame0: regs=r7,r9 stack= before 61: (bf) r9 = r7
+mark_precise: frame0: regs=r7 stack= before 60: (bf) r9 = r0
+mark_precise: frame0: regs=r7 stack= before 74: (95) exit
+mark_precise: frame1: regs= stack= before 73: (bf) r0 = r1
+mark_precise: frame1: regs= stack= before 72: (25) if r1 > 0xf goto pc+2
+mark_precise: frame1: regs= stack= before 59: (85) call pc+12
+mark_precise: frame0: regs=r7 stack= before 58: (bf) r1 = r9
+mark_precise: frame0: regs=r7 stack= before 57: (a7) r9 ^= 12
+mark_precise: frame0: regs=r7 stack= before 54: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r7 stack=:  R6=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=255,var_off=(0xf; 0xf0)) R7=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-128=mmmmmmmm
+mark_precise: frame0: last_idx 53 first_idx 49 subseq_idx 54 
+mark_precise: frame0: regs=r7 stack= before 53: (47) r6 |= 15
+mark_precise: frame0: regs=r7 stack= before 52: (85) call bpf_ringbuf_submit_dynptr#199
+mark_precise: frame0: regs=r7 stack= before 51: (b7) r2 = 0
+mark_precise: frame0: regs=r7 stack= before 50: (07) r1 += -96
+mark_precise: frame0: regs=r7 stack= before 49: (bf) r1 = r10
+mark_precise: frame0: parent state regs=r7 stack=:  R0=rdonly_mem(sz=8) R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R7=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-96=dynptr_ringbuf(id=3,ref_id=4,dynptr_id=1) fp-128=mmmmmmmm refs=4
+mark_precise: frame0: last_idx 48 first_idx 40 subseq_idx 49 
+mark_precise: frame0: regs=r7 stack= before 48: (71) r6 = *(u8 *)(r0 +1)
+mark_precise: frame0: regs=r7 stack= before 47: (15) if r0 == 0x0 goto pc+1
+mark_precise: frame0: regs=r7 stack= before 46: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: regs=r7 stack= before 45: (b7) r4 = 8
+mark_precise: frame0: regs=r7 stack= before 44: (07) r3 += -128
+mark_precise: frame0: regs=r7 stack= before 43: (bf) r3 = r10
+mark_precise: frame0: regs=r7 stack= before 42: (b7) r2 = 0
+mark_precise: frame0: regs=r7 stack= before 41: (07) r1 += -96
+mark_precise: frame0: regs=r7 stack= before 40: (bf) r1 = r10
+mark_precise: frame0: parent state regs=r7 stack=:  R0=scalar() R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm fp-96=dynptr_ringbuf(id=3,ref_id=4,dynptr_id=1) refs=4
+mark_precise: frame0: last_idx 39 first_idx 31 subseq_idx 40 
+mark_precise: frame0: regs=r7 stack= before 39: (85) call bpf_ringbuf_reserve_dynptr#198
+mark_precise: frame0: regs=r7 stack= before 38: (07) r4 += -96
+mark_precise: frame0: regs=r7 stack= before 37: (bf) r4 = r10
+mark_precise: frame0: regs=r7 stack= before 36: (b7) r3 = 0
+mark_precise: frame0: regs=r7 stack= before 35: (b7) r2 = 16
+mark_precise: frame0: regs=r7 stack= before 33: (18) r1 = 0xffff888005107000
+mark_precise: frame0: regs=r7 stack= before 32: (71) r9 = *(u8 *)(r0 +6)
+mark_precise: frame0: regs=r7 stack= before 31: (15) if r0 == 0x0 goto pc+38
+mark_precise: frame0: parent state regs=r7 stack=:  R0=rdonly_mem_or_null(id=2,sz=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar() R10=fp0 fp-8=0000???? fp-16=ctx() fp-48=dynptr_skb(id=1,dynptr_id=1) fp-80=mmmmmmmm
+mark_precise: frame0: last_idx 30 first_idx 17 subseq_idx 31 
+mark_precise: frame0: regs=r7 stack= before 30: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: regs=r7 stack= before 29: (b7) r4 = 8
+mark_precise: frame0: regs=r7 stack= before 28: (07) r3 += -80
+mark_precise: frame0: regs=r7 stack= before 27: (bf) r3 = r10
+mark_precise: frame0: regs=r7 stack= before 26: (b7) r2 = 0
+mark_precise: frame0: regs=r7 stack= before 25: (07) r1 += -48
+mark_precise: frame0: regs=r7 stack= before 24: (bf) r1 = r10
+mark_precise: frame0: regs=r7 stack= before 23: (85) call bpf_dynptr_from_skb#79853
+mark_precise: frame0: regs=r7 stack= before 22: (07) r3 += -48
+mark_precise: frame0: regs=r7 stack= before 21: (bf) r3 = r10
+mark_precise: frame0: regs=r7 stack= before 20: (b7) r2 = 0
+mark_precise: frame0: regs=r7 stack= before 19: (79) r1 = *(u64 *)(r10 -16)
+mark_precise: frame0: regs=r7 stack= before 18: (bf) r8 = r0
+mark_precise: frame0: regs=r7 stack= before 17: (15) if r0 == 0x0 goto pc+52
+mark_precise: frame0: parent state regs=r7 stack=:  R0=map_value(ks=4,vs=64) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar() R10=fp0 fp-8=0000???? fp-16=ctx()
+mark_precise: frame0: last_idx 16 first_idx 0 subseq_idx 17 
+mark_precise: frame0: regs=r7 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r7 stack= before 14: (18) r1 = 0xffff888005106c00
+mark_precise: frame0: regs=r7 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r7 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r7 stack= before 11: (62) *(u32 *)(r10 -4) = 0
+mark_precise: frame0: regs=r7 stack= before 10: (79) r9 = *(u64 *)(r0 +8)
+mark_precise: frame0: regs=r7 stack= before 9: (61) r7 = *(u32 *)(r0 +4)
+67: R7=scalar(id=8,smin=smin32=0,smax=umax=smax32=umax32=12) R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=12,var_off=(0x0; 0xf))
+67: (72) *(u8 *)(r8 +61) = -1
+invalid access to map value, value_size=64 off=73 size=1
+R8 max value is outside of the allowed memory range
+processed 66 insns (limit 1000000) max_states_per_insn 0 total_states 6 peak_states 6 mark_read 0
+
+---END---
+===PROG gencomp#sc40ed5ef#230 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=45 reg=8 off=55 size=1
+COMP seed=0xc40ed5ef insns=55 recipe=spill,dynskb,call,alu32,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s230 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=4 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=9 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+func#1 @50
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+40
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....67.. (79) r9 = *(u64 *)(r0 +8)
+     11: ......67.. (62) *(u32 *)(r10 -4) = 0
+     12: ......67.. (bf) r2 = r10
+     13: ..2...67.. (07) r2 += -4
+     14: ..2...67.. (18) r1 = 0xffff888005106c00
+     16: .12...67.. (85) call bpf_map_lookup_elem#1
+     17: 0.....67.. (15) if r0 == 0x0 goto pc+30
+     18: 0.....67.. (bf) r8 = r0
+     19: ......678. (7b) *(u64 *)(r10 -40) = r7
+     20: ......6.8. (79) r7 = *(u64 *)(r10 -40)
+     21: ......678. (79) r1 = *(u64 *)(r10 -16)
+     22: .1....678. (b7) r2 = 0
+     23: .12...678. (bf) r3 = r10
+     24: .123..678. (07) r3 += -56
+     25: .123..678. (85) call bpf_dynptr_from_skb#79853
+     26: ......678. (bf) r1 = r10
+     27: .1....678. (07) r1 += -56
+     28: .1....678. (b7) r2 = 0
+     29: .12...678. (bf) r3 = r10
+     30: .123..678. (07) r3 += -88
+     31: .123..678. (b7) r4 = 8
+     32: .1234.678. (85) call bpf_dynptr_slice#79866
+     33: 0.2345678. (15) if r0 == 0x0 goto pc+14
+     34: 0.2345678. (71) r9 = *(u8 *)(r0 +0)
+     35: ..23456789 (bf) r1 = r6
+     36: .12345.789 (85) call pc+13
+     37: 0......789 (bf) r6 = r0
+     38: .......789 (64) w7 <<= 13
+     39: ........89 (bf) r6 = r9
+     40: ......6.89 (07) r6 += 4
+     41: ......6.89 (25) if r6 > 0x12 goto pc+6
+     42: ......6.89 (bf) r7 = r9
+     43: ......6.89 (25) if r6 > 0xc goto pc+4
+     44: ........89 (0f) r8 += r9
+     45: ........8. (72) *(u8 *)(r8 +55) = -1
+     46: .......... (b7) r0 = 1
+     47: 0......... (95) exit
+     48: .......... (b7) r0 = 0
+     49: 0......... (95) exit
+     50: .1........ (25) if r1 > 0xf goto pc+2
+     51: .1........ (bf) r0 = r1
+     52: 0......... (95) exit
+     53: .......... (b7) r0 = 0
+     54: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+40       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+30      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0                      ; R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (7b) *(u64 *)(r10 -40) = r7       ; R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R10=fp0 fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+20: (79) r7 = *(u64 *)(r10 -40)       ; R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R10=fp0 fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+21: (79) r1 = *(u64 *)(r10 -16)       ; R1=ctx() R10=fp0 fp-16=ctx()
+22: (b7) r2 = 0                       ; R2=0
+23: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+24: (07) r3 += -56                    ; R3=fp-56
+25: (85) call bpf_dynptr_from_skb#79853       ; R0=scalar() fp-56=dynptr_skb(id=2,dynptr_id=1)
+26: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+27: (07) r1 += -56                    ; R1=fp-56
+28: (b7) r2 = 0                       ; R2=0
+29: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+30: (07) r3 += -88                    ; R3=fp-88
+31: (b7) r4 = 8                       ; R4=8
+32: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 32 first_idx 26 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 31: (b7) r4 = 8
+mark_precise: frame0: last_idx 32 first_idx 26 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 31: (b7) r4 = 8
+33: R0=rdonly_mem_or_null(id=3,sz=8) fp-56=dynptr_skb(id=2,dynptr_id=1)
+33: (15) if r0 == 0x0 goto pc+14      ; R0=rdonly_mem(sz=8)
+34: (71) r9 = *(u8 *)(r0 +0)          ; R0=rdonly_mem(sz=8) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+35: (bf) r1 = r6                      ; R1=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R6=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+36: (85) call pc+13
+caller:
+ R6=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) fp-56=dynptr_skb(id=2,dynptr_id=1) fp-88=mmmmmmmm
+callee:
+ frame1: R1=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R10=fp0
+50: frame1: R1=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R10=fp0
+50: (25) if r1 > 0xf goto pc+2        ; frame1: R1=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+51: (bf) r0 = r1                      ; frame1: R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R1=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+52: (95) exit
+(0) frame 0 insn 32 +live -48,-56,-88 
+(0) frame 0 insn 26 +live -48,-56,-88 
+(0) frame 0 insn 25 +live -88 
+(0) frame 0 insn 25 +written -48,-56 
+(0) frame 0 insn 21 +live -16,-88 
+(0) frame 0 insn 21 +written -48,-56 
+(0) frame 0 insn 20 +live -16,-40,-88 
+(0) frame 0 insn 20 +written -48,-56 
+(0) frame 0 insn 19 +live -16,-88 
+(0) frame 0 insn 19 +written -40,-48,-56 
+(0) frame 0 insn 17 +live -16,-88 
+(0) frame 0 insn 16 +live -8,-16,-88 
+(0) frame 0 insn 7 +live -8,-16,-88 
+(0) frame 0 insn 6 +live -8,-16,-88 
+(0) frame 0 insn 0 +live -8,-88 
+(0) frame 0 insn 0 +written -16 
+(0) live stack update done in 2 iterations
+returning from callee:
+ frame1: R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R1=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R10=fp0
+to caller at 37:
+ R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) fp-56=dynptr_skb(id=2,dynptr_id=1) fp-88=mmmmmmmm
+
+from 52 to 37: R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) fp-56=dynptr_skb(id=2,dynptr_id=1) fp-88=mmmmmmmm
+37: (bf) r6 = r0                      ; R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+38: (64) w7 <<= 13                    ; R7=scalar(smin=0,smax=umax=umax32=0xffffe000,smax32=0x7fffe000,var_off=(0x0; 0xffffe000))
+39: (bf) r6 = r9                      ; R6=scalar(id=5,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R9=scalar(id=5,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+40: (07) r6 += 4                      ; R6=scalar(id=5+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff))
+41: (25) if r6 > 0x12 goto pc+6       ; R6=scalar(id=5+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=18,var_off=(0x0; 0x1f))
+42: (bf) r7 = r9                      ; R7=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=14) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=14)
+43: (25) if r6 > 0xc goto pc+4        ; R6=scalar(id=5+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=12,var_off=(0x0; 0xf))
+44: (0f) r8 += r9
+mark_precise: frame0: last_idx 44 first_idx 41 subseq_idx -1 
+mark_precise: frame0: regs=r9 stack= before 43: (25) if r6 > 0xc goto pc+4
+mark_precise: frame0: regs=r9 stack= before 42: (bf) r7 = r9
+mark_precise: frame0: regs=r9 stack= before 41: (25) if r6 > 0x12 goto pc+6
+mark_precise: frame0: parent state regs=r6,r9 stack=:  R0=scalar(id=4,smin=smin32=0,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf)) R6=Pscalar(id=5+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=259,var_off=(0x0; 0x1ff)) R7=scalar(smin=0,smax=umax=umax32=0xffffe000,smax32=0x7fffe000,var_off=(0x0; 0xffffe000)) R8=map_value(ks=4,vs=64) R9=Pscalar(id=5,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) fp-56=dynptr_skb(id=2,dynptr_id=1) fp-88=mmmmmmmm
+mark_precise: frame0: last_idx 40 first_idx 36 subseq_idx 41 
+mark_precise: frame0: regs=r6,r9 stack= before 40: (07) r6 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 39: (bf) r6 = r9
+mark_precise: frame0: regs=r9 stack= before 38: (64) w7 <<= 13
+mark_precise: frame0: regs=r9 stack= before 37: (bf) r6 = r0
+mark_precise: frame0: regs=r9 stack= before 52: (95) exit
+mark_precise: frame1: regs= stack= before 51: (bf) r0 = r1
+mark_precise: frame1: regs= stack= before 50: (25) if r1 > 0xf goto pc+2
+mark_precise: frame1: regs= stack= before 36: (85) call pc+13
+mark_precise: frame0: parent state regs=r9 stack=:  R0=rdonly_mem(sz=8) R1=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R6=scalar(id=4,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R10=fp0 fp-8=0000???? fp-16=ctx() fp-40=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) fp-56=dynptr_skb(id=2,dynptr_id=1) fp-88=mmmmmmmm
+mark_precise: frame0: last_idx 35 first_idx 26 subseq_idx 36 
+mark_precise: frame0: regs=r9 stack= before 35: (bf) r1 = r6
+mark_precise: frame0: regs=r9 stack= before 34: (71) r9 = *(u8 *)(r0 +0)
+45: R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=14,var_off=(0x0; 0xf)) R9=scalar(id=6,smin=smin32=0,smax=umax=smax32=umax32=14)
+45: (72) *(u8 *)(r8 +55) = -1
+invalid access to map value, value_size=64 off=69 size=1
+R8 max value is outside of the allowed memory range
+processed 47 insns (limit 1000000) max_states_per_insn 0 total_states 4 peak_states 4 mark_read 0
+
+---END---
+===PROG gencomp#s5e1c9d26#341 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=30 reg=8 off=57 size=1
+COMP seed=0x5e1c9d26 insns=35 recipe=loop,link,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s341 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=2 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=6 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+25
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....6... (79) r9 = *(u64 *)(r0 +8)
+     11: ......6... (62) *(u32 *)(r10 -4) = 0
+     12: ......6... (bf) r2 = r10
+     13: ..2...6... (07) r2 += -4
+     14: ..2...6... (18) r1 = 0xffff888005106c00
+     16: .12...6... (85) call bpf_map_lookup_elem#1
+     17: 0.....6... (15) if r0 == 0x0 goto pc+15
+     18: 0.....6... (bf) r8 = r0
+  1  19: ......6.8. (e5) may_goto pc+2
+  1  20: ......6.8. (57) r6 &= 7
+  1  21: ......6.8. (05) goto pc-3
+     22: ......6.8. (bf) r9 = r6
+     23: ......6.89 (07) r9 += 4
+     24: ......6.8. (bf) r7 = r6
+     25: ......678. (07) r7 += 4
+     26: ......678. (25) if r7 > 0xe goto pc+6
+     27: ......678. (bf) r9 = r6
+     28: ......678. (25) if r7 > 0xa goto pc+4
+     29: ......6.8. (0f) r8 += r6
+     30: ........8. (72) *(u8 *)(r8 +57) = -1
+     31: .......... (b7) r0 = 1
+     32: 0......... (95) exit
+     33: .......... (b7) r0 = 0
+     34: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+25       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+15      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0
+SCC enter (1)
+19: R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (e5) may_goto pc+2
+22: (bf) r9 = r6                      ; R6=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+23: (07) r9 += 4                      ; R9=scalar(id=1+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff))
+24: (bf) r7 = r6                      ; R6=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(id=1,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+25: (07) r7 += 4                      ; R7=scalar(id=1+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff))
+26: (25) if r7 > 0xe goto pc+6        ; R7=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=14,var_off=(0x0; 0xf))
+27: (bf) r9 = r6                      ; R6=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=10) R9=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=10)
+28: (25) if r7 > 0xa goto pc+4        ; R7=scalar(id=1+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=10,var_off=(0x0; 0xf))
+29: (0f) r8 += r6
+mark_precise: frame0: last_idx 29 first_idx 19 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 28: (25) if r7 > 0xa goto pc+4
+mark_precise: frame0: regs=r6 stack= before 27: (bf) r9 = r6
+mark_precise: frame0: regs=r6 stack= before 26: (25) if r7 > 0xe goto pc+6
+mark_precise: frame0: regs=r6,r7,r9 stack= before 25: (07) r7 += 4
+mark_precise: frame0: regs=r6,r7,r9 stack= before 24: (bf) r7 = r6
+mark_precise: frame0: regs=r6,r9 stack= before 23: (07) r9 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 22: (bf) r9 = r6
+mark_precise: frame0: regs=r6 stack= before 19: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r6 stack=:  R0=map_value(ks=4,vs=64) R6=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R8=map_value(ks=4,vs=64) R9=scalar() R10=fp0 fp-8=0000???? fp-16=ctx()
+mark_precise: frame0: last_idx 18 first_idx 17 subseq_idx 19 
+mark_precise: frame0: regs=r6 stack= before 18: (bf) r8 = r0
+mark_precise: frame0: regs=r6 stack= before 17: (15) if r0 == 0x0 goto pc+15
+mark_precise: frame0: parent state regs=r6 stack=:  R0=map_value(ks=4,vs=64) R6=Pscalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar() R10=fp0 fp-8=0000???? fp-16=ctx()
+mark_precise: frame0: last_idx 16 first_idx 0 subseq_idx 17 
+mark_precise: frame0: regs=r6 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 14: (18) r1 = 0xffff888005106c00
+mark_precise: frame0: regs=r6 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 11: (62) *(u32 *)(r10 -4) = 0
+mark_precise: frame0: regs=r6 stack= before 10: (79) r9 = *(u64 *)(r0 +8)
+mark_precise: frame0: regs=r6 stack= before 9: (61) r7 = *(u32 *)(r0 +4)
+mark_precise: frame0: regs=r6 stack= before 8: (61) r6 = *(u32 *)(r0 +0)
+30: R6=scalar(id=2,smin=smin32=0,smax=umax=smax32=umax32=10) R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=10,var_off=(0x0; 0xf))
+30: (72) *(u8 *)(r8 +57) = -1
+invalid access to map value, value_size=64 off=67 size=1
+R8 max value is outside of the allowed memory range
+processed 27 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 2 mark_read 0
+
+---END---
+===PROG gencomp#s57128973#650 type=sched_cls ===
+RESULT decision=reject fd=-1 errno=13 load_ns=0
+STORE insn=69 reg=8 off=52 size=1
+COMP seed=0x57128973 insns=74 recipe=iter,dynskb,link,skref,narrow,relink, slice=0 base_off=0
+PRUNE fall=comp taken=s650 fall_safe=1 taken_safe=1 stack=1 base_verdict=reject base_errno=13 base_states=5 base_reason=verdict freq_verdict=reject freq_errno=13 freq_states=13 freq_reason=verdict inv_verdict=reject inv_errno=13 inv_reason=verdict
+---LOG---
+func#0 @0
+Live regs before insn:
+      0: .1........ (7b) *(u64 *)(r10 -16) = r1
+      1: .......... (62) *(u32 *)(r10 -4) = 0
+      2: .......... (bf) r2 = r10
+      3: ..2....... (07) r2 += -4
+      4: ..2....... (18) r1 = 0xffff888005106800
+      6: .12....... (85) call bpf_map_lookup_elem#1
+      7: 0......... (15) if r0 == 0x0 goto pc+64
+      8: 0......... (61) r6 = *(u32 *)(r0 +0)
+      9: 0.....6... (61) r7 = *(u32 *)(r0 +4)
+     10: 0.....6... (79) r9 = *(u64 *)(r0 +8)
+     11: ......6..9 (62) *(u32 *)(r10 -4) = 0
+     12: ......6..9 (bf) r2 = r10
+     13: ..2...6..9 (07) r2 += -4
+     14: ..2...6..9 (18) r1 = 0xffff888005106c00
+     16: .12...6..9 (85) call bpf_map_lookup_elem#1
+     17: 0.....6..9 (15) if r0 == 0x0 goto pc+54
+     18: 0.....6..9 (bf) r8 = r0
+     19: ......6.89 (bf) r1 = r10
+     20: .1....6.89 (07) r1 += -8
+     21: .1....6.89 (b7) r2 = 0
+     22: .12...6.89 (b7) r3 = 4
+     23: .123..6.89 (85) call bpf_iter_num_new#80135
+  1  24: ......6.89 (bf) r1 = r10
+  1  25: .1....6.89 (07) r1 += -8
+  1  26: .1....6.89 (85) call bpf_iter_num_next#80136
+  1  27: 0.....6.89 (15) if r0 == 0x0 goto pc+2
+  1  28: ......6.89 (57) r6 &= 7
+  1  29: ......6.89 (05) goto pc-6
+     30: ........89 (bf) r1 = r10
+     31: .1......89 (07) r1 += -8
+     32: .1......89 (85) call bpf_iter_num_destroy#80133
+     33: ........89 (79) r1 = *(u64 *)(r10 -16)
+     34: .1......89 (b7) r2 = 0
+     35: .12.....89 (bf) r3 = r10
+     36: .123....89 (07) r3 += -48
+     37: .123....89 (85) call bpf_dynptr_from_skb#79853
+     38: ........89 (bf) r1 = r10
+     39: .1......89 (07) r1 += -48
+     40: .1......89 (b7) r2 = 0
+     41: .12.....89 (bf) r3 = r10
+     42: .123....89 (07) r3 += -80
+     43: .123....89 (b7) r4 = 8
+     44: .1234...89 (85) call bpf_dynptr_slice#79866
+     45: 0.......89 (15) if r0 == 0x0 goto pc+26
+     46: 0.......89 (71) r7 = *(u8 *)(r0 +3)
+     47: .......789 (bf) r6 = r7
+     48: ......6.89 (62) *(u32 *)(r10 -96) = 0
+     49: ......6.89 (62) *(u32 *)(r10 -92) = 0
+     50: ......6.89 (62) *(u32 *)(r10 -88) = 0
+     51: ......6.89 (79) r1 = *(u64 *)(r10 -16)
+     52: .1....6.89 (bf) r2 = r10
+     53: .12...6.89 (07) r2 += -96
+     54: .12...6.89 (b7) r3 = 12
+     55: .123..6.89 (b7) r4 = -1
+     56: .1234.6.89 (b7) r5 = 0
+     57: .123456.89 (85) call bpf_sk_lookup_tcp#84
+     58: 0.....6.89 (15) if r0 == 0x0 goto pc+3
+     59: 0.......89 (61) r6 = *(u32 *)(r0 +0)
+     60: 0.....6.89 (bf) r1 = r0
+     61: .1....6.89 (85) call bpf_sk_release#86
+     62: ......6.89 (25) if r9 > 0x1 goto pc+9
+     63: ......6.8. (bf) r9 = r6
+     64: ......6.89 (07) r9 += 4
+     65: ......6.89 (25) if r9 > 0x10 goto pc+6
+     66: ......6.89 (bf) r7 = r6
+     67: ......6.89 (25) if r9 > 0xf goto pc+4
+     68: ......6.8. (0f) r8 += r6
+     69: ........8. (72) *(u8 *)(r8 +52) = -1
+     70: .......... (b7) r0 = 1
+     71: 0......... (95) exit
+     72: .......... (b7) r0 = 0
+     73: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (7b) *(u64 *)(r10 -16) = r1        ; R1=ctx() R10=fp0 fp-16=ctx()
+1: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+2: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+3: (07) r2 += -4                      ; R2=fp-4
+4: (18) r1 = 0xffff888005106800       ; R1=map_ptr(ks=4,vs=16)
+6: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=16)
+7: (15) if r0 == 0x0 goto pc+64       ; R0=map_value(ks=4,vs=16)
+8: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=16) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+9: (61) r7 = *(u32 *)(r0 +4)          ; R0=map_value(ks=4,vs=16) R7=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+10: (79) r9 = *(u64 *)(r0 +8)         ; R0=map_value(ks=4,vs=16) R9=scalar()
+11: (62) *(u32 *)(r10 -4) = 0         ; R10=fp0 fp-8=0000????
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005106c00      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+54      ; R0=map_value(ks=4,vs=64)
+18: (bf) r8 = r0                      ; R0=map_value(ks=4,vs=64) R8=map_value(ks=4,vs=64)
+19: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+20: (07) r1 += -8                     ; R1=fp-8
+21: (b7) r2 = 0                       ; R2=0
+22: (b7) r3 = 4                       ; R3=4
+23: (85) call bpf_iter_num_new#80135          ; R0=scalar() fp-8=iter_num(ref_id=1,state=active,depth=0) refs=1
+24: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=1
+25: (07) r1 += -8
+SCC enter (1)
+26: R1=fp-8 refs=1
+26: (85) call bpf_iter_num_next#80136         ; R0=0 fp-8=iter_num(ref_id=1,state=drained,depth=0) refs=1
+27: (15) if r0 == 0x0 goto pc+2
+mark_precise: frame0: last_idx 27 first_idx 26 subseq_idx -1 
+mark_precise: frame0: regs=r0 stack= before 26: (85) call bpf_iter_num_next#80136
+27: R0=0 refs=1
+30: (bf) r1 = r10                     ; R1=fp0 R10=fp0 refs=1
+31: (07) r1 += -8                     ; R1=fp-8 refs=1
+32: (85) call bpf_iter_num_destroy#80133      ;
+33: (79) r1 = *(u64 *)(r10 -16)       ; R1=ctx() R10=fp0 fp-16=ctx()
+34: (b7) r2 = 0                       ; R2=0
+35: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+36: (07) r3 += -48                    ; R3=fp-48
+37: (85) call bpf_dynptr_from_skb#79853       ; R0=scalar() fp-48=dynptr_skb(id=3,dynptr_id=1)
+38: (bf) r1 = r10                     ; R1=fp0 R10=fp0
+39: (07) r1 += -48                    ; R1=fp-48
+40: (b7) r2 = 0                       ; R2=0
+41: (bf) r3 = r10                     ; R3=fp0 R10=fp0
+42: (07) r3 += -80                    ; R3=fp-80
+43: (b7) r4 = 8                       ; R4=8
+44: (85) call bpf_dynptr_slice#79866
+mark_precise: frame0: last_idx 44 first_idx 38 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 43: (b7) r4 = 8
+mark_precise: frame0: last_idx 44 first_idx 38 subseq_idx -1 
+mark_precise: frame0: regs=r4 stack= before 43: (b7) r4 = 8
+45: R0=rdonly_mem_or_null(id=4,sz=8) fp-48=dynptr_skb(id=3,dynptr_id=1)
+45: (15) if r0 == 0x0 goto pc+26      ; R0=rdonly_mem(sz=8)
+46: (71) r7 = *(u8 *)(r0 +3)          ; R0=rdonly_mem(sz=8) R7=scalar(smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+47: (bf) r6 = r7                      ; R6=scalar(id=5,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff)) R7=scalar(id=5,smin=smin32=0,smax=umax=smax32=umax32=255,var_off=(0x0; 0xff))
+48: (62) *(u32 *)(r10 -96) = 0        ; R10=fp0 fp-96=????0
+49: (62) *(u32 *)(r10 -92) = 0        ; R10=fp0 fp-96=0000mmmm
+50: (62) *(u32 *)(r10 -88) = 0        ; R10=fp0 fp-88=????0
+51: (79) r1 = *(u64 *)(r10 -16)       ; R1=ctx() R10=fp0 fp-16=ctx()
+52: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+53: (07) r2 += -96                    ; R2=fp-96
+54: (b7) r3 = 12                      ; R3=12
+55: (b7) r4 = -1                      ; R4=-1
+56: (b7) r5 = 0                       ; R5=0
+57: (85) call bpf_sk_lookup_tcp#84
+mark_precise: frame0: last_idx 57 first_idx 38 subseq_idx -1 
+mark_precise: frame0: regs=r3 stack= before 56: (b7) r5 = 0
+mark_precise: frame0: regs=r3 stack= before 55: (b7) r4 = -1
+mark_precise: frame0: regs=r3 stack= before 54: (b7) r3 = 12
+58: R0=sock_or_null(id=7,ref_obj_id=7) refs=7
+58: (15) if r0 == 0x0 goto pc+3       ; R0=sock(ref_obj_id=7) refs=7
+59: (61) r6 = *(u32 *)(r0 +0)         ; R0=sock(ref_obj_id=7) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) refs=7
+60: (bf) r1 = r0                      ; R0=sock(ref_obj_id=7) R1=sock(ref_obj_id=7) refs=7
+61: (85) call bpf_sk_release#86       ; R0=scalar()
+62: (25) if r9 > 0x1 goto pc+9        ; R9=scalar(smin=smin32=0,smax=umax=smax32=umax32=1,var_off=(0x0; 0x1))
+63: (bf) r9 = r6                      ; R6=scalar(id=8,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff)) R9=scalar(id=8,smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+64: (07) r9 += 4                      ; R9=scalar(id=8+4,smin=umin=4,smax=umax=0x100000003,var_off=(0x0; 0x1ffffffff))
+65: (25) if r9 > 0x10 goto pc+6       ; R9=scalar(id=8+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=16,var_off=(0x0; 0x1f))
+66: (bf) r7 = r6                      ; R6=scalar(id=9,smin=smin32=0,smax=umax=smax32=umax32=12) R7=scalar(id=9,smin=smin32=0,smax=umax=smax32=umax32=12)
+67: (25) if r9 > 0xf goto pc+4        ; R9=scalar(id=8+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=15,var_off=(0x0; 0xf))
+68: (0f) r8 += r6
+mark_precise: frame0: last_idx 68 first_idx 67 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 67: (25) if r9 > 0xf goto pc+4
+mark_precise: frame0: parent state regs=r6 stack=:  R0=scalar() R6=Pscalar(id=9,smin=smin32=0,smax=umax=smax32=umax32=12) R7=scalar(id=9,smin=smin32=0,smax=umax=smax32=umax32=12) R8=map_value(ks=4,vs=64) R9=scalar(id=8+4,smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=16,var_off=(0x0; 0x1f)) R10=fp0 fp-16=ctx() fp-48=dynptr_skb(id=3,dynptr_id=1) fp-80=mmmmmmmm fp-88=????0 fp-96=0000mmmm
+mark_precise: frame0: last_idx 66 first_idx 58 subseq_idx 67 
+mark_precise: frame0: regs=r6 stack= before 66: (bf) r7 = r6
+mark_precise: frame0: regs=r6 stack= before 65: (25) if r9 > 0x10 goto pc+6
+mark_precise: frame0: regs=r6,r9 stack= before 64: (07) r9 += 4
+mark_precise: frame0: regs=r6,r9 stack= before 63: (bf) r9 = r6
+mark_precise: frame0: regs=r6 stack= before 62: (25) if r9 > 0x1 goto pc+9
+mark_precise: frame0: regs=r6 stack= before 61: (85) call bpf_sk_release#86
+mark_precise: frame0: regs=r6 stack= before 60: (bf) r1 = r0
+mark_precise: frame0: regs=r6 stack= before 59: (61) r6 = *(u32 *)(r0 +0)
+69: R6=scalar(id=9,smin=smin32=0,smax=umax=smax32=umax32=12) R8=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=12,var_off=(0x0; 0xf))
+69: (72) *(u8 *)(r8 +52) = -1
+invalid access to map value, value_size=64 off=64 size=1
+R8 max value is outside of the allowed memory range
+processed 66 insns (limit 1000000) max_states_per_insn 0 total_states 5 peak_states 5 mark_read 0
+
+---END---

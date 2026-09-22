@@ -1,0 +1,57 @@
+fd4cfa8c8f9a  No-unconsumed  verifier.c:__check_buffer_access  negative-start rejection on the buffer access path; a verdict, writes no register field B reads
+2aaf67f0516f  No-unconsumed  verifier.c:check_kfunc_args  r0_size > U32_MAX rejection; argument validation, no state field written
+37363191cbe8  No-unconsumed  verifier.c:check_flow_keys_access  reads var_off to reject a variable offset; access verdict, does not write state
+179ee84a8911  Yes  verifier.c:backtrack_insn  atomic-fetch case in precision backtracking sets/clears bt regs -> writes `precise`, which B consumes from the capture
+efc11a667878  Undecided  verifier.c:__update_reg64_bounds  tightens umin/umax/var_off (fields B consumes) when the tnum admits one value; pre-fix values are imprecise rather than wrong, and whether imprecision counts as corruption for the blind-class question is not settled by the diff
+e2d2115e56c4  Yes  verifier.c:backtrack_insn  excludes PTR_TO_STACK regs from bt_set_reg -> changes which regs get `precise`; B consumes precise
+c03bb2fa327e  No-unconsumed  verifier.c:check_atomic_load  reorders check_load_mem/check_store_reg before an OOB read in verifier code; no state field B reads is written
+b0e66977dc07  No-unconsumed  verifier.c:check_stack_write_fixed_off  narrow spill onto a 64-bit spilled-scalar slot: stack slot state, which B does not consume
+d0b98f6a17a5  No-unconsumed  verifier.c:check_stack_slot_within_bounds  stack bounds for fastcall; access verdict
+aa30eb3260b2  No-unconsumed  verifier.c:is_state_visited  forces a checkpoint when jmp history > 40; a guard around states_equal that B does not model
+8ea607330a39  No-unconsumed  verifier.c:check_helper_mem_access  access_type replaces raw_mode in a helper-argument access check; verdict, writes no state B reads
+763aa759d3b2  No-unconsumed  verifier.c:retval_range_within  return-value range check on the exit path, reads bounds and writes nothing; not the prune predicate, not consumed by B
+4bf79f9be434  Yes  verifier.c:linked_regs/sync path  per-instruction linked-regs history changes how scalar ids are propagated -> writes `id`, which B consumes
+44b7f7151dfc  Yes  verifier.c:coerce_subreg_to_size_sx  sets a var_off that was missed -> writes var_off, which B consumes
+380d5f89a481  Yes  verifier.c:set_sext32_default_val  sets a var_off that was missed -> writes var_off, which B consumes
+22c7fa171a02  No-unconsumed  verifier.c:adjust_ptr_min_max_vals  rejects variable-offset alu on PTR_TO_FLOW_KEYS; a verdict, no consumed field written
+6b4a64bafd10  No-unconsumed  verifier.c:grow_stack_state  stack slot growth and subprog stack_depth; stack state, which B does not consume
+829955981c55  No-unconsumed  verifier.c:check_return_code  changes the printed range in a rejection message for async callbacks; log/verdict only
+d84b1a6708ee  Yes  verifier.c:__mark_chain_precision  subseq_idx fed to backtrack_insn -> which registers become `precise`; B consumes precise
+71b547f56124  Yes  verifier.c:backtrack_insn  BPF_X case adds missing precision taints -> writes `precise`; B consumes it (title says pruning, source is the precise producer)
+7be14c1c9030  Yes  verifier.c:__reg_bound_offset  64->32 var_off subreg propagation -> writes var_off/u32 bounds, which B consumes
+79168a669d81  No-unconsumed  verifier.c:dynptr_get_spi  var_off check on a dynptr argument; verdict, writes nothing B reads
+8374bfd5a3c9  Yes  verifier.c:check_cond_jmp_op  nullness propagation for reg-to-reg compare writes PTR_MAYBE_NULL into branch-state `type`; B consumes type
+f5e477a861e4  No-unconsumed  verifier.c:check_stack_write_var_off  slot-type check on a stack write; stack state, which B does not consume
+a657182a5c51  No-unconsumed  verifier.c:record_func_key  tail-call key range check replaces tnum_range; verdict on a helper argument
+a12ca6277eca  Yes  verifier.c:reg_set_min_max  jmp32 jeq/jne now marks the right register known -> writes var_off/bounds in branch states; B consumes them
+bff61f6faedb  No-unconsumed  verifier.c:check_mem_access  base_type/nullness check before a PTR_TO_BTF_ID access; access verdict
+345e004d0233  Yes  verifier.c:backtrack_insn  drops the DW-only early return for spill/fill in precision backtracking -> writes `precise`; B consumes it
+b9979db83401  Yes  verifier.c:__reg64_bound_s32  64->32 bound propagation boundary condition -> writes 32-bit bounds/var_off; B consumes them
+10bf4e83167c  Yes  verifier.c:__reg_combine_64_into_32  requires both umin and umax to fit before deriving u32 bounds -> writes u32 bounds; B consumes them
+9b00f1b78809  No-unconsumed  verifier.c:fixup_bpf_calls  mod32 patchlet in the post-verification rewrite; emitted stream, not verifier state B reads
+e88b2c6e5a4d  No-unconsumed  verifier.c:fixup_bpf_calls  div/mod src truncation patchlet; post-verification rewrite
+b02709587ea3  Yes  verifier.c:__reg_combine_64_into_32  signed 64->32 propagation and retval smin -> writes s32/smin bounds; B consumes them
+5b9fbeb75b6a  Yes  verifier.c:scalar32_min_max_or  reads the 32-bit halves instead of 64-bit and writes s32 bounds; B consumes them
+3a71dc366d4a  Yes  verifier.c:__reg_assign_32_into_64  writes smin/smax from the 32-bit halves; B consumes 64-bit bounds
+100605035e15  Yes  verifier.c:do_refine_retval_range  writes the return register's smax/umax from msize; B consumes bounds
+f2d67fec0b43  Yes  verifier.c:__reg_bound_offset32  removes an incorrect var_off derivation on jmp32 -> writes var_off; B consumes it
+0af2ffc93a4b  Yes  verifier.c:adjust_scalar_min_max_vals  ARSH under ALU32 writes var_off/smin/smax; B consumes them
+cc52d9140aa9  Yes  verifier.c:record_func_key  adds mark_chain_precision(r3) -> writes `precise`; B consumes it (title names the tail-call key, source is the precise producer)
+1fbd20f8b77b  No-unconsumed  verifier.c:check_stack_access  missing newline in a verbose message; log only
+107c26a70ca8  No-unconsumed  verifier.c:check_stack_boundary  bounded-ness sanity check on var_off stack access; verdict
+088ec26d9c2d  No-unconsumed  verifier.c:check_stack_boundary  rejects indirect var_off stack access for !root; verdict
+f2bcd05ec7b8  No-unconsumed  verifier.c:check_stack_boundary  raw-mode variant of the same rejection; verdict
+5f4566498dee  No-unconsumed  verifier.c:check_sock_access  records ctx_field_size in insn_aux_data for the narrow-load rewrite; not register state B reads
+d623876646be  No-unconsumed  verifier.c:check_sock_access  same fix as 5f4566498dee (duplicate landing); insn_aux_data, not consumed
+979d63d50c0c  No-unconsumed  verifier.c:sanitize_ptr_alu  speculative-execution sanitization: a state-level `speculative` flag and alu_limit patching of emitted code; register bounds B consumes are not written
+f6b1b3bf0d5f  No-unconsumed  verifier.c:fixup_bpf_calls  div/mod-by-zero patchlet and interpreter change; emitted code, not verifier state B reads
+bb7f0f989ca7  No-unconsumed  verifier.c:check_reg_sane_offset  rejects pointer math with huge constants; verdict, and the tightened BPF_MAX_VAR_OFF constants bound access checks
+4cabc5b186b5  Yes  verifier.c:reset_reg_range_values  adds value_from_signed and changes how min/max are derived from signed vs unsigned -> writes bounds; B consumes them
+6bdf6abc56b5  No-unconsumed  verifier.c:check_xadd  rejects a pointer source on xadd for unprivileged; verdict
+1ad2f5838d34  No-examined  verifier.c:compare_ptrs_to_packet  a change to the POINTER arm of states_equal (strict_alignment); B examines pointer registers but its packet arm does not model alignment, so this is predicate-side and outside B's implemented coverage
+79adffcd6489  No-unconsumed  verifier.c:check_ptr_alignment  alignment check for map_value_adj access; verdict
+fce366a9dd0d  No-unconsumed  verifier.c:check_alu_op  restricts which alu ops are accepted on map_value registers; verdict
+2d2be8cab26e  Yes  verifier.c:find_good_pkt_pointers  propagates packet `range` into branch states -> writes range, which B reads from the pointer prefix
+1f415a74b0ca  Yes  verifier.c:check_packet_ptr_add  packet-pointer id now from a global generator -> writes `id`; B consumes id
+1b9b69ecb3a5  Yes  verifier.c:check_packet_ptr_add  imm += ptr pattern yields a PTR_TO_PACKET with copied id/off -> writes type/id/off; B consumes them
+d91b28ed42de  No-unconsumed  verifier.c:check_packet_access  packet access bounds with decreasing order; verdict using off/range, writes nothing

@@ -1,0 +1,177 @@
+A procedure is not a tool, and the question ``does it work'' does not reduce to a
+benchmark score. What Section~3 produces is a partition and a bound, not a
+measurement, so this section states what evaluating such an output can and cannot
+mean before Section~5 applies it.
+
+Four questions are answerable, and they are not equally strong. A fifth is not
+answerable here and is named as such.
+
+\subsection{Did the bound hold?}
+
+The partition claims that defects corrupting an artifact the oracle consumes are
+invisible to it. The claim is testable one defect at a time: build the system at the
+defect, run the oracle, and see whether it fires.
+
+The evidence divides, and the division matters. Most calibration in Section~5 was
+carried out before the partition existed and for other oracles, so it does not test
+this partition. Of the calibration performed afterwards, three pairs were
+\emph{selected using} the partition and are therefore confirmatory rather than
+independent: the partition said where to look, and looking there succeeded.
+
+Twenty-nine cases are genuinely held out. One was the original: a defect classified as
+invisible by the procedure alone---three source lines aligned, no system built---and
+checked afterwards against the fix and the oracle's own predicate. Twenty-eight more were
+added under a pre-registration discipline, in three batches, and the discipline is the
+part worth stating. The frame was fixed by a mechanical query, the sample drawn by a
+content-independent rule, and each case classified from the kernel diff alone with a
+falsifiable prediction attached. Classifications were committed \emph{before} any
+verification ran, in a separate commit from the results, so the ordering is not a
+claim about our conduct---it is visible in the artifact's history.
+
+All twenty-eight predictions held, and the composition matters more than the count.
+Twenty-one corrupt nothing the oracle consumes, so they answer the step's second
+case rather than testing the bound; eighteen of those lie off the
+state-equivalence path altogether. Seven tested the blind bound---the fields at issue
+were a precision flag, register identities, a pointer type, and stack-slot
+metadata, each read from the system's own capture rather than recomputed---and all
+seven were confirmed blind.
+
+The first two batches drew from an unfiltered frame and produced no case touching
+the predicate at all, leaving the bound's upper arm untested. A third batch was
+drawn from a declared stratum---the same frame restricted to fixes whose
+\emph{message} mentions pruning or state equivalence---and the stratification is
+defensible for a measured reason: in an earlier population, four fixes in forty
+carried titles naming a component the diff did not touch, so the message does not
+determine the classification the source must still make. That batch supplied the
+missing case. A fix replacing the scalar arm's equality test with an
+identity-mapping check was classified visible, and the oracle implements exactly
+that arm---indeed it is the arm on which the oracle's own calibrated positive
+fires. One further case is sharper than either arm: a fix to a second comparison
+function, correctly classified as touching the predicate, which the oracle
+nonetheless cannot see because it does not model that function. Predicate does not
+imply visible, and the held-out set now contains an instance rather than an
+assertion.
+
+Two further limits belong here rather than in Section~6, because they bound what
+these twenty-eight establish, and the first needs a distinction to be read
+correctly. Two separate acts in this study are performed from source. Classifying a
+defect from its fix, without building anything, is not a shortcut---it is the
+procedure, and doing it any other way would not be testing the procedure at all.
+Checking afterwards whether the field that defect touches enters the oracle's
+verdict as a consumed value or an independently recomputed one is a different act,
+and there a build is stronger evidence than a reading. For twenty-seven of the
+twenty-eight, no system was built. For the visible case we built both kernels,
+because a reading-only confirmation of the one prediction on the visible side would
+have been the weakest link in the study, and what the build returned is more useful
+than a confirmation. On the first run the oracle was \emph{silent} on the defective
+kernel, although the capture contained exactly the pair the fix's own commit message
+describes. The cause was not the predicate: the oracle routes captures to an
+era-specific implementation of the comparison by their print format, the 2023 format
+is shared with a 2021 era whose comparison legitimately had no identity check, and
+the oracle had no arm for the year in between. The source-level reading ``the arm is
+implemented'' had been true of one path through the oracle and false of the path this
+input took. With the era stated explicitly the oracle fired on the defective kernel
+with the predicted arm and was silent on the fixed one, where the pruning event
+itself no longer occurs; the same capture under the old routing stays silent. We
+count this as a built calibration pair, not as a held-out confirmation, because the
+oracle was changed after the first run; and we count the first run as the study's
+sharpest result, because it is the axis observed inside the oracle: what the oracle
+did was decided by what it read. None of this changes the count. The blind side of
+the bound rests on seven held-out cases; the visible side rests on one, drawn from a
+stratified batch. The build hardens that one case; it does not add a second, and the
+asymmetry is permanent in this study.
+
+The second limit is a wording error of ours. One prediction's falsification
+condition, as written in the first batch, conflated ``modelled in the oracle'' with
+``independently recomputed by the oracle''; the substantive criterion is the second,
+the wording said the first, and a stricter reading would score that case ambiguous
+rather than confirmed. The condition was corrected before the second batch, and both
+readings are recorded.
+
+\subsection{Can a reader check it?}
+
+For a procedure whose output is a classification, auditability is a more appropriate
+evaluation than accuracy, and a stronger one to offer. Every decision in the
+partition cites the fix that anchors it and the location in that fix which settles
+the question. The unit of verification is one commit: a reader who doubts a row can
+open it and re-derive the decision in minutes, without the system, the corpus, or
+any part of our infrastructure.
+
+This is what a classification procedure can offer in place of a score. The claim is
+not ``trust the partition'' but ``check any row of it''---and it now holds for every partition
+in the paper. It did not always. The first flagship partition, of forty fixes, was
+classified with anchors recorded in an engineering log but without retaining the
+per-commit list as one artifact; when a reviewer asked whether its rows could be
+checked, they could not be enumerated, and the partition was rebuilt from a
+mechanical frame with both raters' files kept (Section~5.3). The lesson is procedural
+and we state it as one: a partition's value as evidence depends on keeping the list,
+and the cost of not keeping it was a headline number that had to be withdrawn.
+
+\subsection{Did it change what was done?}
+
+A bound that changes no decision has no value regardless of its correctness, and
+the strongest evidence that this one does is that two oracles in this project were
+built \emph{without} it and paid for that. Oracle $B$ was designed as an independent
+reimplementation of the state-equivalence predicate---independent in the only sense
+then in use---and its evidential entanglement was discovered afterwards, by reading
+the first partition, at which point close to half of the population it had been built
+to catch turned out to have been unreachable from the day it was written. A store-location channel in
+the same project judged runtime writes against the verifier's own printed claim of
+where each store would land; nine successive false findings were traced, one by one,
+to that consumed claim rather than to any predicate, and the verdict had to be moved
+to an input the verifier did not produce. With the axis in hand neither design would
+have been chosen as it was. Both are recorded in the engineering log as discoveries,
+which is the point: they were not obvious at the time.
+
+A smaller instance is recorded as well. Before the partition, the next calibration target had been
+chosen by reading fix summaries. The partition classified that target as
+structurally invisible to the oracle in question and redirected the choice to a
+different defect. The redirected target produced a positive calibration; the
+original would have required building two versions of the system to discover that it
+could not have fired. The procedure replaced a build with a reading.
+
+\subsection{Does it generalize?}
+
+It is not shown here, and the reason is itself a result rather than an omission.
+Validating the bound outside one system requires a defect population classified by
+whether an oracle could have observed each defect. No such data exists: published
+taxonomies organize defects by symptom and by configuration; a technique's own bug
+list measures its sighted side and cannot bound anyone's blind one---including its
+own; and the scope statements techniques do publish are component-scoped rather than
+input-scoped, which Section~7 shows is not the same partition. Section~7 names the study that would supply the missing data and the design
+it must have.
+
+\subsection{Reproducibility, measured once}
+
+Two analysts applying Section~3 to the same population should produce the same
+partition. We measured this on the twenty-eight held-out cases with a second rater
+that had no access to the first rater's labels: an independent model instance given
+only the question of Section~3.3, a factual description of the oracle's consumption
+set, and the diffs. It is not a human rater, and what the experiment measures is
+correspondingly narrower---whether an independent reader of the same source, asked
+the same question, gives the same answer.
+
+On the held-out cases, raw agreement was 25 of 28 and Cohen's $\kappa = 0.71$,
+substantial but not near-perfect. On the rebuilt flagship partition of fifty-seven,
+agreement was 53 of 57 and $\kappa = 0.86$. Both are above the threshold we
+pre-registered as falsifying the auditability claim. The second measurement carries a
+caveat the first does not: the first rater read the fifty-seven diffs as truncated
+excerpts and the second read them in full, and two of the four disagreements are
+plainly the first rater's under-reading. Two details matter more than the coefficient. On the held-out cases the second rater
+answered \emph{Undecided} twice; the first rater answered it zero times in the
+sixty-eight classifications up to that point, which Section~6 had already flagged as
+suspicious, and the flag now has a measurement behind it. On the rebuilt flagship
+partition each rater answered it once, on different cases. And the three disagreements are not
+scattered: all three are fixes that write a \emph{stack slot}, which this oracle does
+not consume at all. The first rater called them blind-by-corruption (Yes); the second
+called them not-consumed (No) or Undecided. Both readers agree the oracle is blind to
+them; they disagree on which of the step's answers that blindness belongs to, and the
+step's wording is what is at fault: its ``No'' covers both a defect the oracle could
+in principle observe and a defect in an artifact the oracle never reads, and only the
+first is potentially visible. Section~3.3 is corrected accordingly. This is also the
+right way to read what the model rater delivered and what it did not. The coefficient
+does not rescue auditability; it makes auditability measurable. What the experiment
+actually produced is the seam, and that finding does not depend on the rater being
+human, because the defect it exposed is in the step's wording, not in any reader of
+it. A human study would supply an effect size for the corrected step; it would not
+supply the correction, which is already in hand.

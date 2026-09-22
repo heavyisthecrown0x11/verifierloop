@@ -1,0 +1,195 @@
+The subject is the in-kernel eBPF verifier: an abstract interpreter that must prove
+memory safety of untrusted programs before the kernel will run them. Two oracles
+were built for it, judging different components of the analysis, and everything
+about them was held constant except the one thing this paper is about.
+
+Two things happen in this section and they carry different weight. Sections~5.1
+and~5.2 \emph{illustrate}: that an oracle reading corrupted state is blind to the
+corruption is close to analytic, and no reader should take the calibration pairs as
+tests of the axis. The tests are elsewhere---in the partition of Section~5.3, whose
+composition is an empirical fact about this population and could have come out
+otherwise; in the held-out predictions of Section~4.1; and in Section~5.4, whose
+mechanism was not derivable from the definition and had to be run to be found.
+
+\subsection{Two oracles, one difference}
+
+Oracle~$A$ judges the verifier's \emph{liveness analysis}---the analysis deciding
+which registers must be compared when two abstract states meet. Oracle~$B$ judges
+the verifier's \emph{state-subsumption predicate}---the decision that one abstract
+state is covered by another, which authorizes pruning the search.
+
+Both are independent reimplementations, written from the algorithm rather than from
+the code, sharing no source with the component they judge. Both follow the same
+rule: where the model cannot decide, it refuses and the case is counted, rather than
+approximated. Both were exercised on the same generated corpus and calibrated by the
+same protocol.
+
+The difference is the consumption set, and it is visible without reading either
+implementation:
+
+\begin{center}
+\ttfamily\footnotesize\raggedright
+\begin{tabular}{@{}l@{}}
+A: run(const insn *ins, int n, result *out)\\
+B: compare(const char *log, cmp *out)
+\end{tabular}
+\end{center}
+
+\noindent$A$'s premises are the instruction stream---upstream of the component it
+judges, and untouched by it. $B$'s premises are the abstract state the verifier
+itself wrote. Section~2's axis predicts, from these signatures alone, that $A$
+survives defects that corrupt verifier state and $B$ reproduces them.
+
+\subsection{Calibration}
+
+Calibration here means: build the system at a real defect and at its fix, with
+configurations held byte-identical, and require the oracle to fire on one and be
+silent on the other. Sixteen pairs anchor the map, and ten were established that
+way; for the rest the defective state was already printed in the fix's own message,
+or the question was decidable by aligning source lines. Appendix~B separates the
+three. Two pairs per oracle carry the argument here.
+
+$A$, positive. A defect in control-flow graph construction dropped an edge, so a
+register that was live was recorded dead. The oracle reported a single cell---the
+instruction and register the fix itself names---on the defective build, and nothing
+on the fixed one.
+
+$A$, boundary. A defect made the kernel treat a register as used when it need not
+be. The deviation is conservative, and the oracle is \emph{required} to stay silent;
+it does. A calibration whose correct outcome is silence is what separates an oracle
+from a difference detector.
+
+$B$, positive. A defect in the identity-matching arm of the subsumption predicate.
+The oracle fires on the defective build; on the fixed build the objected-to pruning
+event does not merely become acceptable, it stops occurring, because the predicate
+now refuses the pair.
+
+$B$, boundary, and it is the axis made concrete. A defect corrupts the precision
+flag that the predicate reads to decide whether to compare at all. The defective
+kernel short-circuits on the corrupted flag; the oracle reads the same flag from the
+same state and short-circuits identically. Three lines---the kernel's, that era's
+kernel, and the model's---align on the same condition. The classification was
+derived from source and required no build.
+
+$B$ is not less careful than $A$. It is blind for a reason legible in its signature.
+
+\subsection{The procedure, applied ahead of the oracle}
+
+The population is fifty-seven fixes to the component's history, and how it was
+assembled matters. A first partition of forty fixes was made early in the project and
+its per-commit list was not retained; its aggregate---23 blind, 2 predicate, 15
+outside---was the paper's headline until the list was found unrecoverable, at which
+point the partition was rebuilt under a pre-registered protocol with a mechanical
+frame: every fix with a \texttt{Fixes:} trailer touching the state-equivalence files
+whose message matches a fixed pattern for printed verifier state, minus the sixteen
+calibration pairs and the twenty-eight held-out cases already classified. The frame,
+both raters' files, and every anchor are artifacts; Section~4.2's claim now holds for
+this partition without qualification. The population satisfies Section~3.2's
+precondition: it is not drawn from what any oracle here reported. It does
+\emph{not} satisfy the weaker second requirement---the frame selects on printed
+internal state, a property that may correlate with how a defect was found---and that
+bias is carried into Section~6 rather than left here.
+
+Each fix was classified by the single question of Section~3.3, decided from the
+diff, by two raters who did not see each other's labels:
+
+\begin{itemize}
+\item \textbf{24 of 57} corrupt an artifact $B$ consumes. Structurally blind.
+\item \textbf{1 of 57} changes the predicate itself, in the pointer arm.
+\item \textbf{31 of 57} corrupt nothing $B$ consumes. The convenient reading of
+this bucket---``outside the state-equivalence path''---is wrong, and the held-out
+work of Section~4.1 supplied the counterexample: a fix that adds a guard
+\emph{in front of} the call to the comparison, changing neither the comparison nor
+any field $B$ reads, yet sitting in the middle of the path. The bucket is defined by
+the consumption set, exactly as Section~3.3 asks, and it mixes defects that are off
+the path with defects that are on it in a part no oracle here models.
+\item \textbf{1 of 57} undecided from source.
+\end{itemize}
+
+The bound is therefore $\mathrm{reach}(B) \le 1/57$. The realized reach is $0/57$:
+the one predicate defect lies in the pointer arm, which $B$ does not implement---the
+gap between a necessary condition and a sufficient one that Section~3.4 insists on.
+The second rater's partition differs in four rows and puts the blind share at 47\%
+rather than 42\%; two of the four are cases where the first rater read a truncated
+excerpt and the second read the full diff, so the truth is likely between them.
+
+Read the other way: within this frame the more sophisticated of the two oracles is
+structurally blind to \textbf{42\%} of the defects and can target \textbf{2\%}. Both
+numbers are properties of the frame as much as of the oracle---Section~6 measures the
+frame's enrichment for the oracle's own path at about threefold, and on the
+unfiltered complement the on-path share is 3 of 20 with no predicate defect among
+them---and both were obtainable before the oracle existed, from material the project
+already had, at the cost of opening fifty-seven commits.
+
+\subsection{What the campaign could not have told us}
+
+Section~2.4 argued that this failure is silent by construction. The case study
+supplies the instance.
+
+Across every run these oracles performed, agreement was total. The blind class is
+not a region where an oracle disagreed and the disagreement was misread; it is a
+region where it agreed, at volume, for the wrong reason. Nothing in the campaign's
+own output distinguishes that agreement from the sound kind. The blindness became
+visible only when the question was put to an external population of real
+defects---which is the procedure, and is why it is a procedure and not a caution.
+Table~\ref{tab:map} reduces the resulting map to the rows this section argues from;
+Appendix~A carries all 56 cells.
+
+The same dependence bounds what an entangled oracle can find when it does fire, and
+the system under test makes the mechanism legible. A third channel in this subject
+reads the verifier's own internal assertion: the kernel checks its register
+invariants and reports a violation as its own bug. That reference is the component's
+account of itself, and it carries the component's judgement about which states are
+worth asserting over---including the recovery attached to that judgement. Detection
+and repair are the same function here: the check reports the violation and, unless a
+test flag makes it fatal, widens the offending register and continues, at five call
+sites none of which is a memory access. Every defect this channel can report is
+therefore one at a point the authors anticipated well enough to install a fallback.
+When the channel did finally disagree with the kernel---on a state the verifier's own
+invariant forbids, reproducing on the current tip and attributable to a single
+commit---a controlled experiment put the emptied register into a memory access and
+found the consequence was refusal, not unsoundness. The agreement was uninformative
+and the disagreement was inconsequential for one reason: what the oracle reads is
+what the component already says about itself.
+
+A run-verified refinement sharpens what ``reads'' means here, and it is not the same
+claim as component-relativity. The boundary pair of Section~5.2 was read there as
+shared evidence: the oracle consumes the corrupted flag and short-circuits with the
+kernel. Running it establishes something narrower. A consumed value need not merely
+feed the oracle's own recomputation; it can decide whether that recomputation happens.
+The comparison this oracle reimplements begins, in the component, with a short-circuit
+on that same bookkeeping flag---a register never marked precise is accepted without
+examination---and any faithful model must mirror it, so the flag the component wrote
+governs the model's independent arithmetic as a switch rather than as an operand. Fed a capture in which
+a register's range had been emptied by an upstream defect, the oracle's range
+comparison never executed: every scalar register was short-circuited out and the
+oracle agreed without looking. The switch is therefore what makes that pair a boundary, and the
+measurement says so rather than inferring it. This cuts slightly against the
+paper's own economy: the bound came from reading, but the mechanism behind one of its
+boundaries came from running, and we do not think the mechanism was recoverable
+without the run. The procedure bounds; calibration explains. The two are not the same
+act and the paper should not be read as claiming the first replaces the second. A defect above
+such a switch is not mis-decided; it is never examined---which is a stronger and
+narrower statement than blindness by shared value, and the one the axis should be
+read to make.
+
+\begin{table}[t]
+\caption{Blind-spot map, reduced. \textbullet~calibrated positive;
+\textcircled{~}~measured boundary; \rule[0.5ex]{1.6ex}{0.4pt}~structurally blind.
+\textbf{An empty cell means untested, not blind}---the distinction the map exists to
+preserve. Full matrix with the fix anchoring each cell in Appendix~A.}
+\label{tab:map}
+\small
+\begin{tabular}{lcc}
+\toprule
+defect class & $A$ liveness & $B$ subsumption \\
+\midrule
+state, self-inconsistent      &            & \rule[0.5ex]{1.6ex}{0.4pt} \\
+state, consistent but wrong   &            & \rule[0.5ex]{1.6ex}{0.4pt} \\
+bookkeeping (precision flag)  &            & \textcircled{~} \\
+predicate, modelled arm       &            & \textbullet \\
+predicate, unmodelled arm     &            & \textcircled{~} \\
+liveness / control flow       & \textbullet\ \textcircled{~} & \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,60 @@
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 064aef5cd186..423ab2c8d0f8 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15902,6 +15902,55 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 		}
+ 		if (states_equal(env, &sl->state, cur)) {
+ hit:
++			/* verifierloop: PRINT-ONLY prune-pair instrumentation, 2023-06 ERA (fourth variant).
++			 *
++			 * Fourth variant, ported from the 2021 one for H21 (1ffc85d9298e).
++			 * This revision has NO exact_level, no cnum, no delta/BPF_ADD_CONST;
++			 * regsafe's scalar arm: REG_LIVE_READ gate, regs_exact fast path, a
++			 * ONE-SIDED precision short-circuit (!rold->precise), then
++			 * range_within && tnum_in. Same print format as 2021 -- the fields
++			 * are identical -- so ROW_21 parses it; live= is the era marker.
++			 * Hooked at the `hit:' label so the iterator goto-hit path is
++			 * captured as well as the direct prune.
++			 *
++			 * `live=` is printed for exactly that reason and doubles as the era
++			 * marker: a row carrying it tells the consumer which regsafe it owes.
++			 * exact= is printed as 0 because this era has only one level.
++			 */
++			if (env->log.level & BPF_LOG_LEVEL2) {
++				struct bpf_verifier_state *vs[2] = { &sl->state, cur };
++				const char *nm[2] = { "old", "cur" };
++				int vi, fi, ri;
++
++				for (vi = 0; vi < 2; vi++) {
++					for (fi = 0; fi <= vs[vi]->curframe; fi++) {
++						struct bpf_func_state *fr = vs[vi]->frame[fi];
++
++						for (ri = 0; ri < MAX_BPF_REG; ri++) {
++							struct bpf_reg_state *r = &fr->regs[ri];
++
++							if (r->type == NOT_INIT)
++								continue;
++							verbose(env,
++								"PRUNEPAIR insn=%d exact=0 side=%s fr=%d r%d type=%d delta=0 var=%llx/%llx u64=%llx..%llx s64=%llx..%llx u32=%x..%x s32=%x..%x id=%x fno=%d prec=%d live=%d\n",
++								insn_idx, nm[vi], fi, ri,
++								(int)r->type,
++								(unsigned long long)r->var_off.value,
++								(unsigned long long)r->var_off.mask,
++								(unsigned long long)r->umin_value,
++								(unsigned long long)r->umax_value,
++								(unsigned long long)r->smin_value,
++								(unsigned long long)r->smax_value,
++								(unsigned int)r->u32_min_value,
++								(unsigned int)r->u32_max_value,
++								(unsigned int)r->s32_min_value,
++								(unsigned int)r->s32_max_value,
++								r->id, r->frameno, r->precise ? 1 : 0,
++								(r->live & REG_LIVE_READ) ? 1 : 0);
++						}
++					}
++				}
++			}
+ 			sl->hit_cnt++;
+ 			/* reached equivalent register/stack state,
+ 			 * prune the search.

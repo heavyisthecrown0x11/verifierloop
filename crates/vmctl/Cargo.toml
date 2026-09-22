@@ -1,0 +1,6 @@
+[package]
+name = "vmctl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,60 @@
+The full map is eight defect classes against seven oracles: 56 cells. A filled cell
+names the fix that anchors it. \textbf{An empty cell means untested, not blind}---the
+distinction the map exists to preserve, and 35 of the 56 are empty.
+
+\newcommand{\Pos}{\textbullet}
+\newcommand{\Bnd}{\textcircled{~}}
+\newcommand{\Bld}{\rule[0.5ex]{1.6ex}{0.4pt}}
+
+\begin{table*}[htbp]
+\caption{\Pos~calibrated positive \quad \Bnd~measured boundary \quad
+\Bld~structurally blind \quad (blank)~untested.
+Oracles: $\Omega$~parsed-state invariants; V~\textsc{reg\_invariants} verdict;
+R~runtime retval/intent; S~store location; L~liveness gate; B~subsumption model;
+P~prune differential.}
+\label{tab:fullmap}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccccc}
+\toprule
+defect class & $\Omega$ & V & R & S & L & B & P \\
+\midrule
+value tracking, self-inconsistent & \Pos & & & & \Bld & \Bld & \\
+value tracking, consistent but wrong & \Bld & \Bnd & \Bnd & \Pos & & \Bld & \Bnd \\
+over-approximation (genuinely wide) & \Bnd & \Bnd & & & & & \\
+bookkeeping, precision flag & & & \Bld & & & \Bnd & \\
+predicate, scalar arm & \Bld & & & & & \Pos & \Bnd \\
+predicate, pointer arm & & & & & & \emph{u} & \\
+liveness / CFG (the prune's gate) & & & & & \Pos\,\Bnd & & \\
+dead-code rewrite (accept $\to$ hang/crash) & \Bld & & \Bnd & \Bnd & & & \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\noindent\emph{u}: the arm exists in the component and is modelled by no oracle here;
+at least one historical defect lives in it (\texttt{1ad2f5838d34}, 2017). It is a
+named gap, not a measured boundary.
+
+\paragraph{Anchors, by cell.} Rows are numbered as in Table~\ref{tab:fullmap}.
+
+\begin{itemize}\setlength{\itemsep}{1pt}\sloppy\emergencystretch=2em
+\item[1.] $\Omega$: \texttt{3844d153a41a}, \texttt{049c4e13714e},
+  \texttt{ae67b9fb8c4e}, \texttt{3cf2b61eb067} --- four positives.
+\item[2.] \texttt{3878ae04e9fc} anchors all five filled cells: positive on S;
+  boundary on V (the corrupted registers are never printed), on R (the two kernels
+  agree on the returned value), and on P (both sides accept).
+\item[3.] \texttt{af9e89d8dd39} on $\Omega$ and V --- the state is consistent and the
+  width is real, so both are required to stay silent.
+\item[4.] \texttt{f54c7898ed1c} on B: the precision short-circuit of Section~5.4. On
+  R the consequence is a hang, and a hang is observable by no oracle here, because
+  the VM runner wraps boot in a timeout that cannot tell a hang from a slow round.
+\item[5.] B: \texttt{2f2ec8e7730e}, \texttt{fd675184fc7a}, \texttt{cd5b460ed1ec} ---
+  three positives on three different arms (identity matching, min/max containment,
+  arc containment). P: \texttt{2f2ec8e7730e} is a structural boundary there, because
+  the default checkpointing already takes the prune.
+\item[7.] \texttt{3157f7e29996} positive, \texttt{871ef8d50e7c} boundary.
+\item[8.] \texttt{811c363645b3} on R --- the oracle's own ground truth had been
+  rewritten to agree with the defect. \texttt{bc308be380c1} on S --- the verifier
+  accepts and the kernel faults while executing, so the observation is fatal by
+  construction.
+\end{itemize}

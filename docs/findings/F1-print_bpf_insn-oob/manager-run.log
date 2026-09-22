@@ -1,0 +1,194 @@
+[run] syz-manager -config /home/tylersec/verifierloop/.lab/syzkaller/manager.cfg
+[run] bounded campaign: 300s
+2026/09/01 16:34:17 serving rpc on tcp://45769
+2026/09/01 16:34:17 serving http on http://127.0.0.1:56741
+2026/09/01 16:34:18 skipped 46 seeds
+2026/09/01 16:34:30 machine check:
+transitively disabled the following syscalls (missing resource [creating syscalls]):
+bpf$BPF_LINK_CREATE                         : fd_cgroup [openat$cgroup openat$cgroup_root]
+bpf$BPF_LINK_CREATE_XDP                     : fd_cgroup [openat$cgroup openat$cgroup_root]
+bpf$BPF_PROG_ATTACH                         : fd_cgroup [openat$cgroup openat$cgroup_root]
+bpf$BPF_PROG_DETACH                         : fd_cgroup [openat$cgroup openat$cgroup_root]
+bpf$BPF_PROG_QUERY                          : fd_cgroup [openat$cgroup openat$cgroup_root]
+bpf$BPF_TASK_FD_QUERY                       : pid [capget$auto capset$auto clone$auto ...]
+bpf$MAP_UPDATE_ELEM                         : sock_udp [socket$inet_udp socket$inet_udplite]
+
+failed to read the following files in the VM:
+/sys/kernel/security/lsm                    : No such file or directory
+
+BinFmtMisc              : write(/proc/sys/fs/binfmt_misc/register) failed
+Comparisons             : enabled
+Coverage                : enabled
+DelayKcovMmap           : enabled
+DevlinkPCI              : PCI device 0000:00:10.0 is not available
+ExtraCoverage           : enabled
+Fault                   : CONFIG_FAULT_INJECTION is not enabled
+KCSAN                   : write(/sys/kernel/debug/kcsan, on) failed
+KcovResetIoctl          : kernel does not support ioctl(KCOV_RESET_TRACE)
+LRWPANEmulation         : netlink_query_family_id failed
+Leak                    : failed to write(kmemleak, "scan=off")
+MemoryDump              : disabled by user
+NetDevices              : enabled
+NetInjection            : NOTFAIL: tun: can't open /dev/net/tun.  (errno 19: No such device).
+NicVF                   : PCI device 0000:00:11.0 is not available
+SandboxAndroid          : NOTFAIL: setcon: failed to change. want=u:r:untrusted_app:s0:c512,c768, context=kernel (errno 19: No such device). . process exited with status 67.
+SandboxNamespace        : NOTFAIL: sandbox fork failed.  (errno 22: Invalid argument). . process exited with status 67.
+SandboxNone             : enabled
+SandboxSetuid           : enabled
+Swap                    : enabled
+USBEmulation            : failed to chmod /dev/raw-gadget
+VhciInjection           : NOTFAIL: socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_HCI) failed.  (errno 97: Address family not supported by protocol).
+WifiEmulation           : NOTFAIL: netlink_query_family_id failed.  (errno 2: No such file or directory).
+syscalls                : 44/8300
+
+2026/09/01 16:34:30 corpus                  : 481 (2 seeds), 4 to be reminimized, 2 to be resmashed
+2026/09/01 16:34:35 candidates=2 corpus=412 coverage=8262 exec total=2334 (111/sec) pending=0 reproducing=0 
+2026/09/01 16:34:45 candidates=0 corpus=531 coverage=8925 exec total=16752 (540/sec) pending=0 reproducing=0 
+2026/09/01 16:34:55 candidates=0 corpus=631 coverage=9240 exec total=33905 (826/sec) pending=0 reproducing=0 
+2026/09/01 16:35:03 candidates=0 corpus=681 coverage=9444 exec total=41370 (811/sec) pending=0 reproducing=0 
+2026/09/01 16:35:12 starting bug reproductions (max 8 VMs, 6 repros)
+2026/09/01 16:35:13 candidates=0 corpus=757 coverage=9838 exec total=51988 (852/sec) pending=0 reproducing=0 
+2026/09/01 16:35:23 candidates=0 corpus=800 coverage=10901 exec total=60321 (849/sec) pending=0 reproducing=0 
+2026/09/01 16:35:24 [ERROR] failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:35:24 VM 1: crash: UBSAN: array-index-out-of-bounds in print_bpf_insn
+2026/09/01 16:35:24 VM 1: crash(tail0): KASAN: global-out-of-bounds Read in print_bpf_insn
+2026/09/01 16:35:24 VM 1: crash(tail1): SYZFAIL: failed to recv rpc
+2026/09/01 16:35:24 start reproducing 'UBSAN: array-index-out-of-bounds in print_bpf_insn'
+2026/09/01 16:35:32 VM 6: crash: lost connection to test machine [suppressed]
+2026/09/01 16:35:33 candidates=0 corpus=789 coverage=11129 exec total=64494 (796/sec) pending=0 reproducing=1 
+2026/09/01 16:35:38 VM 5: crash: lost connection to test machine [suppressed]
+2026/09/01 16:35:40 VM 7: crash: lost connection to test machine [suppressed]
+2026/09/01 16:35:42 candidates=0 corpus=813 coverage=11221 exec total=67546 (742/sec) pending=0 reproducing=1 
+2026/09/01 16:35:42 VM 0: crash: lost connection to test machine [suppressed]
+2026/09/01 16:35:44 VM 2: crash: lost connection to test machine [suppressed]
+2026/09/01 16:35:51 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:35:52 candidates=0 corpus=837 coverage=11330 exec total=69848 (691/sec) pending=0 reproducing=1 
+2026/09/01 16:36:02 candidates=0 corpus=841 coverage=11334 exec total=71484 (644/sec) pending=0 reproducing=1 
+2026/09/01 16:36:06 VM 3: crash: lost connection to test machine [suppressed]
+2026/09/01 16:36:10 candidates=0 corpus=849 coverage=11342 exec total=73448 (607/sec) pending=0 reproducing=1 
+2026/09/01 16:36:10 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:36:20 candidates=0 corpus=860 coverage=11392 exec total=75037 (572/sec) pending=0 reproducing=1 
+2026/09/01 16:36:30 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:36:30 candidates=0 corpus=856 coverage=11671 exec total=77236 (547/sec) pending=0 reproducing=1 
+2026/09/01 16:36:38 candidates=0 corpus=868 coverage=11721 exec total=79056 (523/sec) pending=0 reproducing=1 
+2026/09/01 16:36:48 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:36:48 candidates=0 corpus=872 coverage=11744 exec total=79785 (495/sec) pending=0 reproducing=1 
+2026/09/01 16:36:54 [ERROR] failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:36:54 VM 4: crash: UBSAN: array-index-out-of-bounds in print_bpf_insn [suppressed]
+2026/09/01 16:36:58 candidates=0 corpus=872 coverage=11744 exec total=79855 (466/sec) pending=0 reproducing=1 
+2026/09/01 16:37:07 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:37:07 candidates=0 corpus=872 coverage=11744 exec total=79926 (441/sec) pending=0 reproducing=1 
+2026/09/01 16:37:17 candidates=0 corpus=872 coverage=11744 exec total=80008 (418/sec) pending=0 reproducing=1 
+2026/09/01 16:37:26 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:37:27 candidates=0 corpus=872 coverage=11744 exec total=80092 (398/sec) pending=0 reproducing=1 
+2026/09/01 16:37:37 candidates=0 corpus=872 coverage=11744 exec total=80170 (379/sec) pending=0 reproducing=1 
+2026/09/01 16:37:43 VM 6: crash: SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail0): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail1): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail2): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail3): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail4): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail5): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail6): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail7): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail8): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail9): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail10): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail11): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail12): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail13): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail14): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail15): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail16): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail17): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail18): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail19): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:43 VM 6: crash(tail20): SYZFAIL: repeatedly failed to execute the program
+2026/09/01 16:37:43 start reproducing 'SYZFAIL: mount(binfmt_misc) failed'
+2026/09/01 16:37:43 VM 2: running for 1m55.508125886s, restarting
+2026/09/01 16:37:44 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:37:45 candidates=0 corpus=872 coverage=11744 exec total=80232 (363/sec) pending=0 reproducing=2 
+2026/09/01 16:37:50 VM 5: crash: SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail0): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail1): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail2): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail3): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail4): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail5): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail6): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail7): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail8): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail9): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail10): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail11): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail12): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail13): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail14): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail15): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail16): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail17): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail18): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail19): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:50 VM 5: crash(tail20): SYZFAIL: repeatedly failed to execute the program
+2026/09/01 16:37:52 VM 7: crash: SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail0): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail1): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail2): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail3): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail4): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail5): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail6): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail7): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail8): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail9): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail10): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail11): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail12): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail13): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail14): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail15): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail16): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail17): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail18): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail19): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:37:52 VM 7: crash(tail20): SYZFAIL: repeatedly failed to execute the program
+2026/09/01 16:37:55 candidates=0 corpus=872 coverage=11744 exec total=80266 (347/sec) pending=2 reproducing=2 
+2026/09/01 16:38:05 candidates=0 corpus=872 coverage=11744 exec total=80314 (333/sec) pending=2 reproducing=2 
+2026/09/01 16:38:10 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:38:13 candidates=0 corpus=872 coverage=11744 exec total=80320 (320/sec) pending=2 reproducing=2 
+2026/09/01 16:38:14 VM 3: crash: SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail0): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail1): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail2): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail3): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail4): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail5): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail6): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail7): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail8): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail9): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail10): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail11): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail12): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail13): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail14): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail15): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail16): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail17): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail18): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail19): SYZFAIL: mount(binfmt_misc) failed
+2026/09/01 16:38:14 VM 3: crash(tail20): SYZFAIL: repeatedly failed to execute the program
+2026/09/01 16:38:23 candidates=0 corpus=872 coverage=11744 exec total=80322 (307/sec) pending=3 reproducing=2 
+2026/09/01 16:38:33 candidates=0 corpus=872 coverage=11744 exec total=80381 (296/sec) pending=3 reproducing=2 
+2026/09/01 16:38:42 candidates=0 corpus=872 coverage=11744 exec total=80446 (286/sec) pending=3 reproducing=2 
+2026/09/01 16:38:42 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:38:52 candidates=0 corpus=872 coverage=11744 exec total=80515 (276/sec) pending=3 reproducing=2 
+SIGINT: shutting down...
+2026/09/01 16:39:01 VM 6: running for 1m10.531119182s, restarting
+2026/09/01 16:39:01 VM 7: running for 1m1.885430701s, restarting
+2026/09/01 16:39:01 VM 5: running for 1m3.837227134s, restarting
+2026/09/01 16:39:01 VM 3: running for 29.925146699s, restarting
+2026/09/01 16:39:01 VM 4: running for 2m3.738060887s, restarting
+2026/09/01 16:39:01 repro finished 'SYZFAIL: mount(binfmt_misc) failed', repro=false crepro=false desc='' hub=false from_dashboard=false
+2026/09/01 16:39:01 reproducing crash 'UBSAN: array-index-out-of-bounds in print_bpf_insn': failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f kernel/bpf/disasm.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+2026/09/01 16:39:01 repro finished 'UBSAN: array-index-out-of-bounds in print_bpf_insn', repro=false crepro=false desc='' hub=false from_dashboard=false

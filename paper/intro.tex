@@ -1,0 +1,67 @@
+Differential testing rests on a reference the system under test cannot influence.
+In practice, ``independence'' is almost always discussed along a single axis: how
+independently the reference was \emph{implemented}---by different authors, from a
+different specification, in a separate codebase. A recent systematic review of
+oracle sources grades precisely this, ranking an independently developed reference
+above cross-implementation comparison, and that above consensus among
+implementations drawn from a common origin~\cite{oraclesurvey2026}. A second axis
+is rarely named: what the reference \emph{consumes}. An oracle whose inputs are
+artifacts produced by the system under test inherits that system's defects, no
+matter how independently its own logic was written.
+
+The clearest sign that the second axis is unnamed rather than unimportant is a
+technique that already depends on it. Csmith generates random C programs and compares
+what several compilers make of them, and its authors meet the independence question
+head on: they state that a defect shared by every compiler would go undetected, and
+answer the concern empirically, reporting no correlated failures among unrelated
+compilers~\cite{yang2011csmith}. That answer is about how independently the compilers
+were built. A second reason is available and the paper does not give it: the program
+under test is produced by Csmith, hence by none of the compilers being compared, so
+the evidence never passes through a system under test. Csmith is protected by an axis
+it does not name, and defends itself on the one it does. The axis was load-bearing
+before it was articulated.
+
+This is not a fine distinction that practice already respects; practice pushes the
+other way. Artifacts produced by the system under test---intermediate
+representations, execution profiles, planner estimates, internal state dumps---are
+the richest and cheapest signal available, and oracles are built on them
+\emph{because} they are rich. Equivalence Modulo Inputs derives its variants from a
+profile of the program under test~\cite{le2014emi}; NoREC evaluates its reference on
+the very engine it is testing~\cite{rigger2020norec}. Both are effective, and both
+are evidentially entangled with some component of the system they judge. The
+convenient design is the one that violates the axis.
+
+The consequence is not vague. If an oracle inherits defects in what it consumes,
+its blind-spot class is determined before the oracle exists: partition the system's
+historical defect population by whether each defect corrupts an artifact the oracle
+would consume, and the partition bounds the oracle's reach. This costs source
+reading---no builds, no execution, no test campaign. Yet it cannot be assembled from
+published results. Defect taxonomies in the testing literature are organized by
+symptom (wrong code, crash, performance) and by configuration (32- against 64-bit
+targets), never by whether an oracle could have observed the defect. Where a technique
+does state what it cannot see---and some state it precisely---it states it \emph{by
+component}: which part of the system was analysed. That is a different partition, and
+not convertible into this one, because two oracles covering the same component can
+differ entirely in what they consume.
+
+We name the axis, give the procedure that operationalizes it, and apply it once and
+deeply. The subject is the Linux eBPF verifier, chosen because it is already heavily
+fuzzed, because its defects are individually documented together with the state they
+corrupt, and because its correctness is safety-relevant. Two oracles were built for
+it under identical discipline---same corpus, same author, same
+refusal-over-approximation rule, both independent reimplementations---differing in
+one respect that is visible in their type signatures: one consumes the emitted
+instruction stream, the other consumes the state the verifier itself wrote. Their
+blind-spot classes separate exactly as the axis predicts, and each side is anchored
+by calibration against real defects: sixteen pairs, most built from a kernel that
+carried the defect and one that did not, the rest settled from the defective state the
+fix's own message prints. Applying the procedure ahead of time to
+fifty-seven historical fixes---those whose messages quote internal state, a frame we
+later measure to be enriched about threefold for the oracle's own path---shows that
+the more sophisticated of the two oracles is structurally blind to 42\% of that
+population and can target 2\% of it; on the unfiltered complement both shares fall.
+Either way the result was available before the oracle was written.
+
+A differential oracle's blind-spot class follows from where its reference reads, not
+from how independently it was written; and because it follows, it can be measured
+before the oracle is built rather than discovered after it has failed to fire.

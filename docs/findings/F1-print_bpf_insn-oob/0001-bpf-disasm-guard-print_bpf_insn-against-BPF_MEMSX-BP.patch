@@ -1,0 +1,52 @@
+From dffc1150e2cc5ea4e7da140ea278c6c79aa2210e Mon Sep 17 00:00:00 2001
+From: Utku Erol <utkuerol71@gmail.com>
+Date: Thu, 3 Sep 2026 16:32:25 +0300
+Subject: [PATCH] bpf: disasm: guard print_bpf_insn against BPF_MEMSX | BPF_DW
+
+print_bpf_insn() renders a BPF_LDX by indexing one of two size tables with
+BPF_SIZE(insn->code) >> 3. For BPF_MEMSX it uses bpf_ldsx_string[], which
+has only three entries (W/H/B) because a sign-extended doubleword load is
+not a valid instruction. The LDX branch checks only that the mode is
+BPF_MEM or BPF_MEMSX; it never rejects BPF_MEMSX | BPF_DW. For that opcode
+BPF_SIZE(code) >> 3 == BPF_DW >> 3 == 3, one element past the end of the
+3-entry array:
+
+  UBSAN: array-index-out-of-bounds: index 3 out of range for 'char *[3]'
+  KASAN: global-out-of-bounds: 8-byte read in print_bpf_insn
+
+The out-of-bounds slot is then dereferenced as %s.
+
+The disassembler is expected to run on unvalidated instructions. Since
+commit b9c5d822f677 ("bpf: Add source and instruction diagnostic context")
+the diagnostics facility disassembles instruction context from
+check_subprogs(), before check_insn_fields() has rejected the opcode, so a
+raw BPF_MEMSX | BPF_DW insn reaches print_bpf_insn on the ordinary
+bpf_prog_load() path whenever a verifier log is requested (log_level >= 1).
+
+Reject the impossible size the same way the branch already rejects an
+unexpected mode, keeping the disassembler total for any opcode.
+
+Fixes: b9c5d822f677 ("bpf: Add source and instruction diagnostic context")
+Signed-off-by: Utku Erol <utkuerol71@gmail.com>
+---
+ kernel/bpf/disasm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/kernel/bpf/disasm.c b/kernel/bpf/disasm.c
+index 50b3ca5149a0..70c2b281cfe9 100644
+--- a/kernel/bpf/disasm.c
++++ b/kernel/bpf/disasm.c
+@@ -299,6 +299,10 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
+ 			verbose(cbs->private_data, "BUG_ldx_%02x", insn->code);
+ 			return;
+ 		}
++		if (BPF_MODE(insn->code) == BPF_MEMSX && BPF_SIZE(insn->code) == BPF_DW) {
++			verbose(cbs->private_data, "BUG_ldsx_%02x", insn->code);
++			return;
++		}
+ 		verbose(cbs->private_data, "(%02x) r%d = *(%s *)(r%d %+d)",
+ 			insn->code, insn->dst_reg,
+ 			BPF_MODE(insn->code) == BPF_MEM ?
+-- 
+2.34.1
+

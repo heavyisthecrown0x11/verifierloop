@@ -1,0 +1,25 @@
+# verifierloop — Rust workspace (orchestration side).
+#
+# SCAFFOLDING pass: fine-grained crates, one per concern. No stage logic is
+# implemented — every crate is a compilable skeleton with TODOs at each boundary.
+#
+# Crate map:
+#   metrics      — the 4 metric-schema groups (core / derived / counterfactual / expectation)
+#   contract     — Rust<->Python JSON artifact-file contract (the language boundary)
+#   pipeline     — the period pipeline stages as modules + ground-truth adapters
+#   vmctl        — disposable QEMU VM control (KVM primary, TCG fallback)
+#   orchestrator — loop runtime (binary); hosts the confirmation-bias guardrail
+[workspace]
+resolver = "2"
+members = [
+    "crates/metrics",
+    "crates/contract",
+    "crates/pipeline",
+    "crates/vmctl",
+    "crates/orchestrator",
+]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+# TODO(license): choose a license before any public release. Intentionally unset.

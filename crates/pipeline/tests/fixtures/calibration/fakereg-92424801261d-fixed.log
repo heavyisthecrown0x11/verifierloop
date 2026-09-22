@@ -1,0 +1,95 @@
+===PROG fakereg#92424801261d#000 type=socket_filter ===
+RESULT decision=accept fd=1 errno=0 load_ns=0
+PRUNE fall=fakereg taken=c0 fall_safe=1 taken_safe=1 stack=0 base_verdict=accept base_errno=0 base_states=1 base_reason=none freq_verdict=accept freq_errno=0 freq_states=3 freq_reason=none inv_verdict=accept inv_errno=0 inv_reason=none
+CHANNEL reg_invariants_violation_in_log=0
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a1a400
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+8
+  7: (79) r6 = *(u64 *)(r0 +0)
+  8: (b7) r0 = 0
+  9: (b4) w0 = -1
+ 10: (74) w0 >>= 1
+ 11: (5c) w6 &= w0
+ 12: (44) w6 |= 2
+ 13: (56) if w6 != 0x7ffffffd goto pc+1
+ 14: (b7) r0 = 1
+ 15: (b7) r0 = 0
+ 16: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a1a400
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+8
+  7: (79) r6 = *(u64 *)(r0 +0)
+  8: (b7) r0 = 0
+  9: (b4) w0 = -1
+ 10: (74) w0 >>= 1
+ 11: (5c) w6 &= w0
+ 12: (44) w6 |= 2
+ 13: (56) if w6 != 0x7ffffffd goto pc+1
+ 14: (b7) r0 = 1
+ 15: (b7) r0 = 0
+ 16: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a1a400
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+8
+      7: 0......... (79) r6 = *(u64 *)(r0 +0)
+      8: ......6... (b7) r0 = 0
+      9: ......6... (b4) w0 = -1
+     10: 0.....6... (74) w0 >>= 1
+     11: 0.....6... (5c) w6 &= w0
+     12: ......6... (44) w6 |= 2
+     13: ......6... (56) if w6 != 0x7ffffffd goto pc+1
+     14: .......... (b7) r0 = 1
+     15: .......... (b7) r0 = 0
+     16: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a1a400       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+8        ; R0=map_value(ks=4,vs=8)
+7: (79) r6 = *(u64 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar()
+8: (b7) r0 = 0                        ; R0=0
+9: (b4) w0 = -1                       ; R0=0xffffffff
+10: (74) w0 >>= 1                     ; R0=0x7fffffff
+11: (5c) w6 &= w0                     ; R0=0x7fffffff R6=scalar(smin=smin32=0,smax=umax=umax32=0x7fffffff,var_off=(0x0; 0x7fffffff))
+12: (44) w6 |= 2                      ; R6=scalar(smin=umin=smin32=umin32=2,smax=umax=umax32=0x7fffffff,var_off=(0x2; 0x7ffffffd))
+13: (56) if w6 != 0x7ffffffd goto pc+1
+mark_precise: frame0: last_idx 13 first_idx 13 subseq_idx -1 
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=umin=smin32=umin32=2,smax=umax=umax32=0x7fffffff,var_off=(0x2; 0x7ffffffd)) R10=fp0
+mark_precise: frame0: last_idx 12 first_idx 0 subseq_idx 13 
+mark_precise: frame0: regs=r6 stack= before 12: (44) w6 |= 2
+mark_precise: frame0: regs=r6 stack= before 11: (5c) w6 &= w0
+mark_precise: frame0: regs=r0,r6 stack= before 10: (74) w0 >>= 1
+mark_precise: frame0: regs=r0,r6 stack= before 9: (b4) w0 = -1
+mark_precise: frame0: regs=r6 stack= before 8: (b7) r0 = 0
+mark_precise: frame0: regs=r6 stack= before 7: (79) r6 = *(u64 *)(r0 +0)
+13: R6=scalar(smin=umin=smin32=umin32=2,smax=umax=umax32=0x7fffffff,var_off=(0x2; 0x7ffffffd))
+15: (b7) r0 = 0                       ; R0=0
+16: (95) exit
+processed 15 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+[    3.536151] diffharness (67) used greatest stack depth: 24904 bytes left

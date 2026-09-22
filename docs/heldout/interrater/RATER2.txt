@@ -1,0 +1,28 @@
+00244bdaa423  No  kernel/bpf/verifier.c:btf_id_allow_sleepable  load-time attach-BTF rejection guard, writes no register field
+00750788dfc6  No  kernel/bpf/verifier.c:convert_ctx_accesses  whitespace-only change, no semantics touched
+0108a4e9f358  No  kernel/bpf/verifier.c:jit_subprogs  post-verification JIT extable/kallsyms bookkeeping, off the states_equal path
+032547272eb0  No  kernel/bpf/verifier.c:record_func_key  only the rejection's message and errno change, the program is rejected either way
+05670f81d128  No  kernel/bpf/verifier.c:special_kfunc_set  CONFIG_CGROUPS ifdef guards around BTF id lists, a build fix that writes no state
+0613d8ca9ab3  No  kernel/bpf/verifier.c:convert_ctx_accesses  post-verification insn rewrite (AND mask width), not verifier register state
+06d686f771dd  No  kernel/bpf/verifier.c:check_kfunc_args  adds a PTR_TO_FUNC rejection guard, writes no consumed field
+082cdc69a465  No  kernel/bpf/verifier.c:check_stack_read  removes a redundant rejection guard, writes no register field
+09c447564fca  No  kernel/bpf/verifier.c:save_aux_ptr_type  writes insn_aux_data.ptr_type for the PROBE_MEM rewrite, not a register row field
+0acd03a5bd18  Yes  kernel/bpf/verifier.c:prepare_func_exit  adds mark_chain_precision/mark_reg_read on R0, the writers of the precise and live bits B's short-circuit consumes
+0db63c0b86e9  Yes  kernel/bpf/verifier.c:check_ptr_to_btf_access  writes the register's type flags (PTR_MAYBE_NULL) and id for socket->sk, both row fields B compares
+10e14e9652bf  No  kernel/bpf/verifier.c:push_insn  check_cfg DFS loop-detection guard, runs before state exploration and writes no register field
+122fdbd2a030  No  kernel/bpf/verifier.c:check_alu_op  adds an arena-presence rejection guard, writes no register field
+12659d28615d  No  kernel/bpf/verifier.c:process_iter_arg  adds a PTR_TO_STACK rejection guard, writes no register field
+17c4b65a2493  No  kernel/bpf/verifier.c:check_return_code  changes the allowed exit retval range check, writes no register field
+180c7000712d  Yes  kernel/bpf/verifier.c:process_spin_lock  adds the invalidate_rcu_protected_refs() call after the final unlock, the register type rewrite the defect left MEM_RCU pointers without
+18752d73c189  No  kernel/bpf/verifier.c:check_raw_mode_ok  helper prototype validation, writes no register field
+18cdd90aba79  No  kernel/bpf/verifier.c:do_misc_fixups  post-verification inlining rewrite, off the states_equal path
+1ae497c78f01  No  include/linux/bpf_verifier.h:type_may_be_null  pure code move to the header, no semantic change
+1b30d4441727  No  kernel/bpf/verifier.c:free_states  scc_cnt/NULL-info teardown bookkeeping for a leak, writes no register field
+1ffc85d9298e  No  kernel/bpf/verifier.c:regsafe  the defect is the SCALAR-arm predicate lacking check_scalar_ids, which B re-implements from the printed ids; the check_alu_op need_id tweak only withholds ids from constants
+2658a1720a19  Undecided  kernel/bpf/verifier.c:collect_linked_regs  filters which regs enter linked_regs for jmp history; the downstream precise/id writes it feeds are not in the diff
+2b2efe1937ca  No  kernel/bpf/verifier.c:is_state_visited  changes when states_equal is invoked for may_goto (an unmodelled decision) plus a post-pass jump-offset rewrite
+3a354149bcea  No  kernel/bpf/states.c:__clean_func_state  corrupts a stack slot's spilled_ptr/slot_type, which B does not consume (stacksafe unmodelled)
+3d562d35a044  No  kernel/bpf/verifier.c:check_func_call  pushes an extra exception-exit path to explore, writes no register row field
+41025f441fe6  No  kernel/bpf/states.c:refsafe  predicate change inside refsafe, which B does not model
+52c2b005a3c1  Yes  kernel/bpf/verifier.c:propagate_precision  gates which registers get precision propagated, i.e. the writer of the precise bit B's short-circuit consumes
+713274f1f2c8  Undecided  kernel/bpf/verifier.c:check_stack_write_fixed_off  clears a stack slot's spilled_ptr.id (unmodelled); it reaches a register row's id only through a later fill not in the diff

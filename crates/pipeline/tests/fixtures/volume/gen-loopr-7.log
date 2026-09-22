@@ -1,0 +1,1185 @@
+===PROG genloopr#nop#000 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=999623
+STORE insn=19 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=56 store_len=1 store_size=1 executed=1
+[    2.438475] clocksource: Watchdog remote CPU 1 read timed out
+RUNTIME input=0x00000001 store_off=57 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=58 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=61 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=62 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=63 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r2 = r10	r2: _ -> fp0+0
+ 12: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 15: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 11: (bf) r2 = r10	r2: _ -> fp0+0
+ 12: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 15: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+15
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+1
+ 10: (05) goto pc-2
+ 11: (bf) r2 = r10
+ 12: (07) r2 += -4
+ 13: (18) r1 = 0xffff888005a0e400
+ 15: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 16: (15) if r0 == 0x0 goto pc+5
+ 17: (bf) r7 = r0
+ 18: (0f) r7 += r6
+ 19: (72) *(u8 *)(r7 +56) = -1
+ 20: (b7) r0 = 1
+ 21: (95) exit
+ 22: (b7) r0 = 0
+ 23: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+15
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+1
+ 10: (05) goto pc-2
+ 11: (bf) r2 = r10
+ 12: (07) r2 += -4
+ 13: (18) r1 = 0xffff888005a0e400
+ 15: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 16: (15) if r0 == 0x0 goto pc+5
+ 17: (bf) r7 = r0
+ 18: (0f) r7 += r6
+ 19: (72) *(u8 *)(r7 +56) = -1
+ 20: (b7) r0 = 1
+ 21: (95) exit
+ 22: (b7) r0 = 0
+ 23: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+15
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+1
+  1  10: ......6... (05) goto pc-2
+     11: ......6... (bf) r2 = r10
+     12: ..2...6... (07) r2 += -4
+     13: ..2...6... (18) r1 = 0xffff888005a0e400
+     15: .12...6... (85) call bpf_map_lookup_elem#1
+     16: 0.....6... (15) if r0 == 0x0 goto pc+5
+     17: 0.....6... (bf) r7 = r0
+     18: ......67.. (0f) r7 += r6
+     19: .......7.. (72) *(u8 *)(r7 +56) = -1
+     20: .......... (b7) r0 = 1
+     21: 0......... (95) exit
+     22: .......... (b7) r0 = 0
+     23: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+15       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+1
+11: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+12: (07) r2 += -4                     ; R2=fp-4
+13: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+15: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+16: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+17: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+18: (0f) r7 += r6
+mark_precise: frame0: last_idx 18 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 17: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 16: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 15: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 13: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 12: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 11: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+1
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+19: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+19: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+20: (b7) r0 = 1                       ; R0=1
+21: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (05) goto pc-2
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 10: (05) goto pc-2
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+1
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 10: (05) goto pc-2
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+1
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+processed 21 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 2 mark_read 0
+
+---END---
+===PROG genloopr#mask#001 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=1140121
+STORE insn=20 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=57 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=58 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=61 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=62 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=63 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (57) r6 &= 7
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (57) r6 &= 7
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+16
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+2
+  1  10: ......6... (57) r6 &= 7
+  1  11: ......6... (05) goto pc-3
+     12: ......6... (bf) r2 = r10
+     13: ..2...6... (07) r2 += -4
+     14: ..2...6... (18) r1 = 0xffff888005a0e400
+     16: .12...6... (85) call bpf_map_lookup_elem#1
+     17: 0.....6... (15) if r0 == 0x0 goto pc+5
+     18: 0.....6... (bf) r7 = r0
+     19: ......67.. (0f) r7 += r6
+     20: .......7.. (72) *(u8 *)(r7 +56) = -1
+     21: .......... (b7) r0 = 1
+     22: 0......... (95) exit
+     23: .......... (b7) r0 = 0
+     24: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+16       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+2
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+18: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+19: (0f) r7 += r6
+mark_precise: frame0: last_idx 19 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 18: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 17: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 14: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+20: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+20: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (b7) r0 = 1                       ; R0=1
+22: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (57) r6 &= 7                      ; R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+11: (05) goto pc-3
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+processed 22 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 2 mark_read 0
+
+---END---
+===PROG genloopr#incmask#002 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=1750072
+STORE insn=21 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=63 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=62 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=58 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (07) r6 += 1
+ 11: (57) r6 &= 7
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (07) r6 += 1
+ 11: (57) r6 &= 7
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+17
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+3
+  1  10: ......6... (07) r6 += 1
+  1  11: ......6... (57) r6 &= 7
+  1  12: ......6... (05) goto pc-4
+     13: ......6... (bf) r2 = r10
+     14: ..2...6... (07) r2 += -4
+     15: ..2...6... (18) r1 = 0xffff888005a0e400
+     17: .12...6... (85) call bpf_map_lookup_elem#1
+     18: 0.....6... (15) if r0 == 0x0 goto pc+5
+     19: 0.....6... (bf) r7 = r0
+     20: ......67.. (0f) r7 += r6
+     21: .......7.. (72) *(u8 *)(r7 +56) = -1
+     22: .......... (b7) r0 = 1
+     23: 0......... (95) exit
+     24: .......... (b7) r0 = 0
+     25: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+17       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+3
+13: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+14: (07) r2 += -4                     ; R2=fp-4
+15: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+17: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+18: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+19: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+20: (0f) r7 += r6
+mark_precise: frame0: last_idx 20 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 19: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 18: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 17: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 15: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 14: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 13: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+21: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+22: (b7) r0 = 1                       ; R0=1
+23: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (07) r6 += 1                      ; R6=scalar(smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=8,var_off=(0x0; 0xf))
+11: (57) r6 &= 7                      ; R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+12: (05) goto pc-4
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 11: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 10: (07) r6 += 1
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 11: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 10: (07) r6 += 1
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+processed 23 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 2 mark_read 0
+
+---END---
+===PROG genloopr#shr#003 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=941728
+STORE insn=20 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=56 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (77) r6 >>= 1
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (77) r6 >>= 1
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+16
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+2
+  1  10: ......6... (77) r6 >>= 1
+  1  11: ......6... (05) goto pc-3
+     12: ......6... (bf) r2 = r10
+     13: ..2...6... (07) r2 += -4
+     14: ..2...6... (18) r1 = 0xffff888005a0e400
+     16: .12...6... (85) call bpf_map_lookup_elem#1
+     17: 0.....6... (15) if r0 == 0x0 goto pc+5
+     18: 0.....6... (bf) r7 = r0
+     19: ......67.. (0f) r7 += r6
+     20: .......7.. (72) *(u8 *)(r7 +56) = -1
+     21: .......... (b7) r0 = 1
+     22: 0......... (95) exit
+     23: .......... (b7) r0 = 0
+     24: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+16       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+2
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+18: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+19: (0f) r7 += r6
+mark_precise: frame0: last_idx 19 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 18: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 17: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 14: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+20: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+20: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (b7) r0 = 1                       ; R0=1
+22: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (77) r6 >>= 1                     ; R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=3,var_off=(0x0; 0x3))
+11: (05) goto pc-3
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (77) r6 >>= 1
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (77) r6 >>= 1
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+processed 22 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 2 mark_read 0
+
+---END---
+===PROG genloopr#xor3#004 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=975905
+STORE insn=20 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=58 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=57 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=60 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=62 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=61 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=60 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 12: (bf) r2 = r10	r2: _ -> fp0+0
+ 13: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 16: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (a7) r6 ^= 3
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+16
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+2
+ 10: (a7) r6 ^= 3
+ 11: (05) goto pc-3
+ 12: (bf) r2 = r10
+ 13: (07) r2 += -4
+ 14: (18) r1 = 0xffff888005a0e400
+ 16: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 17: (15) if r0 == 0x0 goto pc+5
+ 18: (bf) r7 = r0
+ 19: (0f) r7 += r6
+ 20: (72) *(u8 *)(r7 +56) = -1
+ 21: (b7) r0 = 1
+ 22: (95) exit
+ 23: (b7) r0 = 0
+ 24: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+16
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+2
+  1  10: ......6... (a7) r6 ^= 3
+  1  11: ......6... (05) goto pc-3
+     12: ......6... (bf) r2 = r10
+     13: ..2...6... (07) r2 += -4
+     14: ..2...6... (18) r1 = 0xffff888005a0e400
+     16: .12...6... (85) call bpf_map_lookup_elem#1
+     17: 0.....6... (15) if r0 == 0x0 goto pc+5
+     18: 0.....6... (bf) r7 = r0
+     19: ......67.. (0f) r7 += r6
+     20: .......7.. (72) *(u8 *)(r7 +56) = -1
+     21: .......... (b7) r0 = 1
+     22: 0......... (95) exit
+     23: .......... (b7) r0 = 0
+     24: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+16       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+2
+12: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+13: (07) r2 += -4                     ; R2=fp-4
+14: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+16: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+17: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+18: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+19: (0f) r7 += r6
+mark_precise: frame0: last_idx 19 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 18: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 17: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 16: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 14: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 13: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 12: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+20: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+20: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (b7) r0 = 1                       ; R0=1
+22: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (a7) r6 ^= 3                      ; R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+11: (05) goto pc-3
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (a7) r6 ^= 3
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 11: (05) goto pc-3
+mark_precise: frame0: regs=r6 stack= before 10: (a7) r6 ^= 3
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+2
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+processed 22 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 2 mark_read 0
+
+---END---
+===PROG genloopr#cond#005 type=socket_filter ===
+RESULT decision=accept fd=5 errno=0 load_ns=1185019
+STORE insn=21 reg=7 off=56 size=1
+RUNTIME input=0x00000000 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000001 store_off=57 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000002 store_off=58 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000003 store_off=59 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000004 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000005 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000006 store_off=56 store_len=1 store_size=1 executed=1
+RUNTIME input=0x00000007 store_off=56 store_len=1 store_size=1 executed=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (b5) if r6 <= 0x3 goto pc+1
+ 11: (b7) r6 = 0
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (b5) if r6 <= 0x3 goto pc+1
+ 11: (b7) r6 = 0
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+17
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+3
+  1  10: ......6... (b5) if r6 <= 0x3 goto pc+1
+  1  11: .......... (b7) r6 = 0
+  1  12: ......6... (05) goto pc-4
+     13: ......6... (bf) r2 = r10
+     14: ..2...6... (07) r2 += -4
+     15: ..2...6... (18) r1 = 0xffff888005a0e400
+     17: .12...6... (85) call bpf_map_lookup_elem#1
+     18: 0.....6... (15) if r0 == 0x0 goto pc+5
+     19: 0.....6... (bf) r7 = r0
+     20: ......67.. (0f) r7 += r6
+     21: .......7.. (72) *(u8 *)(r7 +56) = -1
+     22: .......... (b7) r0 = 1
+     23: 0......... (95) exit
+     24: .......... (b7) r0 = 0
+     25: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+17       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+3
+13: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+14: (07) r2 += -4                     ; R2=fp-4
+15: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+17: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+18: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+19: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+20: (0f) r7 += r6
+mark_precise: frame0: last_idx 20 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 19: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 18: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 17: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 15: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 14: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 13: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+21: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+22: (b7) r0 = 1                       ; R0=1
+23: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (b5) if r6 <= 0x3 goto pc+1       ; R6=scalar(smin=umin=smin32=umin32=4,smax=umax=smax32=umax32=7,var_off=(0x4; 0x3))
+11: (b7) r6 = 0                       ; R6=0
+12: (05) goto pc-4
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 10 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 11: (b7) r6 = 0
+SCC backedge (1)
+9: safe
+
+from 10 to 12: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=3,var_off=(0x0; 0x3)) R10=fp0 fp-8=0000pppp
+12: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=3,var_off=(0x0; 0x3)) R10=fp0 fp-8=0000pppp
+12: (05) goto pc-4
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 10 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 10: (b5) if r6 <= 0x3 goto pc+1
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx 10 
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+SCC backedge (1)
+9: safe
+SCC exit (1)
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 10 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 10: (b5) if r6 <= 0x3 goto pc+1
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+frame 0: propagating r6
+mark_precise: frame0: last_idx 9 first_idx 10 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 11: (b7) r6 = 0
+processed 25 insns (limit 1000000) max_states_per_insn 0 total_states 2 peak_states 4 mark_read 0
+
+---END---
+===PROG genloopr#maskinc#006 type=socket_filter ===
+RESULT decision=reject fd=-1 errno=13 load_ns=1254889
+STORE insn=21 reg=7 off=56 size=1
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+  1: (bf) r2 = r10	r2: _ -> fp0+0
+  2: (07) r2 += -4	r2: fp0+0 -> fp0-4
+  5: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+ 13: (bf) r2 = r10	r2: _ -> fp0+0
+ 14: (07) r2 += -4	r2: fp0+0 -> fp0-4
+ 17: (85) call bpf_map_lookup_elem#1	r2: fp0-4 -> _
+subprog#0:
+  0: (62) *(u32 *)(r10 -4) = 0
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (57) r6 &= 7
+ 11: (07) r6 += 1
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1 // r2=fp0-4
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (62) *(u32 *)(r10 -4) = 0         ; def: fp0-4h
+  1: (bf) r2 = r10
+  2: (07) r2 += -4
+  3: (18) r1 = 0xffff888005a0e800
+  5: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+  6: (15) if r0 == 0x0 goto pc+17
+  7: (61) r6 = *(u32 *)(r0 +0)
+  8: (57) r6 &= 7
+  9: (e5) may_goto pc+3
+ 10: (57) r6 &= 7
+ 11: (07) r6 += 1
+ 12: (05) goto pc-4
+ 13: (bf) r2 = r10
+ 14: (07) r2 += -4
+ 15: (18) r1 = 0xffff888005a0e400
+ 17: (85) call bpf_map_lookup_elem#1   ; use: fp0-4h
+ 18: (15) if r0 == 0x0 goto pc+5
+ 19: (bf) r7 = r0
+ 20: (0f) r7 += r6
+ 21: (72) *(u8 *)(r7 +56) = -1
+ 22: (b7) r0 = 1
+ 23: (95) exit
+ 24: (b7) r0 = 0
+ 25: (95) exit
+Live regs before insn:
+      0: .......... (62) *(u32 *)(r10 -4) = 0
+      1: .......... (bf) r2 = r10
+      2: ..2....... (07) r2 += -4
+      3: ..2....... (18) r1 = 0xffff888005a0e800
+      5: .12....... (85) call bpf_map_lookup_elem#1
+      6: 0......... (15) if r0 == 0x0 goto pc+17
+      7: 0......... (61) r6 = *(u32 *)(r0 +0)              ; zext
+      8: ......6... (57) r6 &= 7
+  1   9: ......6... (e5) may_goto pc+3
+  1  10: ......6... (57) r6 &= 7
+  1  11: ......6... (07) r6 += 1
+  1  12: ......6... (05) goto pc-4
+     13: ......6... (bf) r2 = r10
+     14: ..2...6... (07) r2 += -4
+     15: ..2...6... (18) r1 = 0xffff888005a0e400
+     17: .12...6... (85) call bpf_map_lookup_elem#1
+     18: 0.....6... (15) if r0 == 0x0 goto pc+5
+     19: 0.....6... (bf) r7 = r0
+     20: ......67.. (0f) r7 += r6
+     21: .......7.. (72) *(u8 *)(r7 +56) = -1
+     22: .......... (b7) r0 = 1
+     23: 0......... (95) exit
+     24: .......... (b7) r0 = 0
+     25: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (62) *(u32 *)(r10 -4) = 0          ; R10=fp0 fp-8=0000????
+1: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+2: (07) r2 += -4                      ; R2=fp-4
+3: (18) r1 = 0xffff888005a0e800       ; R1=map_ptr(ks=4,vs=8)
+5: (85) call bpf_map_lookup_elem#1    ; R0=map_value(ks=4,vs=8)
+6: (15) if r0 == 0x0 goto pc+17       ; R0=map_value(ks=4,vs=8)
+7: (61) r6 = *(u32 *)(r0 +0)          ; R0=map_value(ks=4,vs=8) R6=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+8: (57) r6 &= 7
+SCC enter (1)
+9: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+9: (e5) may_goto pc+3
+13: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+14: (07) r2 += -4                     ; R2=fp-4
+15: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+17: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+18: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+19: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+20: (0f) r7 += r6
+mark_precise: frame0: last_idx 20 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 19: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 18: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 17: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 15: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 14: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 13: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 8: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 7: (61) r6 = *(u32 *)(r0 +0)
+21: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+21: (72) *(u8 *)(r7 +56) = -1         ; R7=map_value(ks=4,vs=64,smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+22: (b7) r0 = 1                       ; R0=1
+23: (95) exit
+
+from 9 to 10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+10: (57) r6 &= 7                      ; R6=scalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7))
+11: (07) r6 += 1                      ; R6=scalar(smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=8,var_off=(0x0; 0xf))
+12: (05) goto pc-4
+9: (e5) may_goto pc+3
+13: (bf) r2 = r10                     ; R2=fp0 R10=fp0
+14: (07) r2 += -4                     ; R2=fp-4
+15: (18) r1 = 0xffff888005a0e400      ; R1=map_ptr(ks=4,vs=64)
+17: (85) call bpf_map_lookup_elem#1   ; R0=map_value(ks=4,vs=64)
+18: (15) if r0 == 0x0 goto pc+5       ; R0=map_value(ks=4,vs=64)
+19: (bf) r7 = r0                      ; R0=map_value(ks=4,vs=64) R7=map_value(ks=4,vs=64)
+20: (0f) r7 += r6
+mark_precise: frame0: last_idx 20 first_idx 9 subseq_idx -1 
+mark_precise: frame0: regs=r6 stack= before 19: (bf) r7 = r0
+mark_precise: frame0: regs=r6 stack= before 18: (15) if r0 == 0x0 goto pc+5
+mark_precise: frame0: regs=r6 stack= before 17: (85) call bpf_map_lookup_elem#1
+mark_precise: frame0: regs=r6 stack= before 15: (18) r1 = 0xffff888005a0e400
+mark_precise: frame0: regs=r6 stack= before 14: (07) r2 += -4
+mark_precise: frame0: regs=r6 stack= before 13: (bf) r2 = r10
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs=r6 stack=:  R6=Pscalar(smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=8,var_off=(0x0; 0xf)) R10=fp0 fp-8=0000pppp
+mark_precise: frame0: last_idx 12 first_idx 9 subseq_idx 9 
+mark_precise: frame0: regs=r6 stack= before 12: (05) goto pc-4
+mark_precise: frame0: regs=r6 stack= before 11: (07) r6 += 1
+mark_precise: frame0: regs=r6 stack= before 10: (57) r6 &= 7
+mark_precise: frame0: regs=r6 stack= before 9: (e5) may_goto pc+3
+mark_precise: frame0: parent state regs= stack=:  R6=Pscalar(smin=smin32=0,smax=umax=smax32=umax32=7,var_off=(0x0; 0x7)) R10=fp0 fp-8=0000pppp
+21: R6=scalar(smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=8,var_off=(0x0; 0xf)) R7=map_value(ks=4,vs=64,smin=umin=smin32=umin32=1,smax=umax=smax32=umax32=8,var_off=(0x0; 0xf))
+21: (72) *(u8 *)(r7 +56) = -1
+invalid access to map value, value_size=64 off=64 size=1
+R7 max value is outside of the allowed memory range
+
+Verification failed: Memory Safety: Access outside bounds
+
+Reason:
+  The verifier cannot prove offset + access_size <= object_size. Here, the maximal bound for a
+  memory access is 65: start 64 + access_size 1, beyond object_size 64. R7 is map_value; offset is
+  variable: known bits 0x0, unknown mask 0xf, plus fixed offset 56; signed range [1, 8], unsigned
+  range [1, 8]; access_size is 1; object_size is 64.
+
+At:
+  insn 21
+       | ^-- error: access may be outside object bounds
+  Instruction context:
+      19 | (bf) r7 = r0
+      20 | (0f) r7 += r6
+  >>> 21 | (72) *(u8 *)(r7 +56) = -1
+      22 | (b7) r0 = 1
+      23 | (95) exit
+
+Causal path:
+  insn 17
+       | ^-- update: R0 changed from uninitialized value to map value at offset 0
+  Instruction context:
+      15 | (18) r1 = 0xffff888005a0e400
+  >>> 17 | (85) call bpf_map_lookup_elem#1
+      18 | (15) if r0 == 0x0 goto pc+5
+      19 | (bf) r7 = r0
+
+  insn 18
+       | ^-- branch: took the false branch of this conditional, goto not followed
+  Instruction context:
+      17 | (85) call bpf_map_lookup_elem#1
+  >>> 18 | (15) if r0 == 0x0 goto pc+5
+      19 | (bf) r7 = r0
+      20 | (0f) r7 += r6
+
+  insn 19
+       | ^-- update: R7 changed from uninitialized value to map value at offset 0
+  Instruction context:
+      17 | (85) call bpf_map_lookup_elem#1
+      18 | (15) if r0 == 0x0 goto pc+5
+  >>> 19 | (bf) r7 = r0
+      20 | (0f) r7 += r6
+      21 | (72) *(u8 *)(r7 +56) = -1
+
+  insn 20
+       | ^-- update: R7 changed from map value at offset 0 to map value with variable offset: known
+       |     bits 0x0, unknown mask 0xf, signed range [1, 8], unsigned range [1, 8]
+  Instruction context:
+      18 | (15) if r0 == 0x0 goto pc+5
+      19 | (bf) r7 = r0
+  >>> 20 | (0f) r7 += r6
+      21 | (72) *(u8 *)(r7 +56) = -1
+      22 | (b7) r0 = 1
+
+Suggestion:
+  Add or adjust a bounds check that proves offset + access_size stays within the object.
+
+processed 31 insns (limit 1000000) max_states_per_insn 1 total_states 2 peak_states 2 mark_read 0
+
+---END---

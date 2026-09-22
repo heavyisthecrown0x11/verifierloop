@@ -1,0 +1,3 @@
+CHANNEL shape=nop load=accept testrun_rc=0 retval=1 wall_ns=250284934 store_off=58
+CHANNEL shape=incmask load=accept testrun_rc=0 retval=1 wall_ns=250490037 store_off=61
+CHANNEL shape=shr load=accept testrun_rc=0 retval=1 wall_ns=251365835 store_off=56

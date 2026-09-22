@@ -1,0 +1,121 @@
+diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
+index 4e6aafad33bd..c9da6de0586b 100644
+--- a/kernel/bpf/states.c
++++ b/kernel/bpf/states.c
+@@ -1238,6 +1238,11 @@ static void mark_all_scalars_imprecise(struct bpf_verifier_env *env, struct bpf_
+ 
+ int bpf_is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ {
++	/* verifierloop: print-only. Records WHICH exact_level reached `hit:`.
++	 * OI-14 closed level attribution as unobservable from the log; it is
++	 * observable from here, and without it a subsumption model is blind on
++	 * exactly the imprecise registers the short-circuit governs. */
++	enum exact_level vl_dbg_exact = NOT_EXACT;
+ 	struct bpf_verifier_state_list *new_sl;
+ 	struct bpf_verifier_state_list *sl;
+ 	struct bpf_verifier_state *cur = env->cur_state, *new;
+@@ -1330,7 +1335,7 @@ int bpf_is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 			 * => unsafe memory access at 11 would not be caught.
+ 			 */
+ 			if (is_iter_next_insn(env, insn_idx)) {
+-				if (states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
++				if (vl_dbg_exact = RANGE_WITHIN, states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
+ 					struct bpf_func_state *cur_frame;
+ 					struct bpf_reg_state *iter_state, *iter_reg;
+ 					int spi;
+@@ -1355,13 +1360,13 @@ int bpf_is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 			}
+ 			if (is_may_goto_insn_at(env, insn_idx)) {
+ 				if (sl->state.may_goto_depth != cur->may_goto_depth &&
+-				    states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
++				    (vl_dbg_exact = RANGE_WITHIN, states_equal(env, &sl->state, cur, RANGE_WITHIN))) {
+ 					loop = true;
+ 					goto hit;
+ 				}
+ 			}
+ 			if (bpf_calls_callback(env, insn_idx)) {
+-				if (states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
++				if (vl_dbg_exact = RANGE_WITHIN, states_equal(env, &sl->state, cur, RANGE_WITHIN)) {
+ 					loop = true;
+ 					goto hit;
+ 				}
+@@ -1402,8 +1407,78 @@ int bpf_is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 		}
+ 		/* See comments for mark_all_regs_read_and_precise() */
+ 		loop = incomplete_read_marks(env, &sl->state);
+-		if (states_equal(env, &sl->state, cur, loop ? RANGE_WITHIN : NOT_EXACT)) {
++		if (vl_dbg_exact = loop ? RANGE_WITHIN : NOT_EXACT,
++		    states_equal(env, &sl->state, cur, loop ? RANGE_WITHIN : NOT_EXACT)) {
+ hit:
++			/* verifierloop: PRINT-ONLY prune-pair instrumentation.
++			 *
++			 * The only thing this adds is output. It reads no state it does not
++			 * already have in scope, writes nothing, and changes no control flow —
++			 * which is the whole argument for it being legitimate to run: a patch
++			 * that cannot change a verdict is not "changing the thing under test",
++			 * and that claim is CHECKABLE by requiring byte-identical verdicts from
++			 * the stock and instrumented kernels over the same corpus.
++			 *
++			 * Why it is needed: the log announces that a prune happened and carries
++			 * NEITHER side's state, and even print_verifier_state cannot express the
++			 * predicate's domain — range_within is arc containment on cnum{base,size}
++			 * while the log prints eight derived projections, `precise` decides
++			 * whether the check runs at all and appears only as a `P` prefix, and
++			 * `id` is printed with BPF_ADD_CONST masked off. So the raw fields are
++			 * printed, not a rendering of them.
++			 */
++			if (env->log.level & BPF_LOG_LEVEL2) {
++				struct bpf_verifier_state *vs[2] = { &sl->state, cur };
++				const char *nm[2] = { "old", "cur" };
++				int vi, fi, ri;
++
++				for (vi = 0; vi < 2; vi++) {
++					for (fi = 0; fi <= vs[vi]->curframe; fi++) {
++						struct bpf_func_state *fr = vs[vi]->frame[fi];
++
++						for (ri = 0; ri < MAX_BPF_REG; ri++) {
++							struct bpf_reg_state *r = &fr->regs[ri];
++
++							if (r->type == NOT_INIT)
++								continue;
++							/* THE POINTER ARMS COMPARE BYTES, NOT FIELDS.
++							 * regsafe's map_value family runs
++							 * memcmp(rold,rcur,offsetof(var_off)) and
++							 * regs_exact runs it to offsetof(id) — over a
++							 * UNION whose members are kernel pointers
++							 * (map_ptr, btf). A model that re-derived those
++							 * fields would be guessing at a layout; printing
++							 * the PREFIX makes the comparison exact by
++							 * construction. `vo` is where the shorter cut
++							 * lands, so one blob serves both arms.
++							 * (Kernel addresses appear here; the VM is
++							 * disposable and the log never leaves it.) */
++							{
++								const unsigned char *rb = (const unsigned char *)r;
++								unsigned int bi;
++
++								verbose(env, "PRUNEPAIR_PFX vo=%u ",
++									(unsigned)offsetof(struct bpf_reg_state, var_off));
++								for (bi = 0; bi < offsetof(struct bpf_reg_state, id); bi++)
++									verbose(env, "%02x", rb[bi]);
++								verbose(env, "\n");
++							}
++							verbose(env,
++								"PRUNEPAIR insn=%d exact=%d side=%s fr=%d r%d type=%d delta=%d var=%llx/%llx r64=%llx+%llx r32=%x+%x id=%x pid=%x fno=%d prec=%d\n",
++								env->insn_idx, (int)vl_dbg_exact, nm[vi], fi, ri,
++								(int)r->type, (int)r->delta,
++								(unsigned long long)r->var_off.value,
++								(unsigned long long)r->var_off.mask,
++								(unsigned long long)r->r64.base,
++								(unsigned long long)r->r64.size,
++								(unsigned int)r->r32.base,
++								(unsigned int)r->r32.size,
++								r->id, r->parent_id,
++								r->frameno, r->precise ? 1 : 0);
++						}
++					}
++				}
++			}
+ 			sl->hit_cnt++;
+ 
+ 			/* if previous state reached the exit with precision and

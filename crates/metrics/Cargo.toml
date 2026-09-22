@@ -1,0 +1,8 @@
+[package]
+name = "metrics"
+version.workspace = true
+edition.workspace = true
+
+# Metric schemas (de)serialize as contract payloads.
+[dependencies]
+serde = { version = "1", features = ["derive"] }

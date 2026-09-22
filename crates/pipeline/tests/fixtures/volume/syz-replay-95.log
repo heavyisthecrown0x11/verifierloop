@@ -1,0 +1,2649 @@
+# REAL volume capture: 95 verifier-log blocks from replaying the syzkaller
+# corpus in the self-built bpf-next VM (rev 5e289c5a4a526e870efac0ca658635c47138593a), 2026-08-28.
+# Kept as a regression corpus so the parser's blind-spot rate stays measurable:
+#   70 blocks carry verifier output -> 70 records (0 unrecognized)
+#   25 blocks have an empty log (verifier never ran: EINVAL/EFAULT/E2BIG)
+# See devlog 0018/0019.
+# ----------------------------------------------------------------------
+executing program
+===PROG 012181764b74#0 type=30 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1752350
+---LOG---
+
+---END---
+executing program
+===PROG 016ccf1ce001#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=7269069
+---LOG---
+func#0 @0
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 117 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 117
+       | ^-- error: subprogram can fall through
+  Instruction context:
+      115 | BUG_ld_00
+      116 | BUG_ld_00
+  >>> 117 | BUG_ld_00
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 0c2000dd6dbf#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1975123
+---LOG---
+func#0 @0
+Invalid insn code at line_info[0].insn_off
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 0d45dd322c78#0 type=8 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=165310
+---LOG---
+
+---END---
+executing program
+===PROG 12ea7600a529#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=20651972
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG 12ea7600a529#1 type=27 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=192962
+---LOG---
+
+---END---
+executing program
+===PROG 13527f5c746f#0 type=3 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3410204
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG 13527f5c746f#1 type=19 ===
+RESULT decision=accept fd=6 errno=0 load_ns=21186502
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x600000000
+  2: (18) r1 = 0xffff888005938800
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x600000000
+  2: (18) r1 = 0xffff888005938800
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x600000000
+      2: .......... (18) r1 = 0xffff888005938800
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x600000000              ; R0=0x600000000
+2: (18) r1 = 0xffff888005938800       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG 13a0dd2b2a11#0 type=3 ===
+RESULT decision=accept fd=5 errno=0 load_ns=20337047
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888005923920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888005923920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888005923920
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888005923920      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888005923920
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG 13a0dd2b2a11#1 type=19 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=42254
+---LOG---
+
+---END---
+executing program
+===PROG 1f6580f5d815#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=7240166
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x187b
+  2: (18) r1 = 0xffff8880058ffc00
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 0
+ 12: (85) call unknown#1144554024
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x187b
+  2: (18) r1 = 0xffff8880058ffc00
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 0
+ 12: (85) call unknown#1144554024
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x187b
+      2: .......... (18) r1 = 0xffff8880058ffc00
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0..345.... (bf) r9 = r0
+      8: 0..345...9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: ...345...9 (bf) r1 = r9
+     11: .1.345.... (b7) r2 = 0
+     12: .12345.... (85) call unknown#1144554024
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x187b                   ; R0=6267
+2: (18) r1 = 0xffff8880058ffc00       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 0                       ; R2=0 refs=2
+12: (85) call unknown#1144554024
+invalid func unknown#1144554024
+processed 11 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG 208bc1ab6eac#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1790872
+---LOG---
+call to invalid destination
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 22ac1cb9f05b#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3263572
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 26d202db512d#0 type=6 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1343896
+---LOG---
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 288b85428e4a#0 type=9 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=88305
+---LOG---
+
+---END---
+executing program
+===PROG 29416aef9b57#0 type=13 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=9752393
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+subprog#0:
+  0: (18) r0 = 0xffffffff
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 9
+  9: (85) call bpf_trace_printk#6 // r1=fp0-8
+ 10: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0xffffffff
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1        ; def: fp0-8
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 9
+  9: (85) call bpf_trace_printk#6      ; use: fp0-8
+ 10: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0xffffffff
+      2: .......... (18) r1 = 0x2020200025642020
+      4: .1........ (7b) *(u64 *)(r10 -8) = r1
+      5: .......... (bf) r1 = r10
+      6: .1........ (07) r1 += -8
+      7: .1........ (b7) r2 = 8
+      8: .12....... (b7) r3 = 9
+      9: .12....... (85) call bpf_trace_printk#6
+     10: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0xffffffff               ; R0=0xffffffff
+2: (18) r1 = 0x2020200025642020       ; R1=0x2020200025642020
+4: (7b) *(u64 *)(r10 -8) = r1         ; R1=0x2020200025642020 R10=fp0 fp-8=0x2020200025642020
+5: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+6: (07) r1 += -8                      ; R1=fp-8
+7: (b7) r2 = 8                        ; R2=8
+8: (b7) r3 = 9                        ; R3=9
+9: (85) call bpf_trace_printk#6
+cannot call GPL-restricted function from non-GPL compatible program
+
+Verification failed: Policy: Operation is not allowed
+
+Reason:
+  The helper bpf_trace_printk#6 is not allowed: this helper is restricted to GPL-compatible
+  programs.
+
+At:
+  insn 9
+       | ^-- error: policy check failed for helper bpf_trace_printk#6
+  Instruction context:
+       7 | (b7) r2 = 8
+       8 | (b7) r3 = 9
+  >>>  9 | (85) call bpf_trace_printk#6
+      10 | (95) exit
+
+Suggestion:
+  Use a GPL-compatible license, or replace the helper with one that is available to non-GPL
+  programs.
+
+processed 8 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 30e132926489#0 type=23 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=22562136
+---LOG---
+
+---END---
+executing program
+===PROG 317b8bbc46b5#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1458116
+---LOG---
+invalid type id 1 in func infoprocessed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 3a9b3028546f#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=2285067
+---LOG---
+func#0 @0
+jump out of range from insn 6 to -22264
+
+Verification failed: Program Structure: Jump out of range
+
+Reason:
+  Instruction 6 jumps to instruction -22264, but subprogram 0 only contains instructions 0 through
+  117. A branch target must stay inside the same subprogram.
+
+At:
+  insn 6
+       | ^-- error: jump out of range
+  Instruction context:
+        4 | BUG_ldx_b9
+        5 | (6b) *(u16 *)(r7 -10959) = r7
+  >>>   6 | (c6) if w1 s< 0x0 goto pc-22271
+        7 | BUG_ld_00
+        8 | BUG_ld_00
+
+Suggestion:
+  Keep branch targets within the same subprogram, or use an explicit subprogram call.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 3b06b1653ce8#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=10898761
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 4660
+  9: (85) call bpf_trace_printk#6 // r1=fp0-8
+ 10: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1        ; def: fp0-8
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 4660
+  9: (85) call bpf_trace_printk#6      ; use: fp0-8
+ 10: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0x2020200025642020
+      4: .1........ (7b) *(u64 *)(r10 -8) = r1
+      5: .......... (bf) r1 = r10
+      6: .1........ (07) r1 += -8
+      7: .1........ (b7) r2 = 8
+      8: .12....... (b7) r3 = 4660
+      9: .12....... (85) call bpf_trace_printk#6
+     10: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0x2020200025642020       ; R1=0x2020200025642020
+4: (7b) *(u64 *)(r10 -8) = r1         ; R1=0x2020200025642020 R10=fp0 fp-8=0x2020200025642020
+5: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+6: (07) r1 += -8                      ; R1=fp-8
+7: (b7) r2 = 8                        ; R2=8
+8: (b7) r3 = 4660                     ; R3=4660
+9: (85) call bpf_trace_printk#6
+cannot call GPL-restricted function from non-GPL compatible program
+
+Verification failed: Policy: Operation is not allowed
+
+Reason:
+  The helper bpf_trace_printk#6 is not allowed: this helper is restricted to GPL-compatible
+  programs.
+
+At:
+  insn 9
+       | ^-- error: policy check failed for helper bpf_trace_printk#6
+  Instruction context:
+       7 | (b7) r2 = 8
+       8 | (b7) r3 = 4660
+  >>>  9 | (85) call bpf_trace_printk#6
+      10 | (95) exit
+
+Suggestion:
+  Use a GPL-compatible license, or replace the helper with one that is available to non-GPL
+  programs.
+
+processed 8 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+[   15.448390] replay_3b06b165 (103) used greatest stack depth: 25672 bytes left
+executing program
+===PROG 45e664d6351a#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=8110929
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x7ff00000007
+  2: (18) r1 = 0xffff888005941000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x7ff00000007
+  2: (18) r1 = 0xffff888005941000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x7ff00000007
+      2: .......... (18) r1 = 0xffff888005941000
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x7ff00000007            ; R0=0x7ff00000007
+2: (18) r1 = 0xffff888005941000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG 46edc4788ca4#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=9672621
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff88800594d120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff88800594d120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff88800594d120
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff88800594d120      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff88800594d120
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 4ab81161ba87#0 type=21 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=117208
+---LOG---
+
+---END---
+executing program
+===PROG 4b25667d422c#0 type=13 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=3766636
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0xffffffff
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0xffffffff
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0xffffffff
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0xffffffff               ; R0=0xffffffff
+2: (95) exit
+mark_precise: frame0: last_idx 2 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r0 stack= before 0: (18) r0 = 0xffffffff
+At program exit the register R0 has smin=4294967295 smax=4294967295 should have been in [0, 1]
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 4fec41930db3#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3464931
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 507ae3081c90#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3280716
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG 507ae3081c90#1 type=42 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=88836
+---LOG---
+
+---END---
+executing program
+===PROG 570af0a77943#0 type=6 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1040790
+---LOG---
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 609762888d3f#0 type=6 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3815879
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x700000005
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x700000005              ; R0=0x700000005
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 614302555915#0 type=6 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=731377
+---LOG---
+
+---END---
+===PROG 614302555915#1 type=3 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1350890
+---LOG---
+func#0 @0
+fd -1 is not pointing to valid bpf_map
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 63353d7d91ff#0 type=3 ===
+RESULT decision=reject fd=-1 errno=13 load_ns=9362013
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888005955920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888005955920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888005955920
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888005955920      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888005955920
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+R3 does not point to a readonly map'
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 6ba224025d8f#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=8360201
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888005955000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888005955000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888005955000
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888005955000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG 6be4906bbf07#0 type=19 ===
+RESULT decision=accept fd=4 errno=0 load_ns=8234776
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x600000000
+  2: (18) r1 = 0xffff888005954000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x600000000
+  2: (18) r1 = 0xffff888005954000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x600000000
+      2: .......... (18) r1 = 0xffff888005954000
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x600000000              ; R0=0x600000000
+2: (18) r1 = 0xffff888005954000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG 6cf0f8b1f3a6#0 type=6 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=684470
+---LOG---
+
+---END---
+executing program
+===PROG 6f1c40e48cb9#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=2348560
+---LOG---
+func#0 @0
+kernel btf_id 3 is not a function
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 71da0c881339#0 type=6 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=959176
+---LOG---
+
+---END---
+executing program
+===PROG 72c1db3c4060#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1154322
+---LOG---
+invalid type id 4 in func infoprocessed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 73358aadcf74#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1301325
+---LOG---
+call to invalid destination
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 73bbd550dc0d#0 type=6 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=890399
+---LOG---
+
+---END---
+===PROG 73bbd550dc0d#1 type=24 ===
+RESULT decision=reject fd=-1 errno=13 load_ns=3693510
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (95) exit
+Live regs before insn:
+      0: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (95) exit
+R0 !read_ok
+
+Verification failed: Register Type Safety: Unreadable register
+
+Reason:
+  R0 has never been initialized on this path, so the verifier cannot use it as an input.
+
+At:
+  insn 0
+       | ^-- error: R0 is not readable
+  Instruction context:
+  >>> 0 | (95) exit
+
+Causal path:
+  no retained diagnostic events on this path
+
+Suggestion:
+  Initialize R0 on every path before this instruction.
+
+processed 1 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 7e80d451ecd5#0 type=23 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=796128
+---LOG---
+
+---END---
+executing program
+===PROG 80170c1490e1#0 type=14 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=98564
+---LOG---
+
+---END---
+executing program
+===PROG 92d756989349#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1989522
+---LOG---
+func#0 @0
+func#1 @1
+func#2 @12
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 0 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 0
+       | ^-- error: subprogram can fall through
+  Instruction context:
+  >>>  0 | (18) r0 = 0x700000e10
+       2 | (18) r7 = 0xfffffffe
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 94b9c1d09a1b#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1592337
+---LOG---
+func#0 @0
+unknown opcode 98
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 95e0293f24d4#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1866470
+---LOG---
+func#0 @0
+func#1 @6
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 5 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 5
+       | ^-- error: subprogram can fall through
+  Instruction context:
+       3 | (18) r1 = 0x20202000256c6c64
+  >>>  5 | (7b) *(u64 *)(r10 -8) = r1
+       6 | (bf) r1 = r10
+       7 | (07) r1 += -8
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 97217a7dd432#0 type=3 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1544542
+---LOG---
+func#0 @0
+fd -1 is not pointing to valid bpf_map
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG 9d13bfac0f28#0 type=23 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=122607
+---LOG---
+
+---END---
+executing program
+===PROG a109d63d2971#0 type=3 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3465797
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG a42d1c6caffa#0 type=25 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=112861
+---LOG---
+
+---END---
+executing program
+===PROG a5834d7bcedc#0 type=6 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1669994
+---LOG---
+func#0 @0
+fd -1 is not pointing to valid bpf_map
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG a70c0c42263b#0 type=9 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=103400
+---LOG---
+
+---END---
+executing program
+===PROG ad7730c4fdfb#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3487450
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG ae19e442d19a#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1509837
+---LOG---
+func#0 @0
+func#1 @4
+func#2 @9
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 3 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 3
+       | ^-- error: subprogram can fall through
+  Instruction context:
+       2 | (18) r7 = 0x1
+       4 | (18) r1 = 0xffffffff
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG b4f4197b8455#0 type=3 ===
+RESULT decision=accept fd=3 errno=0 load_ns=11559829
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+  5: (bf) r1 = r10	r1: _ -> fp0+0
+  6: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  9: (85) call bpf_trace_printk#6	r1: fp0-8 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 4660
+  9: (85) call bpf_trace_printk#6 // r1=fp0-8
+ 10: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0x2020200025642020
+  4: (7b) *(u64 *)(r10 -8) = r1        ; def: fp0-8
+  5: (bf) r1 = r10
+  6: (07) r1 += -8
+  7: (b7) r2 = 8
+  8: (b7) r3 = 4660
+  9: (85) call bpf_trace_printk#6      ; use: fp0-8
+ 10: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0x2020200025642020
+      4: .1........ (7b) *(u64 *)(r10 -8) = r1
+      5: .......... (bf) r1 = r10
+      6: .1........ (07) r1 += -8
+      7: .1........ (b7) r2 = 8
+      8: .12....... (b7) r3 = 4660
+      9: .12....... (85) call bpf_trace_printk#6
+     10: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0x2020200025642020       ; R1=0x2020200025642020
+4: (7b) *(u64 *)(r10 -8) = r1         ; R1=0x2020200025642020 R10=fp0 fp-8=0x2020200025642020
+5: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+6: (07) r1 += -8                      ; R1=fp-8
+7: (b7) r2 = 8                        ; R2=8
+8: (b7) r3 = 4660                     ; R3=4660
+9: (85) call bpf_trace_printk#6
+mark_precise: frame0: last_idx 9 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 8: (b7) r3 = 4660
+mark_precise: frame0: regs=r2 stack= before 7: (b7) r2 = 8
+10: R0=scalar()
+10: (95) exit
+processed 9 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG b4f4197b8455#1 type=3 ===
+RESULT decision=accept fd=5 errno=0 load_ns=8093216
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006e66920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006e66920
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888006e66920
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888006e66920      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888006e66920
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG b4f4197b8455#2 type=3 ===
+RESULT decision=accept fd=7 errno=0 load_ns=8025959
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006e6b400
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006e6b400
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+Live regs before insn:
+      0: .1........ (18) r0 = 0x0
+      2: .1........ (18) r2 = 0xffff888006e6b400
+      4: .12....... (b7) r3 = 0
+      5: .123...... (85) call bpf_tail_call#12
+      6: .......... (b7) r0 = 0
+      7: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r2 = 0xffff888006e6b400       ; R2=map_ptr(ks=4,vs=4)
+4: (b7) r3 = 0                        ; R3=0
+5: (85) call bpf_tail_call#12
+mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r3 stack= before 4: (b7) r3 = 0
+6:
+6: (b7) r0 = 0                        ; R0=0
+7: (95) exit
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG b4f4197b8455#3 type=3 ===
+RESULT decision=accept fd=9 errno=0 load_ns=7561262
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888006e6b000
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888006e6b000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+===PROG b4f4197b8455#4 type=3 ===
+RESULT decision=accept fd=10 errno=0 load_ns=3747507
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r2 = 0
+  5: (85) call bpf_ringbuf_query#134
+  6: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r2 = 0
+  5: (85) call bpf_ringbuf_query#134
+  6: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888006e6b000
+      4: .1........ (b7) r2 = 0
+      5: .12....... (85) call bpf_ringbuf_query#134
+      6: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888006e6b000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 0                        ; R2=0
+5: (85) call bpf_ringbuf_query#134    ; R0=scalar()
+6: (95) exit
+processed 5 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG b4f4197b8455#5 type=3 ===
+RESULT decision=accept fd=11 errno=0 load_ns=6575319
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r2 = r10	r2: _ -> fp0+0
+  7: (07) r2 += -8	r2: fp0+0 -> fp0-8
+ 10: (85) call bpf_ringbuf_output#130	r2: fp0-8 -> _
+  6: (bf) r2 = r10	r2: _ -> fp0+0
+  7: (07) r2 += -8	r2: fp0+0 -> fp0-8
+ 10: (85) call bpf_ringbuf_output#130	r2: fp0-8 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -8) = r8
+  6: (bf) r2 = r10
+  7: (07) r2 += -8
+  8: (b7) r3 = 8
+  9: (b7) r4 = 2
+ 10: (85) call bpf_ringbuf_output#130 // r2=fp0-8
+ 11: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006e6b000
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  6: (bf) r2 = r10
+  7: (07) r2 += -8
+  8: (b7) r3 = 8
+  9: (b7) r4 = 2
+ 10: (85) call bpf_ringbuf_output#130          ; use: fp0-8
+ 11: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888006e6b000
+      4: .1........ (b7) r8 = 4660
+      5: .1......8. (7b) *(u64 *)(r10 -8) = r8
+      6: .1........ (bf) r2 = r10
+      7: .12....... (07) r2 += -8
+      8: .12....... (b7) r3 = 8
+      9: .123...... (b7) r4 = 2
+     10: .1234..... (85) call bpf_ringbuf_output#130
+     11: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888006e6b000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -8) = r8         ; R8=4660 R10=fp0 fp-8=4660
+6: (bf) r2 = r10                      ; R2=fp0 R10=fp0
+7: (07) r2 += -8                      ; R2=fp-8
+8: (b7) r3 = 8                        ; R3=8
+9: (b7) r4 = 2                        ; R4=2
+10: (85) call bpf_ringbuf_output#130
+mark_precise: frame0: last_idx 10 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r3 stack= before 9: (b7) r4 = 2
+mark_precise: frame0: regs=r3 stack= before 8: (b7) r3 = 8
+11: R0=scalar()
+11: (95) exit
+processed 10 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG b792e72a7c1f#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1411638
+---LOG---
+func#0 @0
+Program of this type cannot be sleepable
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG b80a522e69d1#0 type=42 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=112068
+---LOG---
+
+---END---
+===PROG b80a522e69d1#1 type=17 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1677711
+---LOG---
+func#0 @0
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 2 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 2
+       | ^-- error: subprogram can fall through
+  Instruction context:
+      0 | (18) r0 = 0x200000002
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG ba4bbe4537ba#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=8331118
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006d5e000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006d5e000
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888006d5e000
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888006d5e000       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG bb72b172788b#0 type=6 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3678562
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x700000005
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x700000005              ; R0=0x700000005
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG bc4099a1e074#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1343258
+---LOG---
+func#0 @0
+invalid bpf_ld_imm64 insn
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG c2ae1f49aee6#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=2065978
+---LOG---
+func#0 @0
+Invalid line_info[0].line_off or .file_name_off
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+executing program
+===PROG c6a8cc80535e#0 type=5 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=212537
+---LOG---
+
+---END---
+executing program
+===PROG c99475ab3d7c#0 type=25 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=126199
+---LOG---
+
+---END---
+executing program
+===PROG cea75359f862#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=2010535
+---LOG---
+func#0 @0
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 1 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 1
+       | ^-- error: subprogram can fall through
+  Instruction context:
+      0 | (18) r0 = 0x100000006
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG d0aec08363f4#0 type=6 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3349136
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x700000005
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x700000005
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x700000005              ; R0=0x700000005
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG d193662911cf#0 type=3 ===
+RESULT decision=accept fd=5 errno=0 load_ns=9121771
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d6b520
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d6b520
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888006d6b520
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888006d6b520      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888006d6b520
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG d193662911cf#1 type=19 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=41982
+---LOG---
+
+---END---
+executing program
+===PROG d3077fff66bd#0 type=28 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=221353
+---LOG---
+
+---END---
+executing program
+===PROG d8e0d5d53799#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1386534
+---LOG---
+func#0 @0
+invalid bpf_ld_imm64 insn
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG d9d35b713173#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=9214666
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d6a120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (18) r8 = 0xffff888006d6a000
+ 17: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d6a120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (18) r8 = 0xffff888006d6a000
+ 17: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888006d6a120
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (18) r8 = 0xffff888006d6a000
+     17: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888006d6a120      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888006d6a120
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (18) r8 = 0xffff888006d6a000      ; R8=map_ptr(ks=4,vs=8)
+17: (95) exit
+processed 15 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG db0a520097f7#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=2206093
+---LOG---
+func#0 @0
+last insn is not an exit or jmp
+
+Verification failed: Program Structure: Subprogram can fall through
+
+Reason:
+  Subprogram 0 reaches its last instruction 851 without an exit or jump, so control could continue
+  into the next subprogram.
+
+At:
+  insn 851
+       | ^-- error: subprogram can fall through
+  Instruction context:
+      849 | BUG_ld_00
+      850 | BUG_ld_00
+  >>> 851 | BUG_ld_00
+
+Suggestion:
+  End each subprogram with an exit or an explicit jump that keeps control flow inside the
+  subprogram.
+
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG e17d3693d232#0 type=19 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=125887
+---LOG---
+
+---END---
+executing program
+===PROG e2193fc3e234#0 type=6 ===
+RESULT decision=reject fd=-1 errno=14 load_ns=675356
+---LOG---
+
+---END---
+executing program
+===PROG e45166cf19d9#0 type=6 ===
+RESULT decision=reject fd=-1 errno=7 load_ns=108235
+---LOG---
+
+---END---
+executing program
+===PROG e78accbaf51a#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3272869
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG e78accbaf51a#1 type=3 ===
+RESULT decision=accept fd=6 errno=0 load_ns=4867325
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006d70c00
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006d70c00
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+Live regs before insn:
+      0: .1........ (18) r0 = 0x0
+      2: .1........ (18) r2 = 0xffff888006d70c00
+      4: .12....... (b7) r3 = 0
+      5: .123...... (85) call bpf_tail_call#12
+      6: .......... (b7) r0 = 0
+      7: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r2 = 0xffff888006d70c00       ; R2=map_ptr(ks=4,vs=4)
+4: (b7) r3 = 0                        ; R3=0
+5: (85) call bpf_tail_call#12
+mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r3 stack= before 4: (b7) r3 = 0
+6:
+6: (b7) r0 = 0                        ; R0=0
+7: (95) exit
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG e78accbaf51a#2 type=3 ===
+RESULT decision=accept fd=8 errno=0 load_ns=6663177
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006d70800
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r1 = 0xffff888006d70800
+  4: (b7) r2 = 20
+  5: (b7) r3 = 0
+  6: (85) call bpf_ringbuf_reserve#131
+  7: (bf) r9 = r0
+  8: (55) if r9 != 0x0 goto pc+1
+  9: (95) exit
+ 10: (bf) r1 = r9
+ 11: (b7) r2 = 1
+ 12: (85) call bpf_ringbuf_submit#132
+ 13: (b7) r0 = 0
+ 14: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (18) r1 = 0xffff888006d70800
+      4: .1........ (b7) r2 = 20
+      5: .12....... (b7) r3 = 0
+      6: .123...... (85) call bpf_ringbuf_reserve#131
+      7: 0......... (bf) r9 = r0
+      8: 0........9 (55) if r9 != 0x0 goto pc+1
+      9: 0......... (95) exit
+     10: .........9 (bf) r1 = r9
+     11: .1........ (b7) r2 = 1
+     12: .12....... (85) call bpf_ringbuf_submit#132
+     13: .......... (b7) r0 = 0
+     14: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r1 = 0xffff888006d70800       ; R1=map_ptr(ks=0,vs=0)
+4: (b7) r2 = 20                       ; R2=20
+5: (b7) r3 = 0                        ; R3=0
+6: (85) call bpf_ringbuf_reserve#131
+mark_precise: frame0: last_idx 6 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 5: (b7) r3 = 0
+mark_precise: frame0: regs=r2 stack= before 4: (b7) r2 = 20
+7: R0=ringbuf_mem_or_null(id=2,sz=20) refs=2
+7: (bf) r9 = r0                       ; R0=ringbuf_mem_or_null(id=2,sz=20) R9=ringbuf_mem_or_null(id=2,sz=20) refs=2
+8: (55) if r9 != 0x0 goto pc+1        ; R9=0
+9: (95) exit
+
+from 8 to 10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: R9=ringbuf_mem(id=2,sz=20) R10=fp0 refs=2
+10: (bf) r1 = r9                      ; R1=ringbuf_mem(id=2,sz=20) R9=ringbuf_mem(id=2,sz=20) refs=2
+11: (b7) r2 = 1                       ; R2=1 refs=2
+12: (85) call bpf_ringbuf_submit#132          ;
+13: (b7) r0 = 0                       ; R0=0
+14: (95) exit
+processed 13 insns (limit 1000000) max_states_per_insn 0 total_states 1 peak_states 1 mark_read 0
+
+---END---
+executing program
+===PROG e85189f50edc#0 type=14 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3412299
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0xfffffffe00000000
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0xfffffffe00000000
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0xfffffffe00000000
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0xfffffffe00000000       ; R0=0xfffffffe00000000
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG e960af6cefc3#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3478433
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG e960af6cefc3#1 type=3 ===
+RESULT decision=accept fd=7 errno=0 load_ns=8350597
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d7a120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888006d7a120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888006d7a120
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888006d7a120      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888006d7a120
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG e960af6cefc3#2 type=28 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=958985
+---LOG---
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+executing program
+===PROG ebf5fe50fb47#0 type=3 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1555211
+---LOG---
+func#0 @0
+BPF_EXIT uses reserved fields
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG f163c1da3854#0 type=3 ===
+RESULT decision=accept fd=3 errno=0 load_ns=3393268
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+===PROG f163c1da3854#1 type=26 ===
+RESULT decision=reject fd=-1 errno=9 load_ns=1413238
+---LOG---
+func#0 @0
+fd -1 is not pointing to valid bpf_map
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG f219163c7b8e#0 type=3 ===
+RESULT decision=reject fd=-1 errno=71 load_ns=1617999
+---LOG---
+func#0 @0
+fd_idx without fd_array is invalid
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG f557bdc7e444#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=9492235
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+  6: (bf) r1 = r10	r1: _ -> fp0+0
+  7: (07) r1 += -8	r1: fp0+0 -> fp0-8
+  8: (bf) r4 = r10	r4: _ -> fp0+0
+  9: (07) r4 += -16	r4: fp0+0 -> fp0-16
+ 14: (85) call bpf_snprintf#165	r1: fp0-8 -> _	r4: fp0-16 -> _
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888001372120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165 // r1=fp0-8 r4=fp0-16
+ 15: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (b7) r8 = 0
+  3: (7b) *(u64 *)(r10 -8) = r8        ; def: fp0-8
+  4: (b7) r8 = 4660
+  5: (7b) *(u64 *)(r10 -16) = r8       ; def: fp0-16
+  6: (bf) r1 = r10
+  7: (07) r1 += -8
+  8: (bf) r4 = r10
+  9: (07) r4 += -16
+ 10: (b7) r2 = 8
+ 11: (18) r3 = 0xffff888001372120
+ 13: (b7) r5 = 8
+ 14: (85) call bpf_snprintf#165        ; use: fp0-8 fp0-16
+ 15: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: .......... (b7) r8 = 0
+      3: ........8. (7b) *(u64 *)(r10 -8) = r8
+      4: .......... (b7) r8 = 4660
+      5: ........8. (7b) *(u64 *)(r10 -16) = r8
+      6: .......... (bf) r1 = r10
+      7: .1........ (07) r1 += -8
+      8: .1........ (bf) r4 = r10
+      9: .1..4..... (07) r4 += -16
+     10: .1..4..... (b7) r2 = 8
+     11: .12.4..... (18) r3 = 0xffff888001372120
+     13: .1234..... (b7) r5 = 8
+     14: .12345.... (85) call bpf_snprintf#165
+     15: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (b7) r8 = 0                        ; R8=0
+3: (7b) *(u64 *)(r10 -8) = r8         ; R8=0 R10=fp0 fp-8=0
+4: (b7) r8 = 4660                     ; R8=4660
+5: (7b) *(u64 *)(r10 -16) = r8        ; R8=4660 R10=fp0 fp-16=4660
+6: (bf) r1 = r10                      ; R1=fp0 R10=fp0
+7: (07) r1 += -8                      ; R1=fp-8
+8: (bf) r4 = r10                      ; R4=fp0 R10=fp0
+9: (07) r4 += -16                     ; R4=fp-16
+10: (b7) r2 = 8                       ; R2=8
+11: (18) r3 = 0xffff888001372120      ; R3=map_value(ks=4,vs=8)
+13: (b7) r5 = 8                       ; R5=8
+14: (85) call bpf_snprintf#165
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r2 stack= before 13: (b7) r5 = 8
+mark_precise: frame0: regs=r2 stack= before 11: (18) r3 = 0xffff888001372120
+mark_precise: frame0: regs=r2 stack= before 10: (b7) r2 = 8
+mark_precise: frame0: last_idx 14 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r5 stack= before 13: (b7) r5 = 8
+15: R0=scalar()
+15: (95) exit
+processed 14 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG fc813765d471#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=5559302
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006d7bc00
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (18) r2 = 0xffff888006d7bc00
+  4: (b7) r3 = 0
+  5: (85) call bpf_tail_call#12
+  6: (b7) r0 = 0
+  7: (95) exit
+Live regs before insn:
+      0: .1........ (18) r0 = 0x0
+      2: .1........ (18) r2 = 0xffff888006d7bc00
+      4: .12....... (b7) r3 = 0
+      5: .123...... (85) call bpf_tail_call#12
+      6: .......... (b7) r0 = 0
+      7: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (18) r2 = 0xffff888006d7bc00       ; R2=map_ptr(ks=4,vs=4)
+4: (b7) r3 = 0                        ; R3=0
+5: (85) call bpf_tail_call#12
+mark_precise: frame0: last_idx 5 first_idx 0 subseq_idx -1 
+mark_precise: frame0: regs=r3 stack= before 4: (b7) r3 = 0
+6:
+6: (b7) r0 = 0                        ; R0=0
+7: (95) exit
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG ff8cc6b89c15#0 type=3 ===
+RESULT decision=accept fd=4 errno=0 load_ns=3174316
+---LOG---
+func#0 @0
+topo_order[0] = 
+subprog#0: analyzing (depth 0)...
+subprog#0:
+  0: (18) r0 = 0x0
+  2: (95) exit
+stack use/def subprog#0 (d0,cs0):
+  0: (18) r0 = 0x0
+  2: (95) exit
+Live regs before insn:
+      0: .......... (18) r0 = 0x0
+      2: 0......... (95) exit
+0: R1=ctx() R10=fp0
+0: (18) r0 = 0x0                      ; R0=0
+2: (95) exit
+processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---
+executing program
+===PROG ffe1a6882daf#0 type=6 ===
+RESULT decision=reject fd=-1 errno=22 load_ns=1302189
+---LOG---
+func#0 @0
+Invalid line_info[0].line_off or .file_name_off
+processed 0 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+
+---END---

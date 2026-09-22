@@ -1,0 +1,57 @@
+fd4cfa8c8f9a  No  kernel/bpf/verifier.c:__check_buffer_access  negative-offset access guard plus prog->aux max_access bookkeeping; no register field is written
+2aaf67f0516f  Undecided  kernel/bpf/verifier.c:check_kfunc_args  guard on meta->r0_size ahead of a write the diff does not show; whether a consumed field (mem_size) is corrupted is not settled from this source
+37363191cbe8  No  kernel/bpf/verifier.c:check_flow_keys_access  access-bounds check folds var_off into off and rejects variable offsets; reads reg state, writes none
+179ee84a8911  Yes  kernel/bpf/verifier.c:backtrack_insn  atomic-fetch precision propagation feeds mark_chain_precision, so the consumed precise flag is left wrong and B short-circuits on it
+efc11a667878  Yes  kernel/bpf/verifier.c:__update_reg64_bounds  rewrites umin/umax/var_off via ___mark_reg_known, all consumed by range_within/tnum_in
+e2d2115e56c4  Yes  kernel/bpf/verifier.c:backtrack_insn  changes which regs receive bt marks on reg-reg conditional jumps, which determines reg->precise
+c03bb2fa327e  No  kernel/bpf/verifier.c:check_atomic_load  reorders reg-number validation ahead of atomic_ptr_type_ok; guard ordering only, no state written
+b0e66977dc07  No  kernel/bpf/verifier.c:check_stack_write_fixed_off  relaxes a spilled-pointer-corruption guard on stack slots; stacksafe is unmodelled
+d0b98f6a17a5  No  kernel/bpf/verifier.c:check_stack_slot_within_bounds  stack access bound check; no register field written
+aa30eb3260b2  No  kernel/bpf/verifier.c:is_state_visited  changes when a checkpoint is forced, i.e. whether states_equal runs at all; explicitly unmodelled
+8ea607330a39  No  kernel/bpf/verifier.c:check_helper_mem_access  helper-argument read-vs-write access-type plumbing; no register field written
+763aa759d3b2  No  kernel/bpf/verifier.c:retval_range_within  return-value range check reads s32 vs s64 bounds; a predicate at exit, writes nothing
+4bf79f9be434  Yes  kernel/bpf/verifier.c:backtrack_insn  bt_sync_linked_regs propagates precision across linked scalars, deciding reg->precise which B consumes
+44b7f7151dfc  Yes  kernel/bpf/verifier.c:coerce_subreg_to_size_sx  adds the missing var_off write; the stale tnum is consumed by tnum_in
+380d5f89a481  Yes  kernel/bpf/verifier.c:set_sext32_default_val  adds the missing var_off write; the stale tnum is consumed by tnum_in
+22c7fa171a02  No  kernel/bpf/verifier.c:adjust_ptr_min_max_vals  rejects variable-offset ALU on flow keys; the reg's var_off was accurate, the access check was the hole
+6b4a64bafd10  No  kernel/bpf/verifier.c:check_stack_access_within_bounds  allocated_stack/stack_depth growth and uninit-slot read policy; stack state is unmodelled
+829955981c55  No  kernel/bpf/verifier.c:check_return_code  only the range printed in the verbose message changes
+d84b1a6708ee  Yes  kernel/bpf/verifier.c:__mark_chain_precision  subseq_idx handed to backtrack_insn steers which regs get precise marks
+71b547f56124  Yes  kernel/bpf/verifier.c:backtrack_insn  reg-reg conditional jump now taints both regs, i.e. sets the reg->precise B short-circuits on
+7be14c1c9030  Yes  kernel/bpf/verifier.c:__reg_bound_offset  rewrites the subreg part of var_off, consumed by tnum_in
+79168a669d81  No  kernel/bpf/verifier.c:dynptr_get_spi  dynptr stack-slot lookup validates var_off/alignment and rejects; stack slots unmodelled, no reg field written
+8374bfd5a3c9  Yes  kernel/bpf/verifier.c:check_cond_jmp_op  nullness propagation rewrites reg->type (drops PTR_MAYBE_NULL); type is the first thing B compares
+f5e477a861e4  No  kernel/bpf/verifier.c:check_stack_write_var_off  slot_type guard for var-offset stack writes; stack unmodelled
+a657182a5c51  No  kernel/bpf/verifier.c:record_func_key  tail-call key poison decision lands in insn_aux_data, not in any register field
+a12ca6277eca  Yes  kernel/bpf/verifier.c:reg_set_min_max  JEQ/JNE marks a reg known and the stale true/false_32off then overwrote var_off; bounds and tnum are consumed
+bff61f6faedb  No  kernel/bpf/verifier.c:check_mem_access  access-dispatch guard on base_type/may-be-null; no state written
+345e004d0233  Yes  kernel/bpf/verifier.c:backtrack_insn  narrow spill/fill no longer skipped in backtracking, so precise marks reach the reg B reads
+b9979db83401  Yes  kernel/bpf/verifier.c:__reg64_bound_u32  gate for __reg_combine_64_into_32 writing u32_min/u32_max
+10bf4e83167c  Yes  kernel/bpf/verifier.c:__reg_combine_64_into_32  writes u32_min/u32_max from 64-bit bounds, consumed by range_within
+9b00f1b78809  No  kernel/bpf/verifier.c:fixup_bpf_calls  post-verification insn patching of mod32; no verifier state involved
+e88b2c6e5a4d  No  kernel/bpf/verifier.c:fixup_bpf_calls  post-verification insn patching of div/mod; no verifier state involved
+b02709587ea3  Yes  kernel/bpf/verifier.c:__reg_combine_64_into_32  writes s32_min/s32_max (and do_refine_retval_range writes smin); consumed by range_within
+5b9fbeb75b6a  Yes  kernel/bpf/verifier.c:scalar32_min_max_or  writes s32_min/s32_max from the wrong (64-bit) source bounds
+3a71dc366d4a  Yes  kernel/bpf/verifier.c:__reg_assign_32_into_64  writes smin/smax from 32-bit bounds
+100605035e15  Yes  kernel/bpf/verifier.c:do_refine_retval_range  writes ret_reg smax then re-deduces bounds; consumed by range_within
+f2d67fec0b43  Yes  kernel/bpf/verifier.c:__reg_bound_offset32  removes a wrong var_off rewrite from reg_set_min_max; tnum is consumed
+0af2ffc93a4b  Yes  kernel/bpf/verifier.c:adjust_scalar_min_max_vals  ARSH under ALU32 writes smin/smax/var_off; all consumed
+cc52d9140aa9  Yes  kernel/bpf/verifier.c:record_func_key  adds mark_chain_precision(r3), i.e. sets the precise flag B short-circuits on
+1fbd20f8b77b  No  kernel/bpf/verifier.c:check_stack_access  newline in a verbose message only
+107c26a70ca8  No  kernel/bpf/verifier.c:check_stack_boundary  indirect var-offset stack access bound guard; no reg field written
+088ec26d9c2d  No  kernel/bpf/verifier.c:check_stack_boundary  rejects unpriv indirect var-offset stack access; guard only
+f2bcd05ec7b8  No  kernel/bpf/verifier.c:check_stack_boundary  clears raw_mode for var-offset stack access; guard only
+5f4566498dee  No  kernel/bpf/verifier.c:check_sock_access  records ctx_field_size into insn_aux_data; no register field
+d623876646be  No  kernel/bpf/verifier.c:check_sock_access  records ctx_field_size into insn_aux_data; no register field
+979d63d50c0c  No  kernel/bpf/verifier.c:states_equal  adds a state-level speculative gate to the predicate plus aux alu_state; no per-reg consumed field
+f6b1b3bf0d5f  No  kernel/bpf/verifier.c:fixup_bpf_calls  interpreter and insn-patching change for div/mod by zero; no verifier state
+bb7f0f989ca7  Yes  kernel/bpf/verifier.c:adjust_scalar_min_max_vals  forces __mark_reg_unknown for unknown-src non-add/sub/and, replacing overflowed bound writes
+4cabc5b186b5  Yes  kernel/bpf/verifier.c:reg_set_min_max  rewrites min_value/max_value (that era's bounds) on mixed signed/unsigned compares
+6bdf6abc56b5  No  kernel/bpf/verifier.c:check_xadd  pointer-leak guard on the xadd source; no state written
+1ad2f5838d34  No  kernel/bpf/verifier.c:compare_ptrs_to_packet  the pruning predicate itself gains a strict_alignment condition
+79adffcd6489  No  kernel/bpf/verifier.c:check_ptr_alignment  alignment access check; no state written
+fce366a9dd0d  Yes  kernel/bpf/verifier.c:check_alu_op  restricts the write of dst_reg->type = PTR_TO_MAP_VALUE_ADJ; type is consumed
+2d2be8cab26e  Yes  kernel/bpf/verifier.c:find_good_pkt_pointers  writes reg.range for the JGE pattern into the right branch; range is read by the pkt_range arm
+1f415a74b0ca  Yes  kernel/bpf/verifier.c:check_packet_ptr_add  changes how dst_reg->id is generated; id feeds check_ids
+1b9b69ecb3a5  Yes  kernel/bpf/verifier.c:check_packet_ptr_add  copies packet type/id/off/range into dst for imm += ptr; all in the pointer prefix B compares
+d91b28ed42de  No  kernel/bpf/verifier.c:check_packet_access  packet access bound check reads off/range; writes nothing

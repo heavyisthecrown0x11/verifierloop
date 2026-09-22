@@ -1,0 +1,21 @@
+REFTRAP name=mov64_k_sign_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0xffffffff kernel=0xffffffff verdict=agree
+REFTRAP name=mov32_k_zero_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=alu32_add_zero_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=jmp32_ignores_upper_half load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000007 kernel=0x00000007 verdict=agree
+REFTRAP name=udiv_by_runtime_zero_is_zero load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=umod_by_runtime_zero_is_dst load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000007 kernel=0x00000007 verdict=agree
+REFTRAP name=sdiv64_min_by_minus_one load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x80000000 kernel=0x80000000 verdict=agree
+REFTRAP name=neg64_of_min_wraps load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x80000000 kernel=0x80000000 verdict=agree
+REFTRAP name=st_dw_imm_sign_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0xffffffff kernel=0xffffffff verdict=agree
+REFTRAP name=ldx_memsx_fills_upper_half load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0xffffffff kernel=0xffffffff verdict=agree
+REFTRAP name=ldx_b_zero_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x000000ff kernel=0x000000ff verdict=agree
+REFTRAP name=movsx32_then_zero_extends load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=movsx64_fills_upper_half load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0xffffffff kernel=0xffffffff verdict=agree
+REFTRAP name=alu32_mod_by_zero_zeroes_upper load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=negative_stack_off_is_signed load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000005 kernel=0x00000005 verdict=agree
+REFTRAP name=atomic_fetch_add_returns_old load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000007 kernel=0x00000007 verdict=agree
+REFTRAP name=atomic_add_updates_memory load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x0000000c kernel=0x0000000c verdict=agree
+REFTRAP name=cmpxchg_returns_old_on_success load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000010 kernel=0x00000010 verdict=agree
+REFTRAP name=xchg32_zero_extends_the_old_value load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x00000000 kernel=0x00000000 verdict=agree
+REFTRAP name=ld_imm64_consumes_two_slots load=accept load_errno=0 ran=1 run_errno=0 ref_status=ok ref=0x55667788 kernel=0x55667788 verdict=agree
+REFCAL total=20 agree=20

@@ -1,0 +1,15 @@
+[project]
+name = "verifierloop-analysis"
+version = "0.0.0"
+description = "Python analysis side (statistics, data processing, anomaly scoring) of the eBPF verifier hunting loop."
+requires-python = ">=3.10"
+# SCAFFOLDING: no runtime deps yet so the package imports on a bare interpreter.
+# TODO(python-deps): add numpy / scipy / pandas when scoring is implemented.
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,10 @@
+===PROG mov32-3cf2b61eb067-fixed type=socket_filter ===
+RESULT decision=accept fd=3 errno=0 load_ns=0
+---LOG---
+func#0 @0
+0: (b4) w0 = -1
+1: R0_w=invP4294967295(id=0,imm=ffffffff,smin_value=4294967295,smax_value=4294967295,umin_value=4294967295,umax_value=4294967295,var_off=(0xffffffff; 0x0),s32_min_value=-1,s32_max_value=-1,u32_min_value=-1,u32_max_value=-1)
+1: (bc) w0 = w0
+2: R0_w=invP4294967295(id=0,imm=ffffffff,smin_value=4294967295,smax_value=4294967295,umin_value=4294967295,umax_value=4294967295,var_off=(0xffffffff; 0x0),s32_min_value=-1,s32_max_value=-1,u32_min_value=-1,u32_max_value=-1)
+processed 3 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+---END---
